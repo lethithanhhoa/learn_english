@@ -1,0 +1,191 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:learn_english/screens/home/home_page.dart';
+import 'package:learn_english/services/auth_service.dart';
+
+class LoginPage extends StatefulWidget {
+  LoginPage({ Key key}) : super(key : key);
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _loading = false;
+  AuthService _authService = new AuthService();
+
+  void initState(){
+    super.initState();
+    checkUserSignedIn();
+  }
+
+  void checkUserSignedIn(){
+    if (_loading){
+      _authService.signOut();
+      setState(() {
+      _loading = true;
+    });
+    }
+  }
+
+  void _googleSignIn() async {
+    setState(() {
+      _loading = true;
+    });
+    var user = _authService.googleSignIn();
+    if (user != null){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => new HomePage()));
+    }else {
+      await Future.delayed(Duration(seconds: 2));
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+  void _facebookSignIn() async {
+    setState(() {
+      _loading = true;
+    });
+    var user = _authService.facebookSignIn();
+    if (user != null){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => new HomePage()));
+    }else {
+      await Future.delayed(Duration(seconds: 2));
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(15, 50, 15, 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width - 150,
+                    height: MediaQuery.of(context).size.width - 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                          MediaQuery.of(context).size.width),
+                      gradient: LinearGradient(
+                        colors: [Colors.pink[50], Colors.pink],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 7,
+                    left: 3,
+                    right: 9,
+                    bottom: 7,
+                    child: CircleAvatar(
+                      backgroundImage: Image.asset('assets/owl.jpg').image,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Text(
+                    "Lingo",
+                    style: TextStyle(
+                      fontSize: 45,
+                      color: Colors.pink,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Change The Future",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.pink[400],
+                    ),
+                  ),
+                ],
+              ),
+              Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 7 * 4.5,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1.2, color: Colors.pink),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: FlatButton(
+                        onPressed: () {
+                          _facebookSignIn();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              FontAwesomeIcons.facebookF,
+                              color: Colors.blue[900],
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Login with Facbook",
+                              style: TextStyle(
+                                fontSize: 17.5,
+                                color: Colors.pink[400],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 7 * 4.5,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1.2, color: Colors.pink),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: FlatButton(
+                        onPressed: () {
+                          _googleSignIn();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              FontAwesomeIcons.google,
+                              color: Colors.pink,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Login with Google",
+                              style: TextStyle(
+                                fontSize: 17.5,
+                                color: Colors.pink[400],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
