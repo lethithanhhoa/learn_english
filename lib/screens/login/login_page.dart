@@ -1,68 +1,61 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:learn_english/screens/home/home_page.dart';
+import 'package:learn_english/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
+  LoginPage({ Key key}) : super(key : key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String _message = 'You are not sign in';
+  bool _loading = false;
+  AuthService _authService = new AuthService();
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FacebookLogin _facebooklogin = FacebookLogin();
-
-  Future<FirebaseUser> _handleSignIn() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    final FirebaseUser user =
-        (await _auth.signInWithCredential(credential)).user;
-    print("signed in " + user.displayName);
-    setState(() {
-      _message = "You are signed in";
-    });
-    return user;
-  }
-
-  Future _checkLogin() async {
-    final FirebaseUser user = await _auth.currentUser();
-    if (user != null) {
-      setState(() {
-        _message = "You are signed in";
-      });
-    }
-  }
-
-  Future _loginWithFacebook() async {
-    final result = await _facebooklogin.logIn(['email']);
-
-    if (result.status == FacebookLoginStatus.loggedIn) {
-      final credential = FacebookAuthProvider.getCredential(
-        accessToken: result.accessToken.token,
-      );
-      final user = (await _auth.signInWithCredential(credential)).user;
-      setState(() {
-        _message = "Logged in as ${user.displayName}";
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    _checkLogin();
+  void initState(){
     super.initState();
+    checkUserSignedIn();
+  }
+
+  void checkUserSignedIn(){
+    if (_loading){
+      _authService.signOut();
+      setState(() {
+      _loading = true;
+    });
+    }
+  }
+
+  void _googleSignIn() async {
+    setState(() {
+      _loading = true;
+    });
+    var user = _authService.googleSignIn();
+    if (user != null){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => new HomePage()));
+    }else {
+      await Future.delayed(Duration(seconds: 2));
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+  void _facebookSignIn() async {
+    setState(() {
+      _loading = true;
+    });
+    var user = _authService.facebookSignIn();
+    if (user != null){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => new HomePage()));
+    }else {
+      await Future.delayed(Duration(seconds: 2));
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   @override
@@ -130,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(50)),
                       child: FlatButton(
                         onPressed: () {
-                          _loginWithFacebook();
+                          _facebookSignIn();
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(50)),
                       child: FlatButton(
                         onPressed: () {
-                          _handleSignIn();
+                          _googleSignIn();
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
