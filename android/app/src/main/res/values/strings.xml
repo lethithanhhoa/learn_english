@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Lingo</string>
-    <string name="facebook_app_id">1431610223663459</string> 
-    <string name="fb_login_protocol_scheme">fb1431610223663459</string>
+    <string name="app_name">Windmill</string>
+    <string name="facebook_app_id">3117489168315225</string> 
+    <string name="fb_login_protocol_scheme">fb3117489168315225</string>
 </resources>
