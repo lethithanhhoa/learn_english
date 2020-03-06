@@ -3,61 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learn_english/screens/home/home_page.dart';
 import 'package:learn_english/services/auth_service.dart';
+import 'package:learn_english/services/book_service.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({ Key key}) : super(key : key);
+  LoginPage({Key key}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _loading = false;
-  AuthService _authService = new AuthService();
-
-  void initState(){
-    super.initState();
-    checkUserSignedIn();
-  }
-
-  void checkUserSignedIn(){
-    if (_loading){
-      _authService.signOut();
-      setState(() {
-      _loading = true;
-    });
-    }
-  }
-
-  void _googleSignIn() async {
-    setState(() {
-      _loading = true;
-    });
-    var user = _authService.googleSignIn();
-    if (user != null){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => new HomePage()));
-    }else {
-      await Future.delayed(Duration(seconds: 2));
-      setState(() {
-        _loading = false;
-      });
-    }
-  }
-
-  void _facebookSignIn() async {
-    setState(() {
-      _loading = true;
-    });
-    var user = _authService.facebookSignIn();
-    if (user != null){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => new HomePage()));
-    }else {
-      await Future.delayed(Duration(seconds: 2));
-      setState(() {
-        _loading = false;
-      });
-    }
-  }
-
+  BookService bookService = new BookService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(50)),
                       child: FlatButton(
                         onPressed: () {
-                          _facebookSignIn();
+                          bookService.getData();
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -155,9 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                           border: Border.all(width: 1.2, color: Colors.pink),
                           borderRadius: BorderRadius.circular(50)),
                       child: FlatButton(
-                        onPressed: () {
-                          _googleSignIn();
-                        },
+                        onPressed: () {},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[

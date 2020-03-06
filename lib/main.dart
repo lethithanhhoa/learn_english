@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
       title: 'Learn English',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.pink,
           scaffoldBackgroundColor: Color(0XFFEFF3F6)),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
