@@ -7,18 +7,14 @@ class BookService {
       Firestore.instance.collection('books');
 
   void getData() {
-  _collectionReference
-      .getDocuments()
-      .then((QuerySnapshot snapshot) {
-    snapshot.documents.forEach((f) => print('${f.data}}'));
-  });
-}
+    _collectionReference.getDocuments().then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) => print('${f.data}}'));
+    });
+  }
+
   Future<List<Book>> getListBook() async {
     try {
-      this.getData();
-
       var ref = await _collectionReference.getDocuments();
-      
       List<Book> listBook =
           ref.documents.map((doc) => Book.fromSnapshot(doc)).toList();
       return listBook;

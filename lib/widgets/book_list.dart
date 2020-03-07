@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/models/book.dart';
 import 'package:learn_english/services/book_service.dart';
+import 'package:learn_english/widgets/unit_list.dart';
 class BookList extends StatefulWidget { 
   BookList({ Key key}) : super(key : key);
   @override
@@ -49,9 +50,6 @@ class BookListState extends State<BookList> {
           title: Text("Account"),
         ),
       ]),
-      appBar: AppBar(
-        title: Text("Home"),
-      ),
 			body: Stack(
         children : <Widget>[
           Container(
@@ -96,13 +94,13 @@ class BookListState extends State<BookList> {
         children: <Widget>[
           Container(
 						margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-						width: 40.0,
-						height: 40.0,
+						width: 100.0,
+						height: 100.0,
 						decoration: new BoxDecoration(
 							shape: BoxShape.circle,
 							image: DecorationImage(
 								fit: BoxFit.fill,
-								image: new NetworkImage(currentBook.title)
+								image: new NetworkImage('https://firebasestorage.googleapis.com/v0/b/learn-english-7c4c5.appspot.com/o/screen_2.jpg?alt=media&token=c478dbc4-78d9-4094-bef9-aeee13f31aad')
 							),
 							color: Colors.blue
 						),
@@ -117,13 +115,13 @@ class BookListState extends State<BookList> {
           )
         ],
       ),
-			// onTap: () {
-			// 	Navigator.push(context, 
-			// 		MaterialPageRoute(builder: (context) => UnitList(
-			// 			bookId : currentBook.bookId,
-			// 			bookTitle : currentBook.name 
-			// 		)));
-			// },
+			onTap: () {
+				Navigator.push(context, 
+					MaterialPageRoute(builder: (context) => UnitList(
+            indexBookId: currentBook.docId,
+            bookTitle: currentBook.bookTitle,
+					)));
+			},
 		);
 	}
 }

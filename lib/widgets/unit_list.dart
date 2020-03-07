@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:learn_english/models/unit.dart';
 import 'package:learn_english/services/unit_service.dart';
 class UnitList extends StatefulWidget { 
-  UnitList({ Key key}) : super(key : key);
+  String indexBookId;
+  String bookTitle;
+  UnitList({ Key key, this.indexBookId, this.bookTitle}) : super(key : key);
   @override
   UnitListState createState() => UnitListState();
 }
 
 class UnitListState extends State<UnitList> {
-  UnitService _bookService = new UnitService();
-  List<Unit> books = [];
+  UnitService _unitService = new UnitService();
+  List<Unit> units = [];
   bool loading = false;
 
   @override
@@ -24,9 +26,9 @@ class UnitListState extends State<UnitList> {
       loading = true;
     });
 
-    List<Unit> fetchedBooks = await _bookService.getListUnit();
+    List<Unit> fetchedBooks = await _unitService.getListUnit(widget.indexBookId);
     this.setState((){
-      books = fetchedBooks;
+      units = fetchedBooks;
       loading = false;
     });
   }
@@ -34,24 +36,19 @@ class UnitListState extends State<UnitList> {
 	@override 
 	Widget build(BuildContext context) {
 		return Scaffold(
-			bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          title: Text("Home"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.autorenew),
-          title: Text("Rankking"),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          title: Text("Account"),
-        ),
-      ]),
-      appBar: AppBar(
-        title: Text("Home"),
-      ),
+			appBar: AppBar(
+				title : Text(widget.bookTitle),
+				leading: IconButton(
+					icon : Icon(
+						Icons.arrow_back,
+						color: Colors.white,
+					),
+					onPressed: (){
+						Navigator.maybePop(context);
+					}
+				),
+				automaticallyImplyLeading: true,
+			),
 			body: Stack(
         children : <Widget>[
           Container(
@@ -84,10 +81,10 @@ class UnitListState extends State<UnitList> {
 	}
 
 	Widget _buildRow(context, index) {
-		if (index >= books.length) 
+		if (index >= units.length) 
 			return null;
 
-    Unit currentBook = books[index];
+    Unit currentUnit = units[index];
 		return new ListTile(
 			title : Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -96,20 +93,20 @@ class UnitListState extends State<UnitList> {
         children: <Widget>[
           Container(
 						margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-						width: 40.0,
-						height: 40.0,
+						width: 60.0,
+						height: 60.0,
 						decoration: new BoxDecoration(
 							shape: BoxShape.circle,
 							image: DecorationImage(
 								fit: BoxFit.fill,
-								image: new NetworkImage(currentBook.name)
+								image: new NetworkImage('https://firebasestorage.googleapis.com/v0/b/learn-english-7c4c5.appspot.com/o/screen_2.jpg?alt=media&token=c478dbc4-78d9-4094-bef9-aeee13f31aad')
 							),
 							color: Colors.blue
 						),
 					),
           Expanded(
             child: Text(
-              '  ${currentBook.unitId}',
+              '  ${currentUnit.unitId}',
               overflow: TextOverflow.fade,
               maxLines: 1,
               softWrap: false,
