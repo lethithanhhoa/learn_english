@@ -70,55 +70,63 @@ class BookListState extends State<BookList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height * 2/ 5,
+                height: MediaQuery.of(context).size.height * 2 / 5,
                 decoration: BoxDecoration(
                   // border: Border.all(color: Colors.red),
                   borderRadius:
                       BorderRadius.only(bottomLeft: Radius.circular(60.0)),
                 ),
                 child: Stack(children: <Widget>[
-                  
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
                       borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(60.0)),
+                          BorderRadius.only(bottomLeft: Radius.circular(60.0)),
                       image: DecorationImage(
-                        image: Image.asset("assets/ba18.jpg").image,
-                        fit: BoxFit.cover
-                      ),
+                          image: Image.asset("assets/ba21.jpg").image,
+                          fit: BoxFit.cover),
                     ),
-                  
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            width: MediaQuery.of(context).size.width - 80,
-                            height: 180,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: Image.asset("assets/ba17.jpg").image,
-                                fit: BoxFit.cover
-                              ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                        child: Container(
+                          child: Text(
+                            'Recent Course',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 180,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            // image: DecorationImage(
+                            //   image: Image.asset("assets/ba17.jpg").image,
+                            //   fit: BoxFit.cover
+                            // ),
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ]),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                 child: Container(
                   child: Text(
                     'Courses',
@@ -134,7 +142,7 @@ class BookListState extends State<BookList> {
               Expanded(
                 child: new ListView.builder(
                   // scrollDirection: Axis.vertical,
-                  // padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(10.0),
                   itemBuilder: _buildRow,
                 ),
               ),
@@ -169,14 +177,16 @@ class BookListState extends State<BookList> {
         height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Color.fromRGBO(255, 255, 255, 1.0),
-          gradient: LinearGradient(
-            // colors: [Colors.pink[50], Colors.pink[100], Colors.pink[50]],
-            // colors: [Colors.lime[100], Colors.lime, Colors.lime[100]],
-            colors: [Colors.lime, Colors.yellow, Colors.yellow[100]],
-            begin: Alignment.bottomLeft,
-            end: Alignment.bottomRight,
-          ),
+          // color: Color.fromRGBO(255, 255, 255, 1.0),
+          color: Colors.purple[300],
+          // gradient: LinearGradient(
+          //   // colors: [Colors.pink[50], Colors.pink[100], Colors.pink[50]],
+          //   // colors: [Colors.lime[100], Colors.lime, Colors.lime[100]],
+          //   // colors: [Colors.lime, Colors.yellow, Colors.yellow[100]],
+          //   // colors: [Colors.purple[800], Colors.purple[800]],
+          //   begin: Alignment.bottomLeft,
+          //   end: Alignment.bottomRight,
+          // ),
         ),
         child: Row(
           children: <Widget>[
@@ -186,7 +196,7 @@ class BookListState extends State<BookList> {
               height: 80.0,
               decoration: new BoxDecoration(
                   // border: Border.all(color: Colors.pink),
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(15.0),
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image: new NetworkImage(
@@ -202,7 +212,8 @@ class BookListState extends State<BookList> {
                   '${currentBook.bookTitle}',
                   textAlign: TextAlign.start,
                   style: new TextStyle(
-                    color: Colors.black54,
+                    // color: Colors.black54,
+                    color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
