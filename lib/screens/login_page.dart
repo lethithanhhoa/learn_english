@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:learn_english/screens/home/home_page.dart';
+import 'package:learn_english/screens/home_page.dart';
 import 'package:learn_english/services/auth_service.dart';
 import 'package:learn_english/services/book_service.dart';
 
@@ -19,18 +19,21 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(15, 50, 15, 50),
+          padding: EdgeInsets.fromLTRB(15, 60, 15, 60),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            
             children: <Widget>[
               Stack(
                 children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width - 150,
-                    height: MediaQuery.of(context).size.width - 150,
+              
+                    width: 230,
+                    height: 230,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                          MediaQuery.of(context).size.width),
+                      // borderRadius: BorderRadius.circular(
+                      //     MediaQuery.of(context).size.width),
+                      shape: BoxShape.circle,
                       gradient: LinearGradient(
                         colors: [Colors.pink[50], Colors.pink],
                         begin: Alignment.bottomLeft,
@@ -72,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width / 7 * 4.5,
+                      width: 230,
                       decoration: BoxDecoration(
                           border: Border.all(width: 1.2, color: Colors.pink),
                           borderRadius: BorderRadius.circular(50)),
@@ -105,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 20,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width / 7 * 4.5,
+                      width: 230,
                       decoration: BoxDecoration(
                           border: Border.all(width: 1.2, color: Colors.pink),
                           borderRadius: BorderRadius.circular(50)),
