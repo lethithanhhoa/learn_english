@@ -70,9 +70,8 @@ class BookListState extends State<BookList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height * 2 / 5,
+                height: 290,
                 decoration: BoxDecoration(
-                  // border: Border.all(color: Colors.red),
                   borderRadius:
                       BorderRadius.only(bottomLeft: Radius.circular(60.0)),
                 ),
@@ -110,14 +109,36 @@ class BookListState extends State<BookList> {
                         padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: 180,
+                          height: 200,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
-                            // image: DecorationImage(
-                            //   image: Image.asset("assets/ba17.jpg").image,
-                            //   fit: BoxFit.cover
-                            // ),
                             color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(1.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.0),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: Image.asset("assets/ba4.jpg").image,
+                                ),
+                              ),
+                              // child: Padding(
+                              //   padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                              //   child: Column(
+                              //     children: <Widget>[
+                              //       Text('Tieng Anh',
+                              //           style: TextStyle(
+                              //               color: Colors.black54, fontSize: 26)),
+                              //       FlatButton(
+                              //         onPressed: null,
+                              //         child: Text('Start'),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
+                            ),
                           ),
                         ),
                       ),
@@ -168,25 +189,13 @@ class BookListState extends State<BookList> {
   Widget _buildRow(context, index) {
     if (index >= books.length) return null;
     Book currentBook = books[index];
-    // String url = '';
-    // ImageService _imageService = new ImageService(url, currentBook.imgName);
-    // print("........................ ${currentBook.imgName}");
-    // print(_imageService.url);
     return new ListTile(
       title: Container(
         height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
+          color: Colors.pink[200],
           // color: Color.fromRGBO(255, 255, 255, 1.0),
-          color: Colors.purple[300],
-          // gradient: LinearGradient(
-          //   // colors: [Colors.pink[50], Colors.pink[100], Colors.pink[50]],
-          //   // colors: [Colors.lime[100], Colors.lime, Colors.lime[100]],
-          //   // colors: [Colors.lime, Colors.yellow, Colors.yellow[100]],
-          //   // colors: [Colors.purple[800], Colors.purple[800]],
-          //   begin: Alignment.bottomLeft,
-          //   end: Alignment.bottomRight,
-          // ),
         ),
         child: Row(
           children: <Widget>[
@@ -195,13 +204,14 @@ class BookListState extends State<BookList> {
               width: 100.0,
               height: 80.0,
               decoration: new BoxDecoration(
-                  // border: Border.all(color: Colors.pink),
                   borderRadius: BorderRadius.circular(15.0),
                   image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/learn-english-7c4c5.appspot.com/o/screen_2.jpg?alt=media&token=c478dbc4-78d9-4094-bef9-aeee13f31aad')),
-                  color: Colors.blue),
+                    fit: BoxFit.cover,
+                    image: Image.asset('assets/ba6.jpg').image,
+                  ),
+                  // image: new NetworkImage(
+                  //  'https://firebasestorage.googleapis.com/v0/b/learn-english-7c4c5.appspot.com/o/screen_2.jpg?alt=media&token=c478dbc4-78d9-4094-bef9-aeee13f31aad')),
+                  color: Colors.white),
             ),
             SizedBox(width: 15),
             Flexible(
@@ -212,12 +222,11 @@ class BookListState extends State<BookList> {
                   '${currentBook.bookTitle}',
                   textAlign: TextAlign.start,
                   style: new TextStyle(
-                    // color: Colors.black54,
-                    color: Colors.white,
+                    color: Colors.black54,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
-                  // overflow: TextOverflow.fade,
+                  overflow: TextOverflow.fade,
                 )),
               ),
             )
