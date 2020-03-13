@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:learn_english/models/unit.dart';
+import 'package:learn_english/core/models/unit.dart';
+
 
 class UnitService {
   final CollectionReference _collectionReference = Firestore.instance.collection('books');  
