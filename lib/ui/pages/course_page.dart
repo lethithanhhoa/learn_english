@@ -11,11 +11,10 @@ class Course extends StatefulWidget{
 }
 
 class CourseState extends State<Course>{
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text(widget.bookTitle),),
       body: UnitsListProvider(bookId: widget.bookId,),
     );
   }

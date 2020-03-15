@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_english/ui/pages/course_page.dart';
 import 'package:learn_english/ui/pages/home_page.dart';
+import 'package:learn_english/ui/pages/learning_word_page.dart';
 import 'package:learn_english/ui/pages/login_page.dart';
 
 class Router {
@@ -28,6 +29,15 @@ class Router {
           //   return child;
           // },
         );
+
+      case 'LearingWord':
+        List<String> arg = settings.arguments as List<String>;
+        return MaterialPageRoute(
+            builder: (context) => LearningWordPage(
+                  bookId: arg[0],
+                  unitId: arg[1],
+
+                ));
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(
