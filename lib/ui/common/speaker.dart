@@ -4,18 +4,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learn_english/core/models/word.dart';
 
-// class Speaker extends StatelessWidget{
-//   Word word;
-//   Speaker({this.word});
-//   @override
-//   Widget build(BuildContext context) {
-//     return Provider<>.value(
-//       value: _unitService.getListWord(bookId, unitId),
-//       child: LearningWord(),
-//     );
-//   }
-
-// }
 class Speaker extends StatelessWidget {
   final FlutterTts flutterTts = FlutterTts();
   Word word;
@@ -39,7 +27,7 @@ class Speaker extends StatelessWidget {
           },
           child: Icon(
             FontAwesomeIcons.volumeUp,
-            color: Colors.pink,
+            color: Colors.pink[400],
             size: 25.0,
           ),
         ),

@@ -1,27 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/word.dart';
+import 'package:learn_english/provider/speech_provider.dart';
 import 'package:learn_english/ui/common/microphone.dart';
 import 'package:learn_english/ui/common/next_quiz_button.dart';
 import 'package:learn_english/ui/common/speaker.dart';
+import 'package:provider/provider.dart';
 
-class Speech extends StatefulWidget {
-  Word word;
-  Speech({Key key, this.word}) : super(key: key);
-  @override
-  SpeechState createState() => SpeechState();
-}
-
-class SpeechState extends State<Speech> {
+class Speech extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    NextQuiz nextQuiz = Provider.of<NextQuiz>(context);
     return Container(
       color: Colors.white30,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           // SliderInLearningDetail(),
-          topPage(),
+          topPage(context, nextQuiz.getCurrentWord),
           Microphone(),
           NextQuizButton(),
         ],
@@ -29,7 +25,7 @@ class SpeechState extends State<Speech> {
     );
   }
 
-  Widget topPage() {
+  Widget topPage(BuildContext context, Word word) {
     return Container(
         height: 310,
         // color: Colors.pink,
@@ -86,17 +82,19 @@ class SpeechState extends State<Speech> {
                 Container(
                   height: 50,
                   child: Text(
-                    widget.word.word,
+                    word.word,
                     style: TextStyle(
                         fontSize: 45,
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink),
+                        color: Colors.pink[400]),
                   ),
                 ),
                 SizedBox(
                   width: 15.0,
                 ),
-                Speaker(word: widget.word,),
+                Speaker(
+                  word: word,
+                ),
               ],
             ),
           ],

@@ -30,13 +30,12 @@ class Router {
           // },
         );
 
-      case 'LearingWord':
+      case 'LearningWord':
         List<String> arg = settings.arguments as List<String>;
         return MaterialPageRoute(
             builder: (context) => LearningWordPage(
                   bookId: arg[0],
                   unitId: arg[1],
-
                 ));
       default:
         return MaterialPageRoute(builder: (_) {

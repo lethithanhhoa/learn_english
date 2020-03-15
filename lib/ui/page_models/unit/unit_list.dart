@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/unit.dart';
+import 'package:learn_english/ui/common/dialog.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +59,12 @@ class UnitList extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.pushNamed(context, RouteName.learingWord, arguments: [currentUnit.bookId, currentUnit.unitId]);
+                showDialog(context: context,
+                builder: (BuildContext context){
+                  return MyDialog(unitName: currentUnit.name, unitId: currentUnit.unitId, bookId: currentUnit.bookId,);
+                }
+                );
+               // Navigator.pushNamed(context, RouteName.learingWord, arguments: [currentUnit.bookId, currentUnit.unitId]);
               }
             );
           });

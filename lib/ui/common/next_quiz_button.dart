@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learn_english/provider/next_quiz_provider.dart';
+import 'package:provider/provider.dart';
 
-class NextQuizButton extends StatelessWidget{
+class NextQuizButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    NextQuiz nextQuiz = Provider.of<NextQuiz>(context);
     return Container(
       height: 150,
-      // color: Colors.pink[50],
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +24,9 @@ class NextQuizButton extends StatelessWidget{
                 border: Border.all(color: Colors.grey[100]),
               ),
               child: FlatButton(
-                  onPressed: null,
+                  onPressed: () {
+                    nextQuiz.setIndex();
+                  },
                   child: Text(
                     'Continue',
                     style: TextStyle(
@@ -37,5 +41,4 @@ class NextQuizButton extends StatelessWidget{
       ),
     );
   }
-
 }

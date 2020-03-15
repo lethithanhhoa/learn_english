@@ -15,7 +15,7 @@ class Microphone extends StatelessWidget{
         ),
         child: Icon(
           FontAwesomeIcons.microphone,
-          color: Colors.pink,
+          color: Colors.pink[400],
           size: 70.0,
         ),
       ),

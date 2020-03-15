@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/word.dart';
 import 'package:learn_english/core/services/database_service.dart';
-import 'package:learn_english/ui/page_models/learning_detail/speech.dart';
+import 'package:learn_english/provider/speech_provider.dart';
 import 'package:provider/provider.dart';
 
 class WordsListProvider extends StatelessWidget {
@@ -28,42 +26,44 @@ class LearningWord extends StatelessWidget {
       if (value == null) return Center(child: CircularProgressIndicator());
       // shuffle elements in list
       value.shuffle();
-      final _random = new Random();
-      List<int> indexScreen = [0, 1, 2, 3];
-      var index = -1;
-      var element = indexScreen[_random.nextInt(indexScreen.length)];
+      // final _random = new Random();
+      // List<int> indexScreen = [0, 1, 2, 3];
+      // var index = 0;
+      // var element = indexScreen[_random.nextInt(indexScreen.length)];
+      // print('................................${value.length}');
+      return SpeechProvider(listWord: value);
 
       // return Center(child: Text('${element}'),);
-      switch (element) {
-        case 0:
-          {
-            index++;
-            return Speech(
-              word: value[index],
-            );
-          }
-        case 1:
-          {
-            index++;
-            return Speech(
-              word: value[index],
-            );
-          }
-        case 2:
-          {
-            index++;
-            return Speech(
-              word: value[index],
-            );
-          }
-        case 3:
-          {
-            index++;
-            return Speech(
-              word: value[index],
-            );
-          }
-      }
+      // switch (element) {
+      //   case 0:
+      //     {
+      //       index++;
+      //       return SpeechState(value[index]);
+      //         word: value[index],
+      //       );
+      //     }
+      //   case 1:
+      //     {
+      //       index++;
+      //       return Speech(
+      //         word: value[index],
+      //       );
+      //     }
+      //   case 2:
+      //     {
+      //       index++;
+      //       return Speech(
+      //         word: value[index],
+      //       );
+      //     }
+      //   case 3:
+      //     {
+      //       index++;
+      //       return Speech(
+      //         word: value[index],
+      //       );
+      //     }
+      // }
 
       // return ListView.builder(
       //     itemCount: value.length,
