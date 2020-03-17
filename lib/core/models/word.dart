@@ -13,7 +13,7 @@ class Word{
       unitId : snapshot.data['unitId'],
       wordId: snapshot.documentID,
       word: snapshot.data['word'],
-      imgName: snapshot.data['imageName'],
+      imgName: snapshot.data['imgName'],
     );
   }
 
@@ -22,7 +22,7 @@ class Word{
       unitId: data['unitId'],
       wordId: data['id'],
       word: data['word'],
-      imgName: data['imageName'],
+      imgName: data['imgeName'],
     );
   }
 }

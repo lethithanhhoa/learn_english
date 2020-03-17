@@ -11,14 +11,16 @@ class Speech extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NextQuiz nextQuiz = Provider.of<NextQuiz>(context);
+    Word word = nextQuiz.getCurrentWord;
     return Container(
       color: Colors.white30,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           // SliderInLearningDetail(),
-          topPage(context, nextQuiz.getCurrentWord),
-          Microphone(),
+          topPage(context, word),
+          // Microphone(),
+          RecordVoiceProvider(word: word),
           NextQuizButton(),
         ],
       ),
@@ -28,7 +30,6 @@ class Speech extends StatelessWidget {
   Widget topPage(BuildContext context, Word word) {
     return Container(
         height: 310,
-        // color: Colors.pink,
         child: Column(
           children: <Widget>[
             Container(
@@ -62,9 +63,8 @@ class Speech extends StatelessWidget {
                               decoration: BoxDecoration(
                                 // color: Colors.blue,
                                 image: DecorationImage(
-                                    image: Image.network(
-                                            'https://firebasestorage.googleapis.com/v0/b/learn-english-7c4c5.appspot.com/o/book.png?alt=media&token=e7cec8fa-3c47-4b43-8654-f1ef4c49caac')
-                                        .image,
+                                    image: Image.network('${word.imgName}').image,                                   
+                                        
                                     fit: BoxFit.scaleDown),
                               ),
                             ),

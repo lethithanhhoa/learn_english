@@ -15,20 +15,22 @@ class Speaker extends StatelessWidget {
       await flutterTts.speak(word.word);
     }
     return Container(
-      height: 35.0,
-      width: 35.0,
+      height: 50.0,
+      width: 60.0,
       alignment: Alignment.center,
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0))),
+      // decoration:
+      //     BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0))),
       child: Center(
         child: FlatButton(
+          shape: CircleBorder(),
+          color: Colors.pink[50],
           onPressed: () {
             speak();
           },
           child: Icon(
             FontAwesomeIcons.volumeUp,
             color: Colors.pink[400],
-            size: 25.0,
+            size: 23.0,
           ),
         ),
       ),

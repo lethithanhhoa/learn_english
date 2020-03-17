@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:learn_english/provider/next_quiz_provider.dart';
+import 'package:learn_english/provider/speech_provider.dart';
+import 'package:learn_english/ui/common/microphone.dart';
 import 'package:provider/provider.dart';
 
 class NextQuizButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NextQuiz nextQuiz = Provider.of<NextQuiz>(context);
+    // RecordVoice recordVoice = Provider.of<RecordVoice>(context);
     return Container(
       height: 150,
       child: Row(
@@ -26,6 +28,7 @@ class NextQuizButton extends StatelessWidget {
               child: FlatButton(
                   onPressed: () {
                     nextQuiz.setIndex();
+                    // recordVoice.initState();
                   },
                   child: Text(
                     'Continue',

@@ -32,6 +32,7 @@ class LearningWord extends StatelessWidget {
       // var element = indexScreen[_random.nextInt(indexScreen.length)];
       // print('................................${value.length}');
       return SpeechProvider(listWord: value);
+      // return MultipleProvider(listWord: value,);
 
       // return Center(child: Text('${element}'),);
       // switch (element) {
