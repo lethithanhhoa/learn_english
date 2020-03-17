@@ -20,7 +20,7 @@ class Speech extends StatelessWidget {
           // SliderInLearningDetail(),
           topPage(context, word),
           // Microphone(),
-          RecordVoiceProvider(word: word),
+          RecordVoice(word: word),
           NextQuizButton(),
         ],
       ),

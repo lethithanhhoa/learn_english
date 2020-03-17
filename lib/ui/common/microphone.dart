@@ -6,94 +6,94 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
-class RecordVoice extends ChangeNotifier {
-  Word word;
-  RecordVoice(Word word){
-    this.word = word;
-    print('HINH NHU O DAY......................${word.word}');
-  }
+// class RecordVoice extends ChangeNotifier {
+//   Word word;
+//   RecordVoice(Word word) {
+//     this.word = word;
+//     print('HINH NHU O DAY......................${word.word}');
+//   }
 
-  SpeechRecognition _speech;
-  bool _speechRecognitionAvailable = false;
-  bool _isListening = false;
+//   SpeechRecognition _speech;
+//   bool _speechRecognitionAvailable = false;
+//   bool _isListening = false;
 
-  String transcription = '';
+//   String transcription = '';
 
-  String _currentLocale = 'en_US';
-  
-  initState() {
-    transcription = '';
-    _speech = new SpeechRecognition();
-    _speech.setAvailabilityHandler(onSpeechAvailability);
-    _speech.setRecognitionStartedHandler(onRecognitionStarted);
-    _speech.setRecognitionResultHandler(onRecognitionResult);
-    _speech.setRecognitionCompleteHandler(onRecognitionComplete);
-    _speech.activate().then((res) => _speechRecognitionAvailable = res);
-    // notifyListeners();
-  }
+//   String _currentLocale = 'en_US';
 
-  void start() => _speech.listen(locale: _currentLocale).then((result) {
-        print('$result');
-      });
+//   initState() {
+//     transcription = '';
+//     _speech = new SpeechRecognition();
+//     _speech.setAvailabilityHandler(onSpeechAvailability);
+//     _speech.setRecognitionStartedHandler(onRecognitionStarted);
+//     _speech.setRecognitionResultHandler(onRecognitionResult);
+//     _speech.setRecognitionCompleteHandler(onRecognitionComplete);
+//     _speech.activate().then((res) => _speechRecognitionAvailable = res);
+//     // notifyListeners();
+//   }
 
-  void cancel() => _speech.cancel().then((result) {
-        _isListening = result;
-      });
+//   void start() => _speech.listen(locale: _currentLocale).then((result) {
+//         print('$result');
+//       });
 
-  void stop() => _speech.stop().then((result) {
-        _isListening = result;
-      });
+//   void cancel() => _speech.cancel().then((result) {
+//         _isListening = result;
+//       });
 
-  void onSpeechAvailability(bool result) {
-    _speechRecognitionAvailable = result;
-  }
+//   void stop() => _speech.stop().then((result) {
+//         _isListening = result;
+//       });
 
-  void onRecognitionStarted() {
-    _isListening = true;
-  }
+//   void onSpeechAvailability(bool result) {
+//     _speechRecognitionAvailable = result;
+//   }
 
-  void onRecognitionResult(String text) {
-    transcription = text;
-  }
+//   void onRecognitionStarted() {
+//     _isListening = true;
+//   }
 
-  void onRecognitionComplete() {
-    _isListening = false;
-  }
+//   void onRecognitionResult(String text) {
+//     transcription = text;
+//   }
 
-  startRecord() {
-    initState();
-    if (_speechRecognitionAvailable && !_isListening) {
-      start();
-      print('.......................................${transcription}');
-      notifyListeners();
-    }
-  }
+//   void onRecognitionComplete() {
+//     _isListening = false;
+//   }
 
-  stopRecord() {
-    if (_isListening) stop();
-    notifyListeners();
-  }
-}
+//   startRecord() {
+//     initState();
+//     if (_speechRecognitionAvailable && !_isListening) {
+//       start();
+//       print('.......................................${transcription}');
+//       notifyListeners();
+//     }
+//   }
+
+//   stopRecord() {
+//     if (_isListening) stop();
+//     notifyListeners();
+//   }
+// }
 
 // class RecordVoiceProvider extends StatelessWidget {
 //   Word word;
 //   RecordVoiceProvider({this.word});
 //   @override
 //   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider<RecordVoice>(    
+//     return ChangeNotifierProvider<RecordVoice>(
 //       create: (context) => RecordVoice(word),
 //       child: Microphone(),
 //     );
 //   }
 // }
 
-class RecordVoiceProvider extends StatefulWidget{
+class RecordVoice extends StatefulWidget {
   Word word;
-  RecordVoiceProvider ({Key key, this.word}) : super(key: key);
+  RecordVoice({Key key, this.word}) : super(key: key);
   Microphone createState() => Microphone();
 }
 
-class Microphone extends State<RecordVoiceProvider> {
+class Microphone extends State<RecordVoice> {
   SpeechRecognition _speech;
   bool _speechRecognitionAvailable = false;
   bool _isListening = false;
@@ -101,7 +101,7 @@ class Microphone extends State<RecordVoiceProvider> {
   String transcription = '';
 
   String _currentLocale = 'en_US';
-  
+
   initState() {
     super.initState();
     transcription = '';
@@ -110,31 +110,36 @@ class Microphone extends State<RecordVoiceProvider> {
     _speech.setRecognitionStartedHandler(onRecognitionStarted);
     _speech.setRecognitionResultHandler(onRecognitionResult);
     _speech.setRecognitionCompleteHandler(onRecognitionComplete);
-    
-    _speech.activate().then((res) => _speechRecognitionAvailable = res);
+
+    _speech
+        .activate()
+        .then((res) => _speechRecognitionAvailable = res)
+        .catchError((error) => throw error);
   }
 
-  void start() => _speech
-      .listen(locale: _currentLocale)
-      .then((result) => print('_MyAppState.start => result $result'));
+  void start() => _speech.listen(locale: _currentLocale).then((result) {
+        print(
+            '......................................._MyAppState.start => result $result');
+      }).catchError((error) => throw error);
 
   void cancel() =>
       _speech.cancel().then((result) => setState(() => _isListening = result));
 
   void stop() => _speech.stop().then((result) {
         setState(() => _isListening = result);
-      });
+      }).catchError((error) => throw error);
 
   void onSpeechAvailability(bool result) =>
       setState(() => _speechRecognitionAvailable = result);
 
-
   void onRecognitionStarted() => setState(() => _isListening = true);
 
-  void onRecognitionResult(String text) => setState(() => transcription = text);
+  void onRecognitionResult(String text) => setState(() {
+        transcription = text;
+      });
 
   void onRecognitionComplete() => setState(() => _isListening = false);
-  
+
   @override
   Widget build(BuildContext context) {
     // RecordVoice recordVoice = Provider.of<RecordVoice>(context);
@@ -147,12 +152,13 @@ class Microphone extends State<RecordVoiceProvider> {
             width: 100,
             child: FlatButton(
               onLongPress: () {
-                if (_speechRecognitionAvailable && !_isListening){
+                if (_speechRecognitionAvailable && !_isListening) {
                   start();
                 }
               },
               onPressed: () {
-                if(_isListening){
+                print('...............isListening: ${_isListening}');
+                if (_isListening) {
                   stop();
                 }
               },
@@ -167,27 +173,32 @@ class Microphone extends State<RecordVoiceProvider> {
             ),
           ),
           // (recordVoice.word.word != recordVoice.transcription)? _wrongText(context, recordVoice.transcription) : _trueText(context, recordVoice.transcription),
-          (widget.word.word.toLowerCase() != transcription.toLowerCase())? _wrongText(context, transcription) : _trueText(context, transcription),
+          (widget.word.word.toLowerCase() != transcription.toLowerCase())
+              ? _wrongText(context, transcription)
+              : _trueText(context, transcription),
         ],
       ),
     );
   }
 
-  Widget _wrongText(BuildContext context, String text){
+  Widget _wrongText(BuildContext context, String text) {
     return Container(
       alignment: Alignment.bottomCenter,
       height: 30.0,
-      child: Text(text,
-      style: TextStyle(color: Colors.pink[300], fontSize: 18),
+      child: Text(
+        text,
+        style: TextStyle(color: Colors.pink[300], fontSize: 18),
       ),
     );
   }
-  Widget _trueText(BuildContext context, String text){
+
+  Widget _trueText(BuildContext context, String text) {
     return Container(
       alignment: Alignment.bottomCenter,
       height: 30.0,
-      child: Text(text,
-      style: TextStyle(color: Colors.green[300], fontSize: 18),
+      child: Text(
+        text,
+        style: TextStyle(color: Colors.green[300], fontSize: 18),
       ),
     );
   }
