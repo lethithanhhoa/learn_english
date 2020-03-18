@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:learn_english/core/services/auth_service.dart';
 import 'package:learn_english/core/services/user_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,79 +15,102 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final UserService _userService = new UserService();
+  final AuthService _authService = new AuthService();
+
   bool loading = false;
-  UserService _userService = UserService();
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  @override
+  void initState(){
+    super.initState();
+    checkUserSignedIn();
+  }
 
-  Future<FirebaseUser> signInWithGoogle() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    final FirebaseUser user =
-        (await _auth.signInWithCredential(credential)).user;
-    print("............................................signed in " + user.displayName);
-    return user;
+  void checkUserSignedIn() async {
+    bool isSignedIn = await _authService.isSignedIn();
+    if (isSignedIn){
+      _authService.signOut();
+    }
   }
 
   Future<Null> handleSignIn() async {
+    this.setState((){
+      loading = true;
+    });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    FirebaseUser user = await signInWithGoogle();
-
+    
+    FirebaseUser user = await _authService.signInWithGoogle();
+    if (user == null){
+      this.setState((){
+        loading = false;
+      });
+      return showSimpleNotification(
+        Text("Unable to sign in."),
+        background: Colors.red,
+        autoDismiss: true
+      );
+    }
+  
     List<dynamic> documents = await _userService.findUsersById(user.email);
-    if (documents.length == 0) {
+    if (documents.length == 0){
       await _userService.save(user);
     }
 
-    await preferences.setString('googleId', user.providerId);
     await preferences.setString('name', user.displayName);
     await preferences.setString('email', user.email);
     await preferences.setString('avatar_url', user.photoUrl);
+    
 
     print('Successfully signed in.');
     Navigator.pushNamed(context, RouteName.homePage);
+
+    this.setState((){
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FlatButton(
-          // onPressed: () {
-          //   signInWithGoogle()
-          //       .then((FirebaseUser user) => print(user))
-          //       .catchError((e) => print(e));
-          // },
-          onPressed: handleSignIn,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: 
+      loading? Center(child: CircularProgressIndicator())
+      : Stack(
+        children: <Widget>[
+          Column(
             children: <Widget>[
-              Icon(
-                FontAwesomeIcons.facebookF,
-                color: Colors.blue[900],
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Login with Facbook",
-                style: TextStyle(
-                  fontSize: 17.5,
-                  color: Colors.pink[400],
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 500,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children : <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Text('Để lưu kết quả học tập, bạn cần đăng nhập.', style: TextStyle(color : Colors.black54, fontSize: 12), ),
+                    ),
+                    FlatButton(
+                      onPressed: handleSignIn,
+                      color: Colors.red[400],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Icon(Icons.account_circle, color: Colors.white),
+                          Text(' ĐĂNG NHẬP VỚI GOOGLE', style: TextStyle(color: Colors.white)) 
+                        ],  
+                      ),
+                    ),
+                  ]
                 ),
               ),
+              Divider(thickness: 1)
             ],
           ),
-        ),
-      ),
+          
+        ],
+      )
+      
     );
   }
 }

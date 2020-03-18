@@ -57,6 +57,7 @@ class BooksList extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pushNamed(context, RouteName.course, arguments: [selectedBook.bookId, selectedBook.bookTitle]);
+                
               }
         );
             
