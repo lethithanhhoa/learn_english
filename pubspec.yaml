@@ -50,7 +50,9 @@ dependencies:
   #audio
   speech_to_text: ^1.1.0
   flutter_tts: ^0.9.0
-  speech_recognition: ^0.3.0+1
+  speech_recognition: ^0.3.0
+  baidu_speech_recognition: ^0.1.4
+
   # audioplayers: ^0.14.0
   # flutter_sound: ^2.1.1
 #  simple_permissions: ^0.1.9

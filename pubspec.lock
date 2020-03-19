@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  baidu_speech_recognition:
+    dependency: "direct main"
+    description:
+      name: baidu_speech_recognition
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   boolean_selector:
     dependency: transitive
     description:

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.pink,
           scaffoldBackgroundColor: Color(0XFFEFF3F6)),
       home: HomePage(),
-      initialRoute: RouteName.loginPage,
+      initialRoute: RouteName.homePage,
       onGenerateRoute: Router.generateRoute,
       
     );

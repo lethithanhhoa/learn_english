@@ -25,6 +25,8 @@ class Database{
       var ref = await _collectionReference.document(bookId).collection('units').document(unitId).collection('words').getDocuments();
       List<Word> listWord =
           ref.documents.map((doc) => Word.fromSnapshot(doc)).toList();
+      //random
+      // listWord.shuffle();
       return listWord;
   }  
 }

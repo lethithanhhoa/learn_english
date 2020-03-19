@@ -6,13 +6,13 @@ import 'package:learn_english/core/models/word.dart';
 
 class Speaker extends StatelessWidget {
   final FlutterTts flutterTts = FlutterTts();
-  Word word;
-  Speaker({this.word});
+  String anyWord;
+  Speaker({this.anyWord});
   @override
   Widget build(BuildContext context) {
     speak() async {
       // await flutterTts.setLanguage('en-US');
-      await flutterTts.speak(word.word);
+      await flutterTts.speak(anyWord);
     }
     return Container(
       height: 50.0,
@@ -23,13 +23,13 @@ class Speaker extends StatelessWidget {
       child: Center(
         child: FlatButton(
           shape: CircleBorder(),
-          color: Colors.pink[50],
+          color: Colors.indigo[50],
           onPressed: () {
             speak();
           },
           child: Icon(
             FontAwesomeIcons.volumeUp,
-            color: Colors.pink[400],
+            color: Colors.indigo[300],
             size: 23.0,
           ),
         ),

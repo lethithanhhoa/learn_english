@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learn_english/core/services/auth_service.dart';
 import 'package:learn_english/core/services/user_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
