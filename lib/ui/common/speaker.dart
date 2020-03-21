@@ -18,8 +18,6 @@ class Speaker extends StatelessWidget {
       height: 50.0,
       width: 60.0,
       alignment: Alignment.center,
-      // decoration:
-      //     BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0))),
       child: Center(
         child: FlatButton(
           shape: CircleBorder(),

@@ -57,6 +57,7 @@ class UnitList extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
+                  print(currentUnit.chant);
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {

@@ -1,15 +1,11 @@
-import 'package:baidu_speech_recognition/baidu_speech_recognition.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learn_english/core/models/word.dart';
 import 'package:learn_english/core/services/database_service.dart';
-import 'package:learn_english/ui/common/microphone.dart';
 import 'package:learn_english/ui/common/speaker.dart';
-import 'package:provider/provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_recognition/speech_recognition.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class ListenAndRepeatPage extends StatefulWidget {
   String bookId;
@@ -22,7 +18,6 @@ class ListenAndRepeatPage extends StatefulWidget {
 class _ListenAndRepeat extends State<ListenAndRepeatPage> {
   Database _database = Database();
   int index = 0;
-  bool isTaped = false;
 
   SpeechRecognition _speech;
   bool _speechRecognitionAvailable = false;
@@ -32,7 +27,9 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
 
   String _currentLocale = 'en_US';
 
+  @override
   initState() {
+    super.initState();
     _speech = SpeechRecognition();
 
     _speech.setAvailabilityHandler(
@@ -44,8 +41,8 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
     _speech.setRecognitionStartedHandler(
         () => setState(() => _isListening = true));
 
-    _speech.setRecognitionResultHandler(
-        (String text) => setState(() => transcription = text));
+    _speech.setRecognitionResultHandler((String text) 
+  => setState(() => transcription = text));
 
     _speech.setRecognitionCompleteHandler(
         () => setState(() => _isListening = false));
@@ -55,13 +52,17 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
         .then((res) => setState(() => _speechRecognitionAvailable = res));
   }
 
-  void start() => _speech.listen(locale: _currentLocale).then(
-        (result) {
-          print('....................._MyAppState.start => result $result');
-        },
-      );
+  void start() => _speech.listen(locale: _currentLocale).then((result) => print(result));
 
   void stop() => _speech.stop().then((result) => print(result));
+
+  void checkPermission()async {
+    PermissionHandler permissionHandler = PermissionHandler();
+    PermissionStatus permission = await permissionHandler.checkPermissionStatus(PermissionGroup.microphone);
+    if (permission != PermissionStatus.granted){
+      await permissionHandler.requestPermissions([PermissionGroup.microphone]);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
                   backgroundColor: Colors.yellow,
                 )
               : Scaffold(
-                  appBar: AppBar(title: Text('NoBack')),
+                  appBar: AppBar(title: Text('Title')),
                   body: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -169,11 +170,11 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
                               width: 100,
                               child: FlatButton(
                                 onPressed: () {
+                                  checkPermission();
                                   start();
-                                  setState(() {
-                                    isTaped = false;
-                                  });
+                                  
                                 },
+                                
                                 shape: CircleBorder(),
                                 focusColor: Colors.indigo,
                                 color: Colors.indigo[50],
@@ -196,7 +197,6 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
                       ),
                       Container(
                         height: 150,
-                        
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -218,6 +218,7 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
                                     builder: (context) => FlatButton(
                                         onPressed: () {
                                           final snackBar = SnackBar(
+                                            duration: Duration(seconds: 2),
                                             backgroundColor: (snapshot
                                                         .data[index].word
                                                         .toLowerCase() ==
@@ -243,22 +244,14 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
                                             ),
                                           );
 
-                                          // Find the Scaffold in the widget tree and use
-                                          // it to show a SnackBar.
-
-                                          if (isTaped) {
-                                            setState(() {
-                                              index++;
-                                              transcription = '';
-                                              isTaped = false;
-                                            });
-                                          } else {
-                                            Scaffold.of(context)
+                                          Scaffold.of(context)
                                                 .showSnackBar(snackBar);
+                                          Future.delayed(Duration(seconds: 3), (){
                                             setState(() {
-                                              isTaped = true;
+                                              index ++;
+                                              transcription = '';
                                             });
-                                          }
+                                          });
                                         },
                                         child: Text(
                                           'Continue',
@@ -284,16 +277,21 @@ class _ListenAndRepeat extends State<ListenAndRepeatPage> {
   Widget _wrongText(BuildContext context, String text) {
     return Container(
       alignment: Alignment.bottomCenter,
+      color: Colors.yellow,
       height: 30.0,
       child: Text(
         text,
-        style: TextStyle(color: Colors.pink[300], fontSize: 23, decoration: TextDecoration.lineThrough),
+        style: TextStyle(
+            color: Colors.pink[300],
+            fontSize: 23,
+            decoration: TextDecoration.lineThrough),
       ),
     );
   }
 
   Widget _trueText(BuildContext context, String text) {
     return Container(
+      color: Colors.yellow,
       alignment: Alignment.bottomCenter,
       height: 30.0,
       child: Text(

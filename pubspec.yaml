@@ -51,11 +51,8 @@ dependencies:
   speech_to_text: ^1.1.0
   flutter_tts: ^0.9.0
   speech_recognition: ^0.3.0
-  baidu_speech_recognition: ^0.1.4
+  audioplayers: ^0.14.1
 
-  # audioplayers: ^0.14.0
-  # flutter_sound: ^2.1.1
-#  simple_permissions: ^0.1.9
   permission_handler: ^4.4.0+hotfix.2
 dev_dependencies:
   flutter_test:

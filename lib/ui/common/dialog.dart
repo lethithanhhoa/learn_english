@@ -19,7 +19,7 @@ class MyDialog extends StatelessWidget {
       children: <Widget>[
         SimpleDialogOption(
           onPressed: () {
-            Navigator.pushNamed(context, RouteName.learningWord,
+            Navigator.pushNamed(context, RouteName.listenAndRepeatPage,
                 arguments: [bookId, unitId]);
           },
           child: Container(
@@ -34,7 +34,10 @@ class MyDialog extends StatelessWidget {
               )),
         ),
         SimpleDialogOption(
-          onPressed: null,
+          onPressed: () {
+            Navigator.pushNamed(context, RouteName.listenAndChantPage,
+                arguments: [bookId, unitId]);
+          },
           child: Container(
               height: 30.0,
               alignment: Alignment.centerLeft,
@@ -47,7 +50,10 @@ class MyDialog extends StatelessWidget {
               )),
         ),
         SimpleDialogOption(
-          onPressed: null,
+          onPressed: (){
+            Navigator.pushNamed(context, RouteName.conversationPage,
+                arguments: [bookId, unitId]);
+          },
           child: Container(
               height: 30.0,
               alignment: Alignment.centerLeft,
@@ -60,7 +66,10 @@ class MyDialog extends StatelessWidget {
               )),
         ),
         SimpleDialogOption(
-          onPressed: null,
+          onPressed: () {
+            Navigator.pushNamed(context, RouteName.songPage,
+                arguments: [bookId, unitId]);
+          },
           child: Container(
               height: 30.0,
               alignment: Alignment.centerLeft,
