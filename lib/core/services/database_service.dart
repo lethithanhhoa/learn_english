@@ -1,9 +1,13 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:learn_english/core/models/book.dart';
 import 'package:learn_english/core/models/chant.dart';
 import 'package:learn_english/core/models/conversation.dart';
+import 'package:learn_english/core/models/lesson.dart';
 import 'package:learn_english/core/models/song.dart';
 import 'package:learn_english/core/models/unit.dart';
+import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/models/word.dart';
 
 class Database {
@@ -75,5 +79,23 @@ class Database {
     List<Song> song =
         ref.documents.map((doc) => Song.fromSnapshot(doc)).toList();
     return song;
+  }
+
+  final CollectionReference _reference =
+      Firestore.instance.collection('lessons');
+
+  Future<List<Lesson>> getListOfLesson() async {
+    var ref = await _reference.getDocuments();
+    List<Lesson> listOfLesson =
+        ref.documents.map((doc) => Lesson.fromSnapshot(doc)).toList();
+    return listOfLesson;
+  }
+
+  Future<List<Vocabulary>> getListOfVocab(String lessonId) async {
+    var ref = await _reference.document(lessonId).collection('vocab').getDocuments();
+    List<Vocabulary> listOfVocab =
+        ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
+        listOfVocab.shuffle();
+    return listOfVocab;
   }
 }

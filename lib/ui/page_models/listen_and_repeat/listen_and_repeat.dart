@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learn_english/core/models/word.dart';
-import 'package:learn_english/ui/common/speaker.dart';
+import 'package:learn_english/ui/common/play_sound.dart';
+import 'package:learn_english/ui/common/play_sound.dart';
 import 'package:learn_english/ui/provider/indexOfList.dart';
 import 'package:learn_english/ui/provider/recording.dart';
 import 'package:provider/provider.dart';
@@ -76,7 +77,7 @@ class ListenAndRepeat extends StatelessWidget {
                                               shape: BoxShape.circle,
                                               color: Colors.yellow[200],
                                             ),
-                                            child: Speaker(
+                                            child: PlaySound(
                                                 anyWord:
                                                     value[indexOfList.index]
                                                         .word),
@@ -121,7 +122,7 @@ class ListenAndRepeat extends StatelessWidget {
                       ),
                     ),
                     resultText(context, value[indexOfList.index].word,
-                        recording.textResult),
+                        recording.getTextResult),
                     
                     Container(
                       height: 100,
@@ -143,7 +144,7 @@ class ListenAndRepeat extends StatelessWidget {
                                 Scaffold.of(context).showSnackBar(snackBar(
                                     context,
                                     value[indexOfList.index].word,
-                                    recording.textResult));
+                                    recording.getTextResult));
                                 Future.delayed(Duration(seconds: 3), () {
                                   indexOfList.increment();
                                   recording.fetchText();

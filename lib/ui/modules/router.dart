@@ -1,4 +1,7 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:learn_english/ui/page_models/vocab/vocabulary_provider.dart';
 import 'package:learn_english/ui/pages/account_page.dart';
 import 'package:learn_english/ui/pages/conversation_page.dart';
 import 'package:learn_english/ui/pages/course_page.dart';
@@ -15,15 +18,14 @@ class Router {
         return MaterialPageRoute(builder: (context) => LoginPage());
       case 'HomePage':
         return MaterialPageRoute(builder: (context) => HomePage());
-      case 'Account':
-        return MaterialPageRoute(builder: (context) => AccountPage());
-      // case 'Course':
-      //   List<String> arg = settings.arguments as List<String>;
-      //   return MaterialPageRoute(
-      //       builder: (context) => Course(
-      //             bookId: arg[0],
-      //             bookTitle: arg[1],
-      //           ));
+      case 'Vocab': {
+        String lessonId = settings.arguments as String;
+        return  MaterialPageRoute(
+            builder: (context) => VocabularyProvider(
+                  lessonId: lessonId,
+                ));
+      }
+        
       case 'Course':
         List<String> arg = settings.arguments as List<String>;
         return PageRouteBuilder(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:learn_english/ui/page_models/book/book_list_provider.dart';
+import 'package:learn_english/ui/page_models/lesson/lesson_list_provider.dart';
 import 'package:learn_english/ui/pages/account_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   final _pageOption = [
     BookListProvider(),
-    BookListProvider(),
+    LessonListProvider(),
     AccountPage(),
   ];
 
