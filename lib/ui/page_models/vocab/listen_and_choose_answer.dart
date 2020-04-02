@@ -4,11 +4,6 @@ import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
 
-// class ListenAndChooseAnswer extends StatefulWidget{
-//   Vocabulary vocabulary;
-//   ListenAndChooseAnswer({this.vocabulary});
-//   ListenAndChooseAnswerState createState() => ListenAndChooseAnswerState();
-// }
 
 class ListenAndChooseAnswer extends StatelessWidget {
   Vocabulary vocabulary;

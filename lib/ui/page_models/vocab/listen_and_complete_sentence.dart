@@ -23,8 +23,8 @@ class ListenAndCompleteSentence extends StatelessWidget {
       stateOfCrossWordList.generateCrosswords(vocabulary);
       loading = false;
     }
-    // print(vocabulary.vocab);
-    // print(stateOfCrossWordList.list);
+    print(vocabulary.vocab);
+    print(stateOfCrossWordList.list);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(title: Text('Complete Sentence')),

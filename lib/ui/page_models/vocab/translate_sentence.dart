@@ -23,11 +23,11 @@ class TranslateSentence extends StatelessWidget {
       stateOfCrossWordList.generateCrosswords(vocabulary);
       loading = false;
     }
-    // print(vocabulary.vocab);
-    // print(stateOfCrossWordList.list);
+    print(vocabulary.vocab);
+    print(stateOfCrossWordList.list);
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('Complete Sentence')),
+      appBar: AppBar(title: Text('Translate Sentence')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

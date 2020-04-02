@@ -58,7 +58,7 @@ class ListenAndRepeat extends StatelessWidget {
                                       image:
                                           Image.network('${vocabulary.image}')
                                               .image,
-                                      fit: BoxFit.fill),
+                                      fit: BoxFit.scaleDown),
                                 ),
                                 child: Container(
                                   alignment: Alignment.topRight,

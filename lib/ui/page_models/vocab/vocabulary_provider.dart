@@ -1,9 +1,10 @@
-
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/database_service.dart';
+import 'package:learn_english/ui/page_models/vocab/listen_and_repeat.dart';
 import 'package:learn_english/ui/page_models/vocab/listen_and_choose_answer.dart';
 import 'package:learn_english/ui/page_models/vocab/listen_and_complete_sentence.dart';
 import 'package:learn_english/ui/page_models/vocab/look_at_the_picture_and_choose_answer.dart';
@@ -43,8 +44,12 @@ class VocabularyProvider extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => TheThirdButtonState(),
         ),
-        ChangeNotifierProvider(create: (context) => CrosswordAnswerState(),),
-        ChangeNotifierProvider(create: (context) => StateOfCrossWordList(),)
+        ChangeNotifierProvider(
+          create: (context) => CrosswordAnswerState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => StateOfCrossWordList(),
+        )
       ],
       child: VocabList(),
     );
@@ -55,17 +60,39 @@ class VocabList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Index index = Provider.of<Index>(context);
+    Random random = new Random();
+    int randomNumber;
     return Consumer<List<Vocabulary>>(builder: (context, value, child) {
       if (value == null) return Center(child: CircularProgressIndicator());
       if (index.getIndex >= value.length)
         return Scaffold(
           backgroundColor: Colors.pink,
         );
-      List<Vocabulary> notMemorized;
-
-      return (value[index.getIndex].type == 1)
-          ? TranslateSentence(vocabulary: value[index.getIndex])
-          : TranslateSentence(vocabulary: value[index.getIndex]);
+      else {
+        if (value[index.getIndex].type == 1) {
+          randomNumber = random.nextInt(4);
+        } else if (value[index.getIndex].type == 2) {
+          randomNumber = random.nextInt(3) + 2;
+        } else if (value[index.getIndex].type == 3) {
+          randomNumber = random.nextInt(3) + 2;
+        } else {
+          print('Error data');
+        }
+        print(randomNumber);
+        switch (randomNumber) {
+          case 0:
+            return LookAtThePictureAndChooseAnswer(
+                vocabulary: value[index.getIndex]);
+          case 1:
+            return ListenAndRepeat(vocabulary: value[index.getIndex]);
+          case 2:
+            return ListenAndChooseAnswer(vocabulary: value[index.getIndex]);
+          case 3:
+            return ListenAndCompleteSentence(vocabulary: value[index.getIndex]);
+          case 4:
+            return TranslateSentence(vocabulary: value[index.getIndex]);
+        }
+      }
     });
   }
 }
