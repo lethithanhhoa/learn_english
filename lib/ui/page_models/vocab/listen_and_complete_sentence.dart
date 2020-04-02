@@ -7,38 +7,24 @@ import 'package:learn_english/ui/provider/state_of_answer_in_crossword_part.dart
 import 'package:learn_english/ui/provider/state_of_crossword_list.dart';
 import 'package:provider/provider.dart';
 
-class ListenAndCompleteSentence extends StatefulWidget {
+class ListenAndCompleteSentence extends StatelessWidget {
   Vocabulary vocabulary;
   ListenAndCompleteSentence({this.vocabulary});
-
-  CompleteSentenceState createState() => CompleteSentenceState();
-}
-
-class CompleteSentenceState extends State<ListenAndCompleteSentence> {
-  List<dynamic> list = [];
-
-  void initState() {
-    super.initState();
-    generateCrosswords();
-  }
-
-  void generateCrosswords() {
-    list = widget.vocabulary.vocab.replaceAll("I'm", "I am").split(' ');
-    widget.vocabulary.otherWord.forEach((f) => f
-        .toString()
-        .replaceAll("I'm", "I am")
-        .split(' ')
-        .forEach((item) => (list.contains(item) ? null : list.add(item))));
-    // list.shuffle();
-  }
+  bool loading = true;
 
   @override
   Widget build(BuildContext context) {
-    print(widget.vocabulary.vocab);
-    print(list);
+    StateOfCrossWordList stateOfCrossWordList =
+        Provider.of<StateOfCrossWordList>(context);
+    CrosswordAnswerState crosswordAnswerState =
+        Provider.of<CrosswordAnswerState>(context);
 
-    StateOfCrossWordList stateOfCrossWordList = Provider.of<StateOfCrossWordList>(context);
-    CrosswordAnswerState crosswordAnswerState = Provider.of<CrosswordAnswerState>(context);
+    if (loading == true) {
+      stateOfCrossWordList.generateCrosswords(vocabulary);
+      loading = false;
+    }
+    // print(vocabulary.vocab);
+    // print(stateOfCrossWordList.list);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(title: Text('Complete Sentence')),
@@ -51,31 +37,29 @@ class CompleteSentenceState extends State<ListenAndCompleteSentence> {
             color: Colors.yellow[100],
             child: SingleChildScrollView(
               child: Wrap(
-              children: 
-              crosswordAnswerState.getAnswer
-                  .asMap()
-                  .map((i, item) => MapEntry(
-                      i,
-                      Stack(
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              crosswordAnswerState.removeFromList(i);
-                              print(crosswordAnswerState.getAnswer);
-                            },
-                            child: CrossWord(text: crosswordAnswerState.getAnswer[i]),
-                          ),
-                        ],
-                      )))
-                  .values
-                  .toList()
-                  .cast<Widget>()
-                  
-                  ),
+                  children: crosswordAnswerState.getAnswer
+                      .asMap()
+                      .map((i, item) => MapEntry(
+                          i,
+                          Stack(
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () {
+                                  crosswordAnswerState.removeFromList(i);
+                                  print(crosswordAnswerState.getAnswer);
+                                },
+                                child: CrossWord(
+                                    text: crosswordAnswerState.getAnswer[i]),
+                              ),
+                            ],
+                          )))
+                      .values
+                      .toList()
+                      .cast<Widget>()),
             ),
           ),
           Wrap(
-              children: list
+              children: stateOfCrossWordList.list
                   .asMap()
                   .map((index, element) => MapEntry(
                       index,
@@ -83,9 +67,11 @@ class CompleteSentenceState extends State<ListenAndCompleteSentence> {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              crosswordAnswerState.addToList(list[index]);
+                              crosswordAnswerState
+                                  .addToList(stateOfCrossWordList.list[index]);
                             },
-                            child: CrossWord(text: list[index]),
+                            child: CrossWord(
+                                text: stateOfCrossWordList.list[index]),
                           ),
                         ],
                       )))

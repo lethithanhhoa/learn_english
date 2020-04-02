@@ -4,13 +4,10 @@ import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
 
-
-
 class LookAtThePictureAndChooseAnswer extends StatelessWidget {
   Vocabulary vocabulary;
   LookAtThePictureAndChooseAnswer({this.vocabulary});
 
-  
   @override
   Widget build(BuildContext context) {
     List<dynamic> answers = [];
