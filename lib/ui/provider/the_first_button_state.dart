@@ -2,14 +2,25 @@ import 'package:flutter/cupertino.dart';
 
 class TheFirstButtonState extends ChangeNotifier{
   bool _clicked = false;
+  String _value = '';
+
   bool get getClicked => _clicked;
-  setClicked(){
+  String get getValue => _value;
+
+  setClicked(String value){
     _clicked = true;
+    _value = value;
+    notifyListeners();
+  }
+
+  setValue(String value){
+    _value = value;
     notifyListeners();
   }
 
   fetchState(){
     _clicked = false;
+    _value = '';
     notifyListeners();
   }
 }

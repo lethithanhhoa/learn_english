@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:learn_english/ui/page_models/book/book_list_provider.dart';
 import 'package:learn_english/ui/page_models/lesson/lesson_list_provider.dart';
+import 'package:learn_english/ui/page_models/rank/rank_provider.dart';
 import 'package:learn_english/ui/pages/account_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,8 +16,8 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final _pageOption = [
-    BookListProvider(),
     LessonListProvider(),
+    RankProvider(),
     AccountPage(),
   ];
 
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
-              title: Text('Ranking'),
+              title: Text('Rank'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),

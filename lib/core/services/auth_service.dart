@@ -17,8 +17,6 @@ class AuthService {
 
     final FirebaseUser user =
         (await _auth.signInWithCredential(credential)).user;
-    print("............................................signed in " +
-        user.displayName);
     return user;
   }
 
@@ -30,7 +28,7 @@ class AuthService {
 
   Future<bool> isSignedIn() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    return user != null;
+    return (user != null);
   }
 
   Future<FirebaseUser> getCurrentUser() async {
