@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
+import 'package:learn_english/ui/common/speaker.dart';
 
-class LookAtThePictureAndChooseAnswer extends StatelessWidget {
+class ListenAndChooseCorrectAnswer extends StatelessWidget {
   Vocabulary vocabulary;
   List<dynamic> answers = [];
   bool loading = true;
-  LookAtThePictureAndChooseAnswer({this.vocabulary});
+  ListenAndChooseCorrectAnswer({this.vocabulary});
 
   void generateAnswers() {
     answers.add(vocabulary.vocab);
@@ -20,10 +22,19 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
     answers.shuffle();
   }
 
+  final FlutterTts flutterTts = FlutterTts();
+  
+
+  void play() async {
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.speak(vocabulary.vocab);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (loading) {
       generateAnswers();
+      play();
       loading = false;
     }
     return Scaffold(
@@ -42,7 +53,7 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(height: 10),
                   Text(
-                    'Look at the picture and choose the correct answer',
+                    'Listen and choose the correct answer',
                     softWrap: true,
                     maxLines: 2,
                     overflow: TextOverflow.fade,
@@ -51,24 +62,10 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black54),
                   ),
-                  Container(
-                    height: 220,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.asset('assets/board.png').image,
-                            fit: BoxFit.fill)),
-                    child: Center(
-                        child: Container(
-                      height: 130,
-                      width: MediaQuery.of(context).size.width * 2.5 / 4,
-                      decoration: BoxDecoration(
-                          // color: Colors.pink,
-                          image: DecorationImage(
-                              fit: BoxFit.scaleDown,
-                              image:
-                                  Image.network('${vocabulary.image}').image)),
-                    )),
+                  SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: play,
+                    child: Speaker(),
                   ),
                 ],
               ),

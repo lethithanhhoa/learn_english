@@ -29,7 +29,7 @@ class CloseIcon extends StatelessWidget {
       },
       icon: Icon(
         Icons.close,
-        size: 38,
+        size: 30,
       ),
       color: Colors.white.withOpacity(0.5),
     );

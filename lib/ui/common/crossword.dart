@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:learn_english/ui/provider/state_of_crossword_list.dart';
+import 'package:learn_english/ui/state/state_of_crossword_list.dart';
+
 import 'package:provider/provider.dart';
 
 class CrossWord extends StatelessWidget {

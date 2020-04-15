@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_english/ui/provider/slider_state.dart';
-import 'package:learn_english/ui/provider/state_of_continue_button.dart';
+import 'package:learn_english/ui/state/slider_state.dart';
+import 'package:learn_english/ui/state/state_of_continue_button.dart';
+
 import 'package:provider/provider.dart';
 
 class MySlider extends StatelessWidget {
@@ -13,7 +14,7 @@ class MySlider extends StatelessWidget {
       children: <Widget>[
         Container(
           height: 18,
-          width: 220,
+          width: MediaQuery.of(context).size.width *3/5,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.white.withOpacity(0.4),

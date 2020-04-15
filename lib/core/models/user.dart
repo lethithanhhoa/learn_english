@@ -5,8 +5,10 @@ class User {
   String email;
   String name;
   String avatarUrl;
+  int score;
+  Map<String, dynamic> state;
 
-  User({this.userId, this.email, this.name, this.avatarUrl});
+  User({this.userId, this.email, this.name, this.avatarUrl, this.score, this.state});
 
   factory User.fromSnapshot(DocumentSnapshot snapshot){
     print(snapshot);
@@ -14,7 +16,9 @@ class User {
       userId : snapshot.documentID,
       name: snapshot.data['name'],
       email: snapshot.data['email'],
-      avatarUrl: snapshot.data['avatar_url']
+      avatarUrl: snapshot.data['avatar_url'],
+      score: snapshot.data['score'],
+      state: snapshot.data['state']
     );
   }
 }

@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/page_models/vocab/vocab_list.dart';
-import 'package:learn_english/ui/provider/correct_answer.dart';
-import 'package:learn_english/ui/provider/index.dart';
-import 'package:learn_english/ui/provider/recording.dart';
-import 'package:learn_english/ui/provider/slider_state.dart';
-import 'package:learn_english/ui/provider/state_of_answer_in_crossword_part.dart';
-import 'package:learn_english/ui/provider/state_of_continue_button.dart';
-import 'package:learn_english/ui/provider/state_of_crossword_list.dart';
-import 'package:learn_english/ui/provider/the_first_button_state.dart';
-import 'package:learn_english/ui/provider/the_second_button_state.dart';
-import 'package:learn_english/ui/provider/the_third_button_state.dart';
+import 'package:learn_english/ui/state/correct_answer.dart';
+import 'package:learn_english/ui/state/index.dart';
+import 'package:learn_english/ui/state/recording.dart';
+import 'package:learn_english/ui/state/slider_state.dart';
+import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
+import 'package:learn_english/ui/state/state_of_continue_button.dart';
+import 'package:learn_english/ui/state/state_of_crossword_list.dart';
+import 'package:learn_english/ui/state/the_first_button_state.dart';
+import 'package:learn_english/ui/state/the_second_button_state.dart';
+import 'package:learn_english/ui/state/the_third_button_state.dart';
+
 import 'package:provider/provider.dart';
 
 class VocabularyProvider extends StatelessWidget {

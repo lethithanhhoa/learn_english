@@ -9,6 +9,8 @@ class Database {
   
   final CollectionReference _users = Firestore.instance.collection('users');
 
+  
+
   Future <List<User>> getAllUser() async{
     var ref = await _users.getDocuments();
     List<User> listOfUser = ref.documents.map((doc) => User.fromSnapshot(doc)).toList();
