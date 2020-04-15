@@ -1,30 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:learn_english/core/models/book.dart';
-import 'package:learn_english/core/models/unit.dart';
-import 'package:learn_english/core/models/word.dart';
+import 'package:learn_english/core/models/lesson.dart';
+import 'package:learn_english/core/models/user.dart';
+import 'package:learn_english/core/models/vocabulary.dart';
 
-class Database{
-  final CollectionReference _collectionReference =
-      Firestore.instance.collection('books');
- 
-  Future<List<Book>> getListBook() async {
-      var ref = await _collectionReference.getDocuments();
-      List<Book> listBook =
-          ref.documents.map((doc) => Book.fromSnapshot(doc)).toList();
-      return listBook;
+class Database {
+  final CollectionReference _reference =
+      Firestore.instance.collection('lessons');
+  
+  final CollectionReference _users = Firestore.instance.collection('users');
+
+  
+
+  Future <List<User>> getAllUser() async{
+    var ref = await _users.getDocuments();
+    List<User> listOfUser = ref.documents.map((doc) => User.fromSnapshot(doc)).toList();
+    return listOfUser;
   }
 
-  Future<List<Unit>> getListUnit(String bookId) async {
-      var ref = await _collectionReference.document(bookId).collection('units').getDocuments();
-      List<Unit> listUnit =
-          ref.documents.map((doc) => Unit.fromSnapshot(doc)).toList();
-      return listUnit;
+  Future<List<Lesson>> getListOfLesson() async {
+    var ref = await _reference.getDocuments();
+    List<Lesson> listOfLesson =
+        ref.documents.map((doc) => Lesson.fromSnapshot(doc)).toList();
+    listOfLesson.sort((Lesson a, Lesson b) => a.index.compareTo(b.index));
+    return listOfLesson;
   }
 
-  Future<List<Word>> getListWord(String bookId, String unitId) async {
-      var ref = await _collectionReference.document(bookId).collection('units').document(unitId).collection('words').getDocuments();
-      List<Word> listWord =
-          ref.documents.map((doc) => Word.fromSnapshot(doc)).toList();
-      return listWord;
-  }  
+  Future<List<Vocabulary>> getListOfVocab(String lessonId) async {
+    var ref =
+        await _reference.document(lessonId).collection('vocab').getDocuments();
+    List<Vocabulary> listOfVocab =
+        ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
+    listOfVocab.shuffle();
+
+    return listOfVocab;
+  }
 }

@@ -5,8 +5,11 @@ import 'package:learn_english/core/services/auth_service.dart';
 import 'package:learn_english/core/services/user_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -21,185 +24,330 @@ class _LoginPageState extends State<LoginPage> {
   bool loading = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     checkUserSignedIn();
   }
 
   void checkUserSignedIn() async {
+    this.setState(() {
+      loading = true;
+    });
     bool isSignedIn = await _authService.isSignedIn();
-    if (isSignedIn){
-      _authService.signOut();
+    if (isSignedIn) {
+      // SharedPreferences preferences = await SharedPreferences.getInstance();
+      // FirebaseUser user = await _authService.getCurrentUser();
+      // await preferences.setString('name', user.displayName);
+      // await preferences.setString('email', user.email);
+      // await preferences.setString('avatar_url', user.photoUrl);
+      // print('Already signed in.');
+
+      Navigator.pushNamed(context, RouteName.homePage);
     }
+    this.setState(() {
+      loading = false;
+    });
   }
 
   Future<Null> handleSignIn() async {
-    this.setState((){
+    this.setState(() {
       loading = true;
     });
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+
     FirebaseUser user = await _authService.signInWithGoogle();
-    if (user == null){
-      this.setState((){
+    if (user == null) {
+      this.setState(() {
         loading = false;
       });
-      return showSimpleNotification(
-        Text("Unable to sign in."),
-        background: Colors.red,
-        autoDismiss: true
-      );
-    }
-  
-    List<dynamic> documents = await _userService.findUsersById(user.email);
-    if (documents.length == 0){
-      await _userService.save(user);
+      return showSimpleNotification(Text("Unable to sign in."),
+          background: Colors.red, autoDismiss: true);
     }
 
-    await preferences.setString('name', user.displayName);
-    await preferences.setString('email', user.email);
-    await preferences.setString('avatar_url', user.photoUrl);
-    
+    List<dynamic> documents = await _userService.findUsersByEmail(user.email);
+    if (documents.length == 0) {
+      await _userService.saveUser(user);
+    }
+
+    // await preferences.setString('name', user.displayName);
+    // await preferences.setString('email', user.email);
+    // await preferences.setString('avatar_url', user.photoUrl);
 
     print('Successfully signed in.');
     Navigator.pushNamed(context, RouteName.homePage);
 
-    this.setState((){
+    this.setState(() {
       loading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: 
-      loading? Center(child: CircularProgressIndicator())
-      : Stack(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 500,
+    return loading
+        ? LoadingPage()
+        : Scaffold(
+          backgroundColor: Colors.white,
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(15, 60, 15, 60),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children : <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Text('Để lưu kết quả học tập, bạn cần đăng nhập.', style: TextStyle(color : Colors.black54, fontSize: 12), ),
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Container(
+                          width: 230,
+                          height: 230,
+                          decoration: BoxDecoration(
+                            // borderRadius: BorderRadius.circular(
+                            //     MediaQuery.of(context).size.width),
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              colors: [Colors.pink[50], Colors.pink],
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 7,
+                          left: 3,
+                          right: 9,
+                          bottom: 7,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                Image.asset('assets/owl.jpg').image,
+                          ),
+                        ),
+                      ],
                     ),
-                    FlatButton(
-                      onPressed: handleSignIn,
-                      color: Colors.red[400],
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          "EFK",
+                          style: TextStyle(
+                            fontSize: 45,
+                            color: Colors.pink,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Change The Future",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.pink[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Column(
                         children: <Widget>[
-                          Icon(Icons.account_circle, color: Colors.white),
-                          Text(' ĐĂNG NHẬP VỚI GOOGLE', style: TextStyle(color: Colors.white)) 
-                        ],  
+                          Container(
+                            width: 230,
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1.2, color: Colors.pink),
+                                borderRadius: BorderRadius.circular(50)),
+                            child: FlatButton(
+                              onPressed: () {
+                                // bookService.getData();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    FontAwesomeIcons.facebookF,
+                                    color: Colors.blue[900],
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Login with Facbook",
+                                    style: TextStyle(
+                                      fontSize: 17.5,
+                                      color: Colors.pink[400],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: 230,
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1.2, color: Colors.pink),
+                                borderRadius: BorderRadius.circular(50)),
+                            child: FlatButton(
+                              onPressed: handleSignIn,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    FontAwesomeIcons.google,
+                                    color: Colors.pink,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Login with Google",
+                                    style: TextStyle(
+                                      fontSize: 17.5,
+                                      color: Colors.pink[400],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ]
+                  ],
                 ),
               ),
-              Divider(thickness: 1)
-            ],
-          ),
-          
-        ],
-      )
-      
-    );
+            ),
+          );
   }
 }
 
-// import 'package:learn_english/core/provider/auth_provider.dart';
-// import 'package:learn_english/ui/modules/route_name.dart';
-// import 'package:provider/provider.dart';
-
-// class LoginPage extends StatelessWidget {
-
-//   void signIn(context, String service) {
-//     //Navigator.pushReplacementNamed(context, '/home');
-//     Provider.of<AuthState>(context, listen: true)
-//         .login(serviceName: service);
-
-//   }
-
-//   void gotoHomeScreen(BuildContext context) {
-//   Future.microtask(() {
-//     if (Provider.of<AuthState>(context, listen: false).authStatus ==
-//         kauthSuccess) {
-//       Navigator.pushNamed(context, RouteName.homePage);
-//     }
-//   });
-// }
-
+// class _LoginPageState extends State<LoginPage> {
+//   BookService bookService = new BookService();
 //   @override
 //   Widget build(BuildContext context) {
-//     // gotoHomeScreen(context);
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       body: SafeArea(
+//         child: Padding(
+//           padding: EdgeInsets.fromLTRB(15, 60, 15, 60),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.spaceAround,
 
-//     return ChangeNotifierProvider<AuthState>.value(
-//       value: AuthState(),
-//     child: Consumer<AuthState>(
-//       builder: (builder, authState, child) {
-//         return Scaffold(
-//           body: Container(
-//             width: 400,
-//             margin: EdgeInsets.all(20.0),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: <Widget>[
-//                 Container(
-//                   margin: EdgeInsets.only(top: 100),
-//                   child: Text(
-//                     'Ten Thoi Ma',
-//                     style: TextStyle(
-//                       fontSize: 40.0,
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.blueAccent,
-//                     ),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 200.0,
-//                 ),
-//                 if (authState.authStatus == kauthLoading)
-//                   Text(
-//                     'loading...',
-//                     style: TextStyle(fontSize: 12.0),
-//                   ),
-//                 if (authState.authStatus == null ||
-//                     authState.authStatus == kauthError)
+//             children: <Widget>[
+//               Stack(
+//                 children: <Widget>[
 //                   Container(
-//                     child: Column(
-//                       children: <Widget>[
-//                         FlatButton(
-//                           child: Text('Google Sign In'),
-//                           onPressed: () => signIn(context, kauthSignInGoogle),
-//                         ),
-//                         SizedBox(
-//                           height: 10,
-//                         ),
-//                         FlatButton(
-//                           child: Text('Anonymous Sign In'),
-//                           onPressed: () => signIn(context, kauthSignInAnonymous),
-//                         ),
-//                       ],
+
+//                     width: 230,
+//                     height: 230,
+//                     decoration: BoxDecoration(
+//                       // borderRadius: BorderRadius.circular(
+//                       //     MediaQuery.of(context).size.width),
+//                       shape: BoxShape.circle,
+//                       gradient: LinearGradient(
+//                         colors: [Colors.pink[50], Colors.pink],
+//                         begin: Alignment.bottomLeft,
+//                         end: Alignment.bottomRight,
+//                       ),
 //                     ),
 //                   ),
-//                 if (authState.authStatus == kauthError)
-//                   Text(
-//                     'Error...',
-//                     style: TextStyle(fontSize: 12.0, color: Colors.redAccent),
+//                   Positioned(
+//                     top: 7,
+//                     left: 3,
+//                     right: 9,
+//                     bottom: 7,
+//                     child: CircleAvatar(
+//                       backgroundImage: Image.asset('assets/owl.jpg').image,
+//                     ),
 //                   ),
-//               ],
-//             ),
+//                 ],
+//               ),
+//               Column(
+//                 children: <Widget>[
+//                   Text(
+//                     "Lingo",
+//                     style: TextStyle(
+//                       fontSize: 45,
+//                       color: Colors.pink,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   Text(
+//                     "Change The Future",
+//                     style: TextStyle(
+//                       fontSize: 20,
+//                       color: Colors.pink[400],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//               Center(
+//                 child: Column(
+//                   children: <Widget>[
+//                     Container(
+//                       width: 230,
+//                       decoration: BoxDecoration(
+//                           border: Border.all(width: 1.2, color: Colors.pink),
+//                           borderRadius: BorderRadius.circular(50)),
+//                       child: FlatButton(
+//                         onPressed: () {
+//                           // bookService.getData();
+//                         },
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: <Widget>[
+//                             Icon(
+//                               FontAwesomeIcons.facebookF,
+//                               color: Colors.blue[900],
+//                             ),
+//                             SizedBox(
+//                               width: 10,
+//                             ),
+//                             Text(
+//                               "Login with Facbook",
+//                               style: TextStyle(
+//                                 fontSize: 17.5,
+//                                 color: Colors.pink[400],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 20,
+//                     ),
+//                     Container(
+//                       width: 230,
+//                       decoration: BoxDecoration(
+//                           border: Border.all(width: 1.2, color: Colors.pink),
+//                           borderRadius: BorderRadius.circular(50)),
+//                       child: FlatButton(
+//                         onPressed: () {},
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: <Widget>[
+//                             Icon(
+//                               FontAwesomeIcons.google,
+//                               color: Colors.pink,
+//                             ),
+//                             SizedBox(
+//                               width: 10,
+//                             ),
+//                             Text(
+//                               "Login with Google",
+//                               style: TextStyle(
+//                                 fontSize: 17.5,
+//                                 color: Colors.pink[400],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ],
 //           ),
-//         );
-//       },
-//     ),);
+//         ),
+//       ),
+//     );
 //   }
 // }
