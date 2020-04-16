@@ -36,44 +36,34 @@ class ChooseCorrectTranslate extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height * 2 / 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: 10.0),
-                        Container(
-                          child: Text(
-                            'Choose the correct translation',
-                            softWrap: true,
-                            maxLines: 2,
-                            overflow: TextOverflow.fade,
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: Text(
-                            vocabulary.mean,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-                    
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 10.0),
+                  Container(
+                    child: Text(
+                      'Choose the correct translation',
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Container(
+                    child: Text(
+                      vocabulary.mean,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Column(
                 children: <Widget>[

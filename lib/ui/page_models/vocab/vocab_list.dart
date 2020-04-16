@@ -35,7 +35,7 @@ class VocabList extends StatelessWidget {
         return FinishLessonPage();
       else {
         if (value[index.getIndex].type == 1) {
-          randomNumber = random.nextInt(5);
+          randomNumber = random.nextInt(5); //5
         } else if (value[index.getIndex].type == 2) {
           randomNumber = random.nextInt(3) + 3;
         } else if (value[index.getIndex].type == 3) {
@@ -47,7 +47,7 @@ class VocabList extends StatelessWidget {
             return LookAtThePictureAndChooseAnswer(
                 vocabulary: value[index.getIndex]);
 
-          case 1:
+          case 1: 
             return ListenAndRepeat(vocabulary: value[index.getIndex]);
 
           case 2:

@@ -6,19 +6,24 @@ class User {
   String name;
   String avatarUrl;
   int score;
-  Map<String, dynamic> state;
+  Map<String, dynamic> learningState;
 
-  User({this.userId, this.email, this.name, this.avatarUrl, this.score, this.state});
+  User(
+      {this.userId,
+      this.email,
+      this.name,
+      this.avatarUrl,
+      this.score,
+      this.learningState});
 
-  factory User.fromSnapshot(DocumentSnapshot snapshot){
+  factory User.fromSnapshot(DocumentSnapshot snapshot) {
     print(snapshot);
     return User(
-      userId : snapshot.documentID,
-      name: snapshot.data['name'],
-      email: snapshot.data['email'],
-      avatarUrl: snapshot.data['avatar_url'],
-      score: snapshot.data['score'],
-      state: snapshot.data['state']
-    );
+        userId: snapshot.documentID,
+        name: snapshot.data['name'],
+        email: snapshot.data['email'],
+        avatarUrl: snapshot.data['avatar_url'],
+        score: snapshot.data['score'],
+        learningState: snapshot.data['state']);
   }
 }

@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/page_models/vocab/vocab_list.dart';
+
+import 'package:learn_english/ui/state/account_user.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
 import 'package:learn_english/ui/state/index.dart';
 import 'package:learn_english/ui/state/recording.dart';
+import 'package:learn_english/ui/state/result_learning_state.dart';
 import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
@@ -50,7 +53,15 @@ class VocabularyProvider extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CorrectAnswer(),
         ),
-        ChangeNotifierProvider(create: (context) => SliderState()),
+        ChangeNotifierProvider(
+          create: (context) => SliderState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ResultLearningState(lessonId: lessonId),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AccountUser(),
+        ),
       ],
       child: VocabList(),
     );

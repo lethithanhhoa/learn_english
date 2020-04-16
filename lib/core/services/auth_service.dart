@@ -37,12 +37,12 @@ class AuthService {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return user.uid;
   }
+  
   Future<User> getDetailCurrentUser() async {
     String docId =  await getUidCurrentUser();
     var currentUser =
         await Firestore.instance.collection('users').document(docId).get();
-    var result = User.fromSnapshot(currentUser);
-    return result;
+    return User.fromSnapshot(currentUser);
   }
   
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 class SliderState extends ChangeNotifier{
   int _maxOfSlider = 0;

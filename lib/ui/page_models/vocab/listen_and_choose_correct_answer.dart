@@ -33,8 +33,9 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      generateAnswers();
       play();
+      generateAnswers();
+      
       loading = false;
     }
     return Scaffold(

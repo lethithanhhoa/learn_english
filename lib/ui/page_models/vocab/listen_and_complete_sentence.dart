@@ -36,10 +36,10 @@ class ListenAndCompleteSentence extends StatelessWidget {
 
     if (loading == true) {
       stateOfCrossWordList.generateCrosswords(vocabulary);
-      Timer(Duration(seconds: 1), () {
-        play();
-      });
+      // Timer(Duration(seconds: 1), () {
 
+      // });
+      play();
       loading = false;
     }
 

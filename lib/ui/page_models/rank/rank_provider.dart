@@ -11,7 +11,9 @@ class RankProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureProvider<List<User>>.value(
       value: database.getAllUser(),
-      child: RankPage(),
+      child: RankPage(
+        
+      ),
     );
   }
 }

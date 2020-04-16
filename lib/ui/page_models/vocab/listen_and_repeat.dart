@@ -28,10 +28,10 @@ class ListenAndRepeat extends StatelessWidget {
   Widget build(BuildContext context) {
     Recording recording = Provider.of<Recording>(context);
     if (loading == true) {
-      Timer(Duration(seconds: 1), () {
-        play();
-      });
-
+      // Timer(Duration(seconds: 1), () {
+        
+      // });
+play();
       loading = false;
     }
     return Scaffold(

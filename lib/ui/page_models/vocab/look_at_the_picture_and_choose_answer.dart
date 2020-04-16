@@ -59,20 +59,29 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
                             image: Image.asset('assets/board.png').image,
                             fit: BoxFit.fill)),
                     child: Center(
-                        child: Container(
-                      height: 130,
-                      width: MediaQuery.of(context).size.width * 2.5 / 4,
-                      decoration: BoxDecoration(
-                          // color: Colors.pink,
-                          image: DecorationImage(
-                              fit: BoxFit.scaleDown,
-                              image:
-                                  Image.network('${vocabulary.image}').image)),
-                    )),
+                      child: FadeInImage.assetNetwork(
+                        height: 130,
+                        width: MediaQuery.of(context).size.width * 2.5 / 4,
+                        placeholder: 'assets/waiting_image.gif',
+                        image: '${vocabulary.image}',
+                        fit: BoxFit.scaleDown,
+                        fadeInCurve: Curves.bounceIn,
+                      ),
+                    ),
+                    //     child: Container(
+                    //   height: 130,
+                    //   width: MediaQuery.of(context).size.width * 2.5 / 4,
+                    //   decoration: BoxDecoration(
+                    //       // color: Colors.pink,
+                    //       // image: DecorationImage(
+                    //       //     fit: BoxFit.scaleDown,
+                    //       //     image:
+
+                    //               // ),
+                    // )),
                   ),
                 ],
               ),
-              
               Column(
                 children: <Widget>[
                   AnswerButtons(answers: answers),
