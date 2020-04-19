@@ -9,101 +9,92 @@ import 'package:learn_english/ui/state/result_learning_state.dart';
 import 'package:provider/provider.dart';
 
 class LessonList extends StatelessWidget {
+  List<Lesson> value;
+  AccountUser accountUser;
+  LessonList({this.value, this.accountUser});
   @override
   Widget build(BuildContext context) {
-    AccountUser accountUser = Provider.of<AccountUser>(context);
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Consumer<List<Lesson>>(builder: (context, value, child) {
-          if (value == null || accountUser.user == null) return LoadingPage();
-          return ListView.builder(
-              itemCount: value.length,
-              itemBuilder: (context, index) {
-                Lesson currentLesson = value[index];
-                int percent = 0;
-                if (accountUser.user.learningState[currentLesson.lessonId] !=
-                    null)
-                  percent =
-                      (accountUser.user.learningState[currentLesson.lessonId]).toInt();
-                return ListTile(
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      SliderAtLessonList(percent: percent),
-                      Text('${percent}%'),
-                    ],
-                  ),
-                  title: Container(
-                    height: 150,
-                    // color: Colors.yellow,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                            child: Stack(
-                          children: <Widget>[
-                            FadeInImage.assetNetwork(
-                              height: 150,
-                              width: MediaQuery.of(context).size.width,
-                              placeholder: 'assets/waiting_image.gif',
-                              image: currentLesson.image,
-                              fit: BoxFit.cover,
-                              fadeInCurve: Curves.bounceInOut,
-                            ),
-                            Container(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  currentLesson.name,
-                                  overflow: TextOverflow.fade,
-                                  softWrap: true,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                    color: Colors.pink,
-                                    backgroundColor:
-                                        Colors.white.withOpacity(0.9),
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )),
-                          ],
-                        )),
-                        // Container(
-                        //   width: 90,
-                        //   height: 150,
-                        //   alignment: Alignment.bottomCenter,
-                        //   child: Stack(
-                        //     children: <Widget>[
-                        //       Container(
-                        //         width: 60,
-                        //         height: 60,
+    if (value == null || accountUser.user == null) return LoadingPage();
+    return ListView.builder(
+        itemCount: value.length,
+        itemBuilder: (context, index) {
+          Lesson currentLesson = value[index];
+          int percent = 0;
+          if (accountUser.user.learningState != null) {
+            if (accountUser.user.learningState[currentLesson.lessonId] != null)
+              percent = (accountUser.user.learningState[currentLesson.lessonId])
+                  .toInt();
+          }
+          return ItemWidget(context, currentLesson, percent);
+        });
+  }
 
-                        //         decoration: BoxDecoration(
-
-                        //           image: DecorationImage(
-                        //               image: Image.asset('assets/pot.png').image,
-                        //               fit: BoxFit.scaleDown),
-                        //         ),
-                        //       ),
-                        //       (accountUser.user.learningState[
-                        //                   currentLesson.lessonId] !=
-                        //               null)
-                        //           ? Text(
-                        //               '${accountUser.user.learningState[currentLesson.lessonId]}')
-                        //           : Text(''),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
+  Widget ItemWidget(BuildContext context, Lesson currentLesson, int percent) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 5, 20, 5),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, RouteName.vocab,
+              arguments: currentLesson.lessonId);
+        },
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 160,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(25),
+                    topRight: Radius.circular(25)),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: 160,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25)),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: Image.asset('assets/' + currentLesson.image)
+                              .image),
                     ),
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(context, RouteName.vocab,
-                        arguments: currentLesson.lessonId);
-                  },
-                );
-              });
-        }),
+                  
+                  Container(
+                      alignment: Alignment.bottomLeft,
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        // color: Colors.white.withOpacity(0.5),
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(25),
+                            topRight: Radius.circular(25)),
+                      ),
+                      height: 160,
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        currentLesson.name,
+                        overflow: TextOverflow.fade,
+                        softWrap: true,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: Colors.white,
+                          backgroundColor: Colors.green.withOpacity(0.7),
+                          // backgroundColor: Colors.white.withOpacity(0.6),
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      )),
+                ],
+              ),
+            ),
+            SliderAtLessonList(
+              percent: percent,
+            )
+          ],
+        ),
       ),
     );
   }

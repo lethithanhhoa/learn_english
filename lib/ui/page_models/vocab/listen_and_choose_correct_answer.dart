@@ -23,7 +23,6 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
   }
 
   final FlutterTts flutterTts = FlutterTts();
-  
 
   void play() async {
     await flutterTts.setLanguage('en-US');
@@ -35,51 +34,64 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
     if (loading) {
       play();
       generateAnswers();
-      
+
       loading = false;
     }
+    
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 10),
-                  Text(
-                    'Listen and choose the correct answer',
-                    softWrap: true,
-                    maxLines: 2,
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54),
-                  ),
-                  SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: play,
-                    child: Speaker(),
-                  ),
-                ],
+        child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: constraints.copyWith(
+                minHeight: constraints.maxHeight,
+                maxHeight: double.infinity,
               ),
-              
-              Column(
-                children: <Widget>[
-                  AnswerButtons(answers: answers),
-                  ContinueButton(),
-                ],
+              child: IntrinsicHeight(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: 10),
+                              Text(
+                                'Listen and choose the correct answer',
+                                softWrap: true,
+                                maxLines: 2,
+                                overflow: TextOverflow.fade,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black54),
+                              ),
+                              SizedBox(height: 10),
+                              GestureDetector(
+                                onTap: play,
+                                child: Speaker(),
+                              ),
+                            ],
+                          ),
+                          AnswerButtons(answers: answers),
+                        ],
+                      ),
+                    ),
+                    ContinueButton(),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

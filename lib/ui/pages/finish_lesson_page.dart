@@ -22,7 +22,7 @@ class FinishLessonPage extends StatelessWidget {
     SliderState sliderState = Provider.of<SliderState>(context);
     ResultLearningState resultLearningState =
         Provider.of<ResultLearningState>(context);
-    // AccountState accountState = Provider.of<AccountState>(context);
+    
 
     if (loading) {
       resultLearningState.setPercentCorrect(
@@ -43,8 +43,8 @@ class FinishLessonPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('You have finished the lesson.'),
-                  Text(
-                      '${continueButtonState.getCorrectAnswerNum} / ${sliderState.getMaxOfSlider}'),
+                 Text(
+                     '${continueButtonState.getCorrectAnswerNum} / ${sliderState.getMaxOfSlider}'),
                   FlatButton(
                     onPressed: () {
                       Map<String, dynamic> map = Map();

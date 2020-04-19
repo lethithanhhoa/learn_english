@@ -13,6 +13,7 @@ class StateOfCrossWordList extends ChangeNotifier {
         .replaceAll("I'm", "I am")
         .split(' ')
         .forEach((item) => (list.contains(item) ? null : list.add(item))));
+    if (list.length > 10) list = list.getRange(0, 9).toList();
     list.shuffle();
     notifyListeners();
   }

@@ -26,54 +26,67 @@ class ChooseCorrectTranslate extends StatelessWidget {
       generateAnswers();
       loading = false;
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 10.0),
-                  Container(
-                    child: Text(
-                      'Choose the correct translation',
-                      softWrap: true,
-                      maxLines: 2,
-                      overflow: TextOverflow.fade,
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54,
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: constraints.copyWith(
+                minHeight: constraints.maxHeight,
+                maxHeight: double.infinity,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: 10.0),
+                              Container(
+                                child: Text(
+                                  'Choose the correct translation',
+                                  softWrap: true,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.fade,
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20.0),
+                              Container(
+                                child: Text(
+                                  vocabulary.mean,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnswerButtons(answers: answers),
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Container(
-                    child: Text(
-                      vocabulary.mean,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-                ],
+                    ContinueButton(),
+                  ],
+                ),
               ),
-              Column(
-                children: <Widget>[
-                  AnswerButtons(answers: answers),
-                  ContinueButton(),
-                ],
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

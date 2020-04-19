@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 
-class CloseIcon extends StatelessWidget {
+class CloseLesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(

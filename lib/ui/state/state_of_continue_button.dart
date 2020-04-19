@@ -4,9 +4,11 @@ class ContinueButtonState extends ChangeNotifier {
   bool _disable = true;
   String _nameButton = 'CHECK IT';
   int _clickedNum = 0;
-  bool _active = true; //this parameter is used to disable choose other answer after clicking 'check it' button
+  bool _active =
+      true; //this parameter is used to disable choose other answer after clicking 'check it' button
   int _screenCode = 0;
-  int _correctAnswerNum =0;
+  int _correctAnswerNum = 0;
+  int _heartNum = 5;
 
   bool get getDisable => _disable;
   String get getNameButton => _nameButton;
@@ -14,38 +16,49 @@ class ContinueButtonState extends ChangeNotifier {
   bool get getActive => _active;
   int get getScreenCode => _screenCode;
   int get getCorrectAnswerNum => _correctAnswerNum;
+  int get getHeartNum => _heartNum;
 
-  incrementCorrectAnswerNum(){
-    _correctAnswerNum ++;
+  incrementCorrectAnswerNum() {
+    _correctAnswerNum++;
     notifyListeners();
   }
 
-  inActive(){
+  decrementHeart() {
+    _heartNum--;
+    notifyListeners();
+  }
+
+  setHeartNum(int number) {
+    _heartNum = number;
+    notifyListeners();
+  }
+
+  inActive() {
     _active = false;
     notifyListeners();
   }
 
-  setScreenCode(int code){
+  setScreenCode(int code) {
     _screenCode = code;
     notifyListeners();
   }
 
-  incrementClickedNum(){
-    _clickedNum ++;
+  incrementClickedNum() {
+    _clickedNum++;
     notifyListeners();
   }
 
-  setDefaultClickedNum(){
+  setDefaultClickedNum() {
     _clickedNum = 0;
     notifyListeners();
   }
 
-  setNameToContinue(){
+  setNameToContinue() {
     _nameButton = 'CONTINUE';
     notifyListeners();
   }
 
-  fetchState(){
+  fetchState() {
     _nameButton = 'CHECK IT';
     _disable = true;
     _active = true;

@@ -26,9 +26,10 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
           child: _pageOption[_selectedIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.lightGreen[50],
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -51,7 +53,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.pink,
+          selectedItemColor: Colors.green[600],
+          // unselectedItemColor: Colors.white70,
           onTap: _onItemTapped,
         ),
       ),

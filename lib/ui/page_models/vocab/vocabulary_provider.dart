@@ -5,7 +5,9 @@ import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/page_models/vocab/vocab_list.dart';
 
 import 'package:learn_english/ui/state/account_user.dart';
+import 'package:learn_english/ui/state/action_sound_state.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
+import 'package:learn_english/ui/state/heart_state.dart';
 import 'package:learn_english/ui/state/index.dart';
 import 'package:learn_english/ui/state/recording.dart';
 import 'package:learn_english/ui/state/result_learning_state.dart';
@@ -62,6 +64,12 @@ class VocabularyProvider extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AccountUser(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => HeartState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ActionSoundState(),
+        )
       ],
       child: VocabList(),
     );
