@@ -8,7 +8,7 @@ import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 
-class LessonListProvider extends StatelessWidget {
+class LessonPage extends StatelessWidget {
   Database database = Database();
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_english/ui/page_models/vocab/vocabulary_provider.dart';
+import 'package:learn_english/ui/page_models/vocab/vocabulary_page.dart';
 import 'package:learn_english/ui/pages/home_page.dart';
 import 'package:learn_english/ui/pages/login_page.dart';
 import 'package:learn_english/ui/pages/setting_page.dart';
@@ -15,7 +15,7 @@ class Router {
         {
           String lessonId = settings.arguments as String;
           return MaterialPageRoute(
-              builder: (context) => VocabularyProvider(
+              builder: (context) => VocabularyPage(
                     lessonId: lessonId,
                   ));
         }

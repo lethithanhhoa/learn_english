@@ -5,8 +5,6 @@ import 'package:learn_english/ui/common/slider_at_lesson_list.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
-import 'package:learn_english/ui/state/result_learning_state.dart';
-import 'package:provider/provider.dart';
 
 class LessonList extends StatelessWidget {
   List<Lesson> value;
@@ -62,12 +60,10 @@ class LessonList extends StatelessWidget {
                               .image),
                     ),
                   ),
-                  
                   Container(
                       alignment: Alignment.bottomLeft,
                       decoration: BoxDecoration(
                         color: Colors.green.withOpacity(0.1),
-                        // color: Colors.white.withOpacity(0.5),
                         borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(25),
                             topRight: Radius.circular(25)),

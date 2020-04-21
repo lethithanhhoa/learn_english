@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Vocabulary {
+  String lessonId;
   String vocabId;
   String vocab;
   String mean;

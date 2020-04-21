@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_english/ui/common/trade_exp_dialog.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
 import 'package:learn_english/ui/state/heart_state.dart';
@@ -34,7 +33,7 @@ class ContinueButton extends StatelessWidget {
     TheThirdButtonState theThirdButtonState =
         Provider.of<TheThirdButtonState>(context);
     CorrectAnswer correctAnswer = Provider.of<CorrectAnswer>(context);
-    HeartState heartState = Provider.of<HeartState>(context);
+
     if (recording.getTextResult != '' ||
         crosswordAnswerState.getAnswer.isEmpty == false ||
         (theFirstButtonState.getClicked ||
@@ -50,7 +49,6 @@ class ContinueButton extends StatelessWidget {
         children: <Widget>[
           Container(
             height: 55,
-            // width: 265,
             decoration: BoxDecoration(
               color: continueButtonState.getDisable
                   ? Colors.grey[400]
@@ -108,37 +106,20 @@ class ContinueButton extends StatelessWidget {
                                         .toLowerCase())
                                 ? continueButtonState
                                     .incrementCorrectAnswerNum()
-                                : heartState.decrementHeart();
+                                : null;
 
                             continueButtonState.setNameToContinue();
                             continueButtonState.inActive();
                           }
                           if (continueButtonState.getClickedNum == 2) {
-                            if (heartState.getHeartNum <= 0) {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                child: tradeExpDialog(
-                                    context,
-                                    heartState,
-                                    index,
-                                    continueButtonState,
-                                    crosswordAnswerState,
-                                    recording,
-                                    theFirstButtonState,
-                                    theSecondButtonState,
-                                    theThirdButtonState),
-                              );
-                            } else {
-                              action(
-                                  index,
-                                  continueButtonState,
-                                  crosswordAnswerState,
-                                  recording,
-                                  theFirstButtonState,
-                                  theSecondButtonState,
-                                  theThirdButtonState);
-                            }
+                            actionInTheSecondTimes(
+                                index,
+                                continueButtonState,
+                                crosswordAnswerState,
+                                recording,
+                                theFirstButtonState,
+                                theSecondButtonState,
+                                theThirdButtonState);
                           }
                         },
                   child: Padding(
@@ -249,7 +230,7 @@ class ContinueButton extends StatelessWidget {
     );
   }
 
-  void action(
+  void actionInTheSecondTimes(
       Index index,
       ContinueButtonState continueButtonState,
       CrosswordAnswerState crosswordAnswerState,
@@ -291,51 +272,54 @@ class ContinueButton extends StatelessWidget {
     continueButtonState.fetchState();
   }
 
-  Widget tradeExpDialog(
-      BuildContext context,
-      HeartState heartState,
-      Index index,
-      ContinueButtonState continueButtonState,
-      CrosswordAnswerState crosswordAnswerState,
-      Recording recording,
-      TheFirstButtonState theFirstButtonState,
-      TheSecondButtonState theSecondButtonState,
-      TheThirdButtonState theThirdButtonState) {
-    return AlertDialog(
-      title: Text('ABC'),
-      content: RichText(
-        text: TextSpan(
-            style: TextStyle(color: Colors.black54, fontSize: 18),
-            children: <TextSpan>[
-              TextSpan(text: 'Do you want to use '),
-              TextSpan(
-                  text: '100 EXP',
-                  style: TextStyle(color: Colors.blue, fontSize: 25)),
-              TextSpan(text: ' and give 5 heart to continue'),
-            ]),
-      ),
-      actions: <Widget>[
-        FlatButton(
-            onPressed: () {
-              heartState.setHeartNum(5);
-              action(
-                  index,
-                  continueButtonState,
-                  crosswordAnswerState,
-                  recording,
-                  theFirstButtonState,
-                  theSecondButtonState,
-                  theThirdButtonState);
-              Navigator.pop(context);
-            },
-            child: Text('Yes')),
-        FlatButton(
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, RouteName.homePage, (Route<dynamic> route) => false);
-            },
-            child: Text('No')),
-      ],
-    );
-  }
+  // Widget tradeExpDialog(
+  //     BuildContext context,
+  //     HeartState heartState,
+  //     Index index,
+  //     ContinueButtonState continueButtonState,
+  //     CrosswordAnswerState crosswordAnswerState,
+  //     Recording recording,
+  //     TheFirstButtonState theFirstButtonState,
+  //     TheSecondButtonState theSecondButtonState,
+  //     TheThirdButtonState theThirdButtonState) {
+  //   return AlertDialog(
+  //     title: Text('No more lives'),
+  //     content: RichText(
+  //       text: TextSpan(
+  //           style: DefaultTextStyle.of(context).style,
+  //           children: <TextSpan>[
+  //             TextSpan(text: 'Do you want to use '),
+  //             TextSpan(
+  //                 text: '20 EXP',
+  //                 style: TextStyle(color: Colors.blue, fontSize: 20)),
+  //             TextSpan(text: 'to give'),
+  //             TextSpan(
+  //                 text: '5 lives',
+  //                 style: TextStyle(color: Colors.red, fontSize: 20)),
+  //           ]),
+  //     ),
+  //     actions: <Widget>[
+  //       FlatButton(
+  //           onPressed: () {
+  //             heartState.setHeartNum(5);
+  //             action(
+  //                 index,
+  //                 continueButtonState,
+  //                 crosswordAnswerState,
+  //                 recording,
+  //                 theFirstButtonState,
+  //                 theSecondButtonState,
+  //                 theThirdButtonState);
+  //             Navigator.pop(context);
+  //           },
+  //           child: Text('Yes')),
+  //       FlatButton(
+  //           onPressed: () {
+  //             Navigator.pushNamedAndRemoveUntil(
+  //                 context, RouteName.homePage, (Route<dynamic> route) => false);
+  //           },
+  //           child: Text('No')),
+  //     ],
+  //   );
+  // }
 }

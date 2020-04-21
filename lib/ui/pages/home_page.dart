@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:learn_english/ui/page_models/lesson/lesson_list_provider.dart';
-import 'package:learn_english/ui/page_models/rank/rank_provider.dart';
+import 'package:learn_english/ui/page_models/game/game_page.dart';
+import 'package:learn_english/ui/page_models/lesson/lesson_page.dart';
+import 'package:learn_english/ui/page_models/rank/rank_page.dart';
 import 'package:learn_english/ui/pages/account_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,8 +17,9 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final _pageOption = [
-    LessonListProvider(),
-    RankProvider(),
+    LessonPage(),
+    GamePage(),
+    RankPage(),
     AccountPage(),
   ];
 
@@ -26,22 +28,26 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
         body: Center(
           child: _pageOption[_selectedIndex],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.lightGreen[50],
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(canvasColor: Colors.green[200]),
+        child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               title: Text('Home'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.games),
+              title: Text('Game'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
@@ -53,9 +59,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.green[600],
-          // unselectedItemColor: Colors.white70,
+          selectedItemColor: Colors.teal,
+          unselectedItemColor: Colors.white,
+          
           onTap: _onItemTapped,
+        ),
         ),
       ),
     );

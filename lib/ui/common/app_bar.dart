@@ -13,13 +13,14 @@ Widget appBar = AppBar(
        
         child: Row(
           children: <Widget>[
-            Expanded(flex: 8, child: MySlider()),
-            Expanded(flex: 2, child: Heart(),),
+            Expanded(flex: 1, child: MySlider()),
+            // Expanded(flex: 2, child: Heart(),),
+            // Expanded(flex: 1, child: Container(),)
           ],
         ),
       ),
       
-      // Heart(),
+      
     ],
   ),
 );

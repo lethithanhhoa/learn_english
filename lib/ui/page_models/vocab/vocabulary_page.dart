@@ -21,10 +21,10 @@ import 'package:learn_english/ui/state/the_third_button_state.dart';
 
 import 'package:provider/provider.dart';
 
-class VocabularyProvider extends StatelessWidget {
+class VocabularyPage extends StatelessWidget {
   Database _database = Database();
   String lessonId;
-  VocabularyProvider({this.lessonId});
+  VocabularyPage({this.lessonId});
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -63,9 +63,6 @@ class VocabularyProvider extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AccountUser(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => HeartState(),
         ),
         ChangeNotifierProvider(
           create: (context) => ActionSoundState(),
