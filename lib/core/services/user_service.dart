@@ -18,7 +18,10 @@ class UserService {
         'name': userData.displayName,
         'email': userData.email,
         'avatar_url': userData.photoUrl,
-        'score': 0,
+        'exp': 0,
+        'matrix2by2': 0,
+        'matrix3by3': 0,
+        'matrix4by4': 0,
         'state': null,
       },
     );
@@ -33,4 +36,21 @@ class UserService {
     });
     return;
   }
+
+  Future<Null> updateExp(
+      String userId, int exp) async {
+    await Firestore.instance.collection('users').document(userId).updateData({
+      'exp': exp,
+    });
+    return;
+  }
+
+  Future<Null> updateMatrix2by2HighScore(
+      String userId, int score) async {
+    await Firestore.instance.collection('users').document(userId).updateData({
+      'matrix2by2': score,
+    });
+    return;
+  }
+
 }

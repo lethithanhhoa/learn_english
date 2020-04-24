@@ -36,17 +36,31 @@ class LessonPage extends StatelessWidget {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          IconButton(
-                            padding: EdgeInsets.all(0),
-                              icon: Icon(
-                                Icons.settings,
-                                size: 30,
-                                color: Colors.white,
+                          Row(
+                            children: <Widget>[
+                              IconButton(
+                                
+                                  padding: EdgeInsets.all(0),
+                                  icon: Icon(
+                                    Icons.settings,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, RouteName.settingPage);
+                                  }),
+                              IconButton(
+                                padding: EdgeInsets.all(0.0),
+                                icon: Icon(Icons.list,
+                                    size: 30, color: Colors.white),
+                                onPressed: (){
+                                  Navigator.pushNamed(
+                                        context, RouteName.learnedWordsPage);
+                                },
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.settingPage);
-                              }),
+                            ],
+                          ),
                           Text(
                             'Lessons',
                             style: TextStyle(

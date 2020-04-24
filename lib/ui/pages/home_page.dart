@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   final _pageOption = [
     LessonPage(),
     GamePage(),
+    
     RankPage(),
     AccountPage(),
   ];
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "press again to exit app");
+      Fluttertoast.showToast(msg: "Press again to exit app");
       return Future.value(false);
     }
     return Future.value(true);

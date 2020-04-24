@@ -12,9 +12,9 @@ class RankPage extends StatelessWidget {
     return FutureProvider<List<User>>.value(
       value: database.getAllUser(),
       child: Scaffold(
-        backgroundColor: Colors.yellow[50],
-        body: RankList(
-          
+        backgroundColor: Colors.lime[50],
+        body: SafeArea(
+          child: RankList(),
         ),
       ),
     );

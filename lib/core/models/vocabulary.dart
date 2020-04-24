@@ -11,7 +11,9 @@ class Vocabulary {
   List<dynamic> otherWord;
 
   Vocabulary(
-      {this.vocabId,
+      {
+        this.lessonId,
+        this.vocabId,
       this.vocab,
       this.mean,
       this.image,
@@ -22,9 +24,10 @@ class Vocabulary {
   factory Vocabulary.fromSnapshot(DocumentSnapshot snapshot) {
     return Vocabulary(
       vocabId: snapshot.documentID,
+      lessonId: snapshot.data['lessonId'],
       vocab: snapshot.data['vocab'],
       mean: snapshot.data['mean'],
-      image: snapshot.data['image'],
+      image: snapshot.data['imgName'],
       audioFile: snapshot.data['audioFile'],
       type: snapshot.data['type'],
       otherWord: snapshot.data['otherWord']
@@ -34,12 +37,13 @@ class Vocabulary {
   factory Vocabulary.fromJson(Map<String, dynamic> data) {
     return Vocabulary(
       vocabId: data['id'],
+      lessonId: data['lessonId'],
       vocab: data['vocab'],
       mean: data['mean'],
-      image: data['image'],
+      image: data['imgName'],
       audioFile: data['audioFile'],
       type: data['type'],
-      otherWord: data['otherWord']
+      otherWord: data['otherWord'],
     );
   }
 }

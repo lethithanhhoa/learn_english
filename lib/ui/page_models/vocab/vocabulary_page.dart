@@ -29,7 +29,7 @@ class VocabularyPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         FutureProvider<List<Vocabulary>>.value(
-            value: _database.getListOfVocab(lessonId)),
+            value: _database.getVocabByLesson([lessonId]),),
         ChangeNotifierProvider(
           create: (context) => Index(),
         ),

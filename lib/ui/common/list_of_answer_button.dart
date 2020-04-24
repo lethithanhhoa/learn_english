@@ -31,7 +31,7 @@ class AnswerButtons extends StatelessWidget {
         Provider.of<TheThirdButtonState>(context);
     ContinueButtonState continueButtonState =
         Provider.of<ContinueButtonState>(context);
-    ActionSoundState actionSoundState = Provider.of<ActionSoundState>(context);
+    
     return Column(
       children: <Widget>[
         Stack(

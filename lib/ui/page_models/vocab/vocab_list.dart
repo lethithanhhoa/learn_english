@@ -25,24 +25,21 @@ class VocabList extends StatelessWidget {
     int randomNumber;
     return Consumer<List<Vocabulary>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
-      // print(value);
-      // return Scaffold(body: Center(child: Text('kho hieu')));
-      
+
       sliderState.setMaxOfSlider(value.length);
-      // print(sliderState.getMaxOfSlider);
+
       if (index.getIndex >= value.length)
         return FinishLessonPage();
       else {
         if (value[index.getIndex].type == 1) {
-          randomNumber = random.nextInt(5); //5
+          randomNumber = random.nextInt(5);
         } else if (value[index.getIndex].type == 2) {
           randomNumber = random.nextInt(3) + 3;
         } else if (value[index.getIndex].type == 3) {
           randomNumber = random.nextInt(3) + 3;
         }
         answer.setCorrectAnswer(value[index.getIndex].vocab);
-        print('OK');
-        print(index.getIndex);
+
         switch (randomNumber) {
           case 0:
             return LookAtThePictureAndChooseAnswer(

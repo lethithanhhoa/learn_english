@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/ui/state/action_sound_state.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,13 @@ class SettingState extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Setting'),
+        title: Text(
+          'Setting',
+          style: GoogleFonts.handlee(
+            textStyle: TextStyle(
+                color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),
+          ),
+        ),
         backgroundColor: Colors.green[300],
       ),
       body: Padding(
@@ -55,5 +62,3 @@ class SettingState extends StatelessWidget {
     );
   }
 }
-
-
