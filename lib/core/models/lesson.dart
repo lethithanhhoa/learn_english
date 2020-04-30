@@ -12,7 +12,7 @@ class Lesson {
     return Lesson(
         lessonId: snapshot.documentID,
         name: snapshot.data['lessonName'],
-        image: snapshot.data['image'],
+        image: snapshot.data['imgName'],
         index: snapshot.data['index']);
   }
 
@@ -20,7 +20,7 @@ class Lesson {
     return Lesson(
       lessonId: data['id'],
       name: data['lessonName'],
-      image: data['image'],
+      image: data['imgName'],
       index: data['index'],
     );
   }

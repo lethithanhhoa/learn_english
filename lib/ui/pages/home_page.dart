@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:learn_english/ui/page_models/lesson/lesson_list_provider.dart';
-import 'package:learn_english/ui/page_models/rank/rank_provider.dart';
+import 'package:learn_english/ui/page_models/game/game_page.dart';
+import 'package:learn_english/ui/page_models/lesson/lesson_page.dart';
+import 'package:learn_english/ui/page_models/rank/rank_page.dart';
 import 'package:learn_english/ui/pages/account_page.dart';
+import 'package:learn_english/ui/pages/starting_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -16,8 +18,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final _pageOption = [
-    LessonListProvider(),
-    RankProvider(),
+    LessonPage(),
+    GamePage(),
+    
+    RankPage(),
+    // StartingPage(),
     AccountPage(),
   ];
 
@@ -35,15 +40,21 @@ class _HomePageState extends State<HomePage> {
         body: Center(
           child: _pageOption[_selectedIndex],
         ),
-        bottomNavigationBar: BottomNavigationBar(
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(canvasColor: Colors.green[200]),
+        child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               title: Text('Home'),
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.games),
+              title: Text('Game'),
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.school),
-              title: Text('Rank'),
+              title: Text('Ranking'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
@@ -51,8 +62,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.pink,
+          selectedItemColor: Colors.teal,
+          unselectedItemColor: Colors.white,
+          
           onTap: _onItemTapped,
+        ),
         ),
       ),
     );
@@ -63,7 +77,7 @@ class _HomePageState extends State<HomePage> {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "press again to exit app");
+      Fluttertoast.showToast(msg: "Press again to exit app");
       return Future.value(false);
     }
     return Future.value(true);

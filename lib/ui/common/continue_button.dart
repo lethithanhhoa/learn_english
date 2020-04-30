@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
 import 'package:learn_english/ui/state/index.dart';
 import 'package:learn_english/ui/state/recording.dart';
-import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
 import 'package:learn_english/ui/state/the_first_button_state.dart';
@@ -14,6 +15,7 @@ import 'package:provider/provider.dart';
 
 class ContinueButton extends StatelessWidget {
   String temp = '';
+  AudioPlayer playAudio = AudioPlayer();
   @override
   Widget build(BuildContext context) {
     Index index = Provider.of<Index>(context);
@@ -29,7 +31,7 @@ class ContinueButton extends StatelessWidget {
     TheThirdButtonState theThirdButtonState =
         Provider.of<TheThirdButtonState>(context);
     CorrectAnswer correctAnswer = Provider.of<CorrectAnswer>(context);
-    SliderState sliderState = Provider.of<SliderState>(context);
+
     if (recording.getTextResult != '' ||
         crosswordAnswerState.getAnswer.isEmpty == false ||
         (theFirstButtonState.getClicked ||
@@ -40,12 +42,11 @@ class ContinueButton extends StatelessWidget {
       continueButtonState.fetchState();
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
+      padding: EdgeInsets.symmetric(vertical: 30.0),
       child: Stack(
         children: <Widget>[
           Container(
             height: 55,
-            // width: 265,
             decoration: BoxDecoration(
               color: continueButtonState.getDisable
                   ? Colors.grey[400]
@@ -70,11 +71,11 @@ class ContinueButton extends StatelessWidget {
                   onPressed: continueButtonState.getDisable
                       ? null
                       : () {
+                        playAudio.playClickSound();
                           continueButtonState.incrementClickedNum();
                           if (continueButtonState.getClickedNum == 1) {
                             if (!crosswordAnswerState.getAnswer.isEmpty) {
-                              crosswordAnswerState.getAnswer
-                                  .forEach((item) {
+                              crosswordAnswerState.getAnswer.forEach((item) {
                                 temp = temp + item + " ";
                               });
                               temp = temp.trim();
@@ -99,52 +100,30 @@ class ContinueButton extends StatelessWidget {
                               temp,
                               correctAnswer.getCorrectAnswer,
                             ));
-                            (temp.toLowerCase() ==
+                            if (temp.toLowerCase() ==
                                     correctAnswer.getCorrectAnswer
                                         .toLowerCase())
-                                ? continueButtonState
-                                    .incrementCorrectAnswerNum()
-                                : null;
-                            // Future.delayed(Duration(seconds: 3), () {
-                            //   continueButtonState.setNameToContinue();
-                            // });
+                                {
+                                  playAudio.playCorrectSound();
+                                  continueButtonState
+                                    .incrementCorrectAnswerNum();
+                                }
+                                else{
+                                  playAudio.playWrongSound();
+                                };
+
                             continueButtonState.setNameToContinue();
                             continueButtonState.inActive();
                           }
                           if (continueButtonState.getClickedNum == 2) {
-                            index.increment();
-
-                            print(continueButtonState.getScreenCode);
-                            switch (continueButtonState.getScreenCode) {
-                              case 1:
-                                {
-                                  crosswordAnswerState.fetchList();
-                                  break;
-                                }
-                              case 2:
-                                {
-                                  recording.fetchText();
-                                  break;
-                                }
-                              case 3:
-                                {
-                                  theFirstButtonState.fetchState();
-                                  break;
-                                }
-                              case 4:
-                                {
-                                  theSecondButtonState.fetchState();
-                                  break;
-                                }
-                              case 5:
-                                {
-                                  theThirdButtonState.fetchState();
-                                  break;
-                                }
-                            }
-                            continueButtonState.setDefaultClickedNum();
-
-                            continueButtonState.fetchState();
+                            actionInTheSecondTimes(
+                                index,
+                                continueButtonState,
+                                crosswordAnswerState,
+                                recording,
+                                theFirstButtonState,
+                                theSecondButtonState,
+                                theThirdButtonState);
                           }
                         },
                   child: Padding(
@@ -253,5 +232,47 @@ class ContinueButton extends StatelessWidget {
                 : TextDecoration.lineThrough),
       ),
     );
+  }
+
+  void actionInTheSecondTimes(
+      Index index,
+      ContinueButtonState continueButtonState,
+      CrosswordAnswerState crosswordAnswerState,
+      Recording recording,
+      TheFirstButtonState theFirstButtonState,
+      TheSecondButtonState theSecondButtonState,
+      TheThirdButtonState theThirdButtonState) {
+    index.increment();
+
+    switch (continueButtonState.getScreenCode) {
+      case 1:
+        {
+          crosswordAnswerState.fetchList();
+          break;
+        }
+      case 2:
+        {
+          recording.fetchText();
+          break;
+        }
+      case 3:
+        {
+          theFirstButtonState.fetchState();
+          break;
+        }
+      case 4:
+        {
+          theSecondButtonState.fetchState();
+          break;
+        }
+      case 5:
+        {
+          theThirdButtonState.fetchState();
+          break;
+        }
+    }
+    continueButtonState.setDefaultClickedNum();
+
+    continueButtonState.fetchState();
   }
 }

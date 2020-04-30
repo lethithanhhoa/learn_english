@@ -7,4 +7,15 @@ class Index extends ChangeNotifier{
     _index ++;
     notifyListeners();
   }
+
+  setIndex(int number){
+    _index = number;
+    notifyListeners();
+  }
+
+  decrement(){
+    _index --;
+    notifyListeners();
+  }
+
 }

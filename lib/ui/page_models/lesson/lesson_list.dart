@@ -1,73 +1,98 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/lesson.dart';
-import 'package:learn_english/ui/common/slider_in_lesson_list.dart';
+import 'package:learn_english/ui/common/slider_at_lesson_list.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
-import 'package:provider/provider.dart';
+import 'package:learn_english/ui/state/account_user.dart';
 
 class LessonList extends StatelessWidget {
+  List<Lesson> value;
+  AccountUser accountUser;
+  LessonList({this.value, this.accountUser});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink[50],
-      body: Consumer<List<Lesson>>(builder: (context, value, child) {
-        if (value == null) return LoadingPage();
-        return ListView.builder(
-            itemCount: value.length,
-            itemBuilder: (context, index) {
-              Lesson currentLesson = value[index];
-              return ListTile(
-                  title: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 100.0,
-                            height: 80.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: Colors.green[100],
-                              image: DecorationImage(
-                                  image: Image.asset('assets/ba6.jpg').image,
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
-                          SizedBox(width: 15),
-                          Expanded(
-                              child: Text(
-                                '${currentLesson.name}',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                overflow: TextOverflow.fade,
-                              ))
-                        ],
-                      ),
-                      SliderInLessonList(),
-                      
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, RouteName.vocab,
-                        arguments: currentLesson.lessonId);
-                  });
-            });
-      }),
-    );
+    if (value == null || accountUser.user == null) return LoadingPage();
+    return ListView.builder(
+        itemCount: value.length,
+        itemBuilder: (context, index) {
+          Lesson currentLesson = value[index];
+          int percent = 0;
+          if (accountUser.user.learningState != null) {
+            if (accountUser.user.learningState[currentLesson.lessonId] != null)
+              percent = (accountUser.user.learningState[currentLesson.lessonId])
+                  .toInt();
+          }
+          return ItemWidget(context, currentLesson, percent);
+        });
   }
-}
 
-class ImageDecoration extends StatelessWidget {
-  const ImageDecoration({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset('assets/ba6.jpg');
+  Widget ItemWidget(BuildContext context, Lesson currentLesson, int percent) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 5, 20, 5),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, RouteName.vocab,
+              arguments: currentLesson.lessonId);
+        },
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 160,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(25),
+                    topRight: Radius.circular(25)),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: 160,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25)),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: Image.asset('assets/' + currentLesson.image)
+                              .image),
+                    ),
+                  ),
+                  Container(
+                      alignment: Alignment.bottomLeft,
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(25),
+                            topRight: Radius.circular(25)),
+                      ),
+                      height: 160,
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        currentLesson.name,
+                        overflow: TextOverflow.fade,
+                        softWrap: true,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: Colors.white,
+                          backgroundColor: Colors.green.withOpacity(0.7),
+                          // backgroundColor: Colors.white.withOpacity(0.6),
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      )),
+                ],
+              ),
+            ),
+            SliderAtLessonList(
+              percent: percent,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

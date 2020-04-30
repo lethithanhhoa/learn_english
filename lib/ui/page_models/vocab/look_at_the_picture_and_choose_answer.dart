@@ -26,62 +26,76 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
       generateAnswers();
       loading = false;
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 10),
-                  Text(
-                    'Look at the picture and choose the correct answer',
-                    softWrap: true,
-                    maxLines: 2,
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54),
-                  ),
-                  Container(
-                    height: 220,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.asset('assets/board.png').image,
-                            fit: BoxFit.fill)),
-                    child: Center(
-                        child: Container(
-                      height: 130,
-                      width: MediaQuery.of(context).size.width * 2.5 / 4,
-                      decoration: BoxDecoration(
-                          // color: Colors.pink,
-                          image: DecorationImage(
-                              fit: BoxFit.scaleDown,
-                              image:
-                                  Image.network('${vocabulary.image}').image)),
-                    )),
-                  ),
-                ],
+        child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: constraints.copyWith(
+                minHeight: constraints.maxHeight,
+                maxHeight: double.infinity,
               ),
-              
-              Column(
-                children: <Widget>[
-                  AnswerButtons(answers: answers),
-                  ContinueButton(),
-                ],
+              child: IntrinsicHeight(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: 10),
+                              Text(
+                                'Look at the picture and choose the correct answer',
+                                softWrap: true,
+                                maxLines: 2,
+                                overflow: TextOverflow.fade,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black54),
+                              ),
+                              Container(
+                                height: 220,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: Image.asset('assets/board.png')
+                                            .image,
+                                        fit: BoxFit.fill)),
+                                child: Center(
+                                  child: FadeInImage.assetNetwork(
+                                    height: 130,
+                                    width: MediaQuery.of(context).size.width *
+                                        2.5 /
+                                        4,
+                                    placeholder: 'assets/waiting_image.gif',
+                                    image: '${vocabulary.image}',
+                                    fit: BoxFit.scaleDown,
+                                    fadeInCurve: Curves.bounceIn,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnswerButtons(answers: answers),
+                        ],
+                      ),
+                    ),
+                    ContinueButton(),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

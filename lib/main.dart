@@ -22,12 +22,15 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.handleeTextTheme(
           Theme.of(context).textTheme,
         ),
+        // textTheme: GoogleFonts.playballTextTheme(
+        //   Theme.of(context).textTheme,
+        // ),
       ),
 
       home: LoginPage(),
       initialRoute: RouteName.loginPage,
       onGenerateRoute: Router.generateRoute,
-      // home: StartingPage(),
+      
     );
   }
 }
