@@ -3,12 +3,12 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/microphone.dart';
 import 'package:learn_english/ui/common/speaker.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/state/recording.dart';
 
 import 'package:provider/provider.dart';
@@ -17,18 +17,13 @@ class ListenAndRepeat extends StatelessWidget {
   Vocabulary vocabulary;
   ListenAndRepeat({this.vocabulary});
   bool loading = true;
-  final FlutterTts flutterTts = FlutterTts();
-
-  void play() async {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.speak(vocabulary.vocab);
-  }
+  AudioPlayer playAudio = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
     Recording recording = Provider.of<Recording>(context);
     if (loading == true) {
-      play();
+      playAudio.playCustomAudioFile(vocabulary.audioFile);
       loading = false;
     }
 
@@ -144,7 +139,9 @@ class ListenAndRepeat extends StatelessWidget {
                                     Container(
                                       alignment: Alignment.bottomLeft,
                                       child: GestureDetector(
-                                        onTap: play,
+                                        onTap: (){
+                                          playAudio.playCustomAudioFile(vocabulary.audioFile);
+                                        },
                                         child: Speaker(),
                                       ),
                                     ),

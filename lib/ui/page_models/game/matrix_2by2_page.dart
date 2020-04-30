@@ -1,137 +1,132 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/user_service.dart';
-import 'package:learn_english/ui/page_models/game/cell.dart';
-import 'package:learn_english/ui/page_models/game/image_cell.dart';
-import 'package:learn_english/ui/page_models/game/score.dart';
-import 'package:learn_english/ui/page_models/game/text_cell.dart';
+import 'package:learn_english/ui/page_models/game/widgets/cell.dart';
+import 'package:learn_english/ui/page_models/game/widgets/image_cell.dart';
+import 'package:learn_english/ui/page_models/game/widgets/text_cell.dart';
 import 'package:learn_english/ui/state/account_user.dart';
+import 'package:learn_english/ui/state/matrix_2by2_state.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_english/ui/page_models/game/matrix_2by2_state.dart';
-
-
+import 'package:learn_english/ui/modules/audio_player.dart';
 
 class Matrix2By2Page extends StatelessWidget {
   List<Vocabulary> vocabList;
   Matrix2By2Page({this.vocabList});
   UserService userService = UserService();
+  AudioPlayer audioPlayer = AudioPlayer();
   int firstIndex = 0;
   int secondIndex = 0;
   List<Cell> widgets;
 
-  DateTime currentBackPressTime;
+
   Future<bool> onWillPop() {
-    DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "Press again to back. The result won't be saved.");
+    Fluttertoast.showToast(msg: "Press close icon to back");
+    return Future.value(false);
+  }
 
-      return Future.value(false);
-    }
-
-    return Future.value(true);
+  Future<bool> onWillPopAlertMessage(){
+    return Future.value(false);
   }
 
   @override
   Widget build(BuildContext context) {
     Matrix2By2State matrix2by2state = Provider.of<Matrix2By2State>(context);
-    Score score = Provider.of<Score>(context);
     AccountUser accountUser = Provider.of<AccountUser>(context);
     matrix2by2state.load();
 
-    if (matrix2by2state.getCheckIsCorrect) {
-      score.increment();
-      // matrix2by2state.setIsCorrectEqualFalse();
-    }
     if (matrix2by2state.getCheckIsWrong) {
       int currentExp = accountUser.exp;
       if (currentExp >= 100)
-        return AlertDialog(
+        return WillPopScope(
+          onWillPop: onWillPopAlertMessage,
+          child: AlertDialog(
+            title: Text(
+              'SCORE: ${matrix2by2state.getScore}',
+              style: TextStyle(color: Colors.green, fontSize: 25),
+            ),
+            content: RichText(
+              text: TextSpan(
+                  style: GoogleFonts.handlee(
+                      textStyle: TextStyle(color: Colors.blue, fontSize: 18)),
+                  children: <TextSpan>[
+                    TextSpan(text: 'Do you want to trade '),
+                    TextSpan(
+                      text: '${100} ',
+                      style: TextStyle(color: Colors.orange[300], fontSize: 25),
+                    ),
+                    TextSpan(
+                      text: 'EXP ',
+                      style: TextStyle(color: Colors.green[300], fontSize: 25),
+                    ),
+                    TextSpan(text: 'to continue?'),
+                  ]),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  int updateExp = currentExp - 100;
+                  userService.updateExp(accountUser.user.userId, updateExp);
+                  accountUser.decrementExp(100);
+                  matrix2by2state.fetch();
+                },
+              ),
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  if (matrix2by2state.getScore > 0) {
+                    int currentHighScore = accountUser.user.matrix2by2;
+                    if (currentHighScore < matrix2by2state.getScore) {
+                      userService.updateMatrix2by2HighScore(
+                          accountUser.user.userId, matrix2by2state.getScore);
+                    }
+                  }
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          ),
+        );
+
+      return WillPopScope(
+        onWillPop: onWillPopAlertMessage,
+        child: AlertDialog(
           title: Text(
-            'SCORE: ${score.getScore}',
-            style: TextStyle(color: Colors.green, fontSize: 25),
+            'You are wrong!!!',
+            style: TextStyle(color: Colors.red[400], fontSize: 25),
           ),
           content: RichText(
             text: TextSpan(
                 style: GoogleFonts.handlee(
                     textStyle: TextStyle(color: Colors.blue, fontSize: 18)),
                 children: <TextSpan>[
-                  TextSpan(text: 'Do you want to trade '),
+                  TextSpan(text: 'Your score: '),
                   TextSpan(
-                    text: '${100} ',
-                    style: TextStyle(color: Colors.orange[300], fontSize: 25),
-                  ),
-                  TextSpan(
-                    text: 'EXP ',
+                    text: '${matrix2by2state.getScore} ',
                     style: TextStyle(color: Colors.green[300], fontSize: 25),
                   ),
-                  TextSpan(text: 'to continue?'),
                 ]),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Yes'),
+              child: Text('OK'),
               onPressed: () {
-                int updateExp = currentExp - 100;
-                userService.updateExp(accountUser.user.userId, updateExp);
-                accountUser.decrementExp(100);
-                matrix2by2state.fetch();
-              },
-            ),
-            FlatButton(
-              child: Text('No'),
-              onPressed: () {
-                if (score.getScore > 0) {
+                if (matrix2by2state.getScore > 0) {
                   int currentHighScore = accountUser.user.matrix2by2;
-                  if (currentHighScore < score.getScore) {
+                  if (currentHighScore < matrix2by2state.getScore) {
                     userService.updateMatrix2by2HighScore(
-                        accountUser.user.userId, score.getScore);
+                        accountUser.user.userId, matrix2by2state.getScore);
                   }
                 }
                 Navigator.of(context).pop();
               },
-            )
+            ),
           ],
-        );
-
-      return AlertDialog(
-        title: Text(
-          'You are wrong!!!',
-          style: TextStyle(color: Colors.red[400], fontSize: 25),
         ),
-        content: RichText(
-          text: TextSpan(
-              style: GoogleFonts.handlee(
-                  textStyle: TextStyle(color: Colors.blue, fontSize: 18)),
-              children: <TextSpan>[
-                TextSpan(text: 'Your score: '),
-                TextSpan(
-                  text: '${score.getScore} ',
-                  style: TextStyle(color: Colors.green[300], fontSize: 25),
-                ),
-              ]),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('OK'),
-            onPressed: () {
-              if (score.getScore > 0) {
-                int currentHighScore = accountUser.user.matrix2by2;
-                if (currentHighScore < score.getScore) {
-                  userService.updateMatrix2by2HighScore(
-                      accountUser.user.userId, score.getScore);
-                }
-              }
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       );
     }
 
@@ -146,18 +141,22 @@ class Matrix2By2Page extends StatelessWidget {
         ImageCell(
           vocabulary: vocabList[firstIndex],
           textSize: 18,
+          borderRadius: 15,
         ),
         TextCell(
           vocabulary: vocabList[firstIndex],
           textSize: 40,
+          borderRadius: 15,
         ),
         ImageCell(
           vocabulary: vocabList[secondIndex],
           textSize: 18,
+          borderRadius: 15,
         ),
         TextCell(
           vocabulary: vocabList[secondIndex],
           textSize: 40,
+          borderRadius: 15,
         )
       ];
       widgets.shuffle();
@@ -165,26 +164,17 @@ class Matrix2By2Page extends StatelessWidget {
       matrix2by2state.setLoading(false);
     }
 
-    // matrix2by2state.load();
     return WillPopScope(
       onWillPop: onWillPop,
-      // () {
-      //   onWillPop();
-      //   // if (score.getScore > 0 &&
-      //   //     score.getScore > accountUser.user.matrix2by2) {
-      //   //   userService.updateMatrix2by2HighScore(
-      //   //       accountUser.user.userId, score.getScore);
-      //   // }
-      // },
       child: Scaffold(
-        backgroundColor: Colors.pink[100],
+        backgroundColor: Colors.green[200],
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Stack(
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.topRight,
                   child: Row(
@@ -201,18 +191,18 @@ class Matrix2By2Page extends StatelessWidget {
                                 color: Colors.grey,
                               )),
                           onPressed: () {
-                            if (score.getScore > 0) {
+                            if (matrix2by2state.getScore > 0) {
                               int currentHighScore =
                                   accountUser.user.matrix2by2;
-                              if (currentHighScore < score.getScore) {
+                              if (currentHighScore < matrix2by2state.getScore) {
                                 userService.updateMatrix2by2HighScore(
-                                    accountUser.user.userId, score.getScore);
+                                    accountUser.user.userId, matrix2by2state.getScore);
                               }
                             }
                             Navigator.of(context).pop();
                           }),
                       Text(
-                        'SCORE: ${score.getScore}',
+                        'SCORE: ${matrix2by2state.getScore}',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 25,
@@ -226,7 +216,7 @@ class Matrix2By2Page extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.center,
                   child: Container(
-                    height: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width-20,
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: <Widget>[
@@ -239,6 +229,7 @@ class Matrix2By2Page extends StatelessWidget {
                                               .getResultOfFirstWidget ==
                                           0)
                                       ? () {
+                                          audioPlayer.playDragSound();
                                           matrix2by2state.setFirstWidgetState(
                                               widgets[0].vocabulary.vocab);
                                         }
@@ -291,6 +282,7 @@ class Matrix2By2Page extends StatelessWidget {
                                               .getResultOfSecondWidget ==
                                           0)
                                       ? () {
+                                          audioPlayer.playDragSound();
                                           matrix2by2state.setSecondWidgetState(
                                               widgets[1].vocabulary.vocab);
                                         }
@@ -350,6 +342,7 @@ class Matrix2By2Page extends StatelessWidget {
                                               .getResultOfThirdWidget ==
                                           0)
                                       ? () {
+                                          audioPlayer.playDragSound();
                                           matrix2by2state.setThirdWidgetState(
                                               widgets[2].vocabulary.vocab);
                                         }
@@ -402,6 +395,7 @@ class Matrix2By2Page extends StatelessWidget {
                                                 .getResultOfForWidget ==
                                             0)
                                         ? () {
+                                            audioPlayer.playDragSound();
                                             matrix2by2state.setForWidgetState(
                                                 widgets[3].vocabulary.vocab);
                                           }

@@ -49,6 +49,38 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  Future<Null> handleSignInWithFacebook() async {
+    this.setState(() {
+      loading = true;
+    });
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    FirebaseUser user = await _authService.facebookSignIn();
+    if (user == null) {
+      this.setState(() {
+        loading = false;
+      });
+      return showSimpleNotification(Text("Unable to sign in."),
+          background: Colors.red, autoDismiss: true);
+    }
+
+    List<dynamic> documents = await _userService.findUsersByEmail(user.email);
+    if (documents.length == 0) {
+      await _userService.saveUser(user);
+    }
+
+    // await preferences.setString('name', user.displayName);
+    // await preferences.setString('email', user.email);
+    // await preferences.setString('avatar_url', user.photoUrl);
+
+    print('Successfully signed in.');
+    Navigator.pushNamed(context, RouteName.homePage);
+
+    this.setState(() {
+      loading = false;
+    });
+  }
+
   Future<Null> handleSignIn() async {
     this.setState(() {
       loading = true;
@@ -86,73 +118,79 @@ class _LoginPageState extends State<LoginPage> {
     return loading
         ? LoadingPage()
         : Scaffold(
-          backgroundColor: Colors.white,
+            backgroundColor: Colors.white,
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(15, 60, 15, 60),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        Container(
-                          width: 230,
-                          height: 230,
-                          decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(
-                            //     MediaQuery.of(context).size.width),
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: [Colors.pink[50], Colors.pink],
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 7,
-                          left: 3,
-                          right: 9,
-                          bottom: 7,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                Image.asset('assets/owl.jpg').image,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "EFK",
-                          style: TextStyle(
-                            fontSize: 45,
-                            color: Colors.pink,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "Change The Future",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.pink[400],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Center(
-                      child: Column(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Stack(
                         children: <Widget>[
                           Container(
-                            width: 230,
+                            width: 210,
+                            height: 210,
                             decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1.2, color: Colors.pink),
-                                borderRadius: BorderRadius.circular(50)),
-                            child: FlatButton(
-                              onPressed: () {
-                                // bookService.getData();
-                              },
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: [Colors.pink[50], Colors.pink],
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              top: 5,
+                              left: 3,
+                              right: 8,
+                              bottom: 5,
+                              child: Container(
+                                width: 210,
+                                height: 210,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image:
+                                          Image.asset('assets/owl.jpg').image,
+                                      fit: BoxFit.fill),
+                                ),
+                              )),
+                        ],
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            "EFK",
+                            style: TextStyle(
+                              fontSize: 45,
+                              color: Colors.pink,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "Change The Future",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.pink[400],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: handleSignInWithFacebook,
+                            child: Container(
+                              width: 240,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(width: 1.2, color: Colors.pink[300]),
+                                  borderRadius: BorderRadius.circular(50)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -164,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                                     width: 10,
                                   ),
                                   Text(
-                                    "Login with Facbook",
+                                    "Sign In with Facebook",
                                     style: TextStyle(
                                       fontSize: 17.5,
                                       color: Colors.pink[400],
@@ -177,14 +215,15 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          Container(
-                            width: 230,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1.2, color: Colors.pink),
-                                borderRadius: BorderRadius.circular(50)),
-                            child: FlatButton(
-                              onPressed: handleSignIn,
+                          GestureDetector(
+                            onTap: handleSignIn,
+                            child: Container(
+                              width: 240,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(width: 1.2, color: Colors.pink[300]),
+                                  borderRadius: BorderRadius.circular(50)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -196,10 +235,11 @@ class _LoginPageState extends State<LoginPage> {
                                     width: 10,
                                   ),
                                   Text(
-                                    "Login with Google",
+                                    "Sign In with Google",
                                     style: TextStyle(
                                       fontSize: 17.5,
                                       color: Colors.pink[400],
+                                      
                                     ),
                                   ),
                                 ],
@@ -208,8 +248,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

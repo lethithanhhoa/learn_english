@@ -16,27 +16,30 @@ class MySlider extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: 18,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white.withOpacity(0.4),
+            child: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: 18,
+                    width: 220,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white.withOpacity(0.4),
+                    ),
+                     
                   ),
-                ),
-                Container(
-                  height: 18,
-                  width: 220 *
-                      continueButtonState.getCorrectAnswerNum /
-                      sliderState.getMaxOfSlider,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
+                  Container(
+                    height: 18,
+                    width: 220*
+                        continueButtonState.getCorrectAnswerNum /
+                        sliderState.getMaxOfSlider,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Padding(

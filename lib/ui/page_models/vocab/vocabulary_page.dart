@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/page_models/vocab/vocab_list.dart';
-
 import 'package:learn_english/ui/state/account_user.dart';
-import 'package:learn_english/ui/state/action_sound_state.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
 import 'package:learn_english/ui/state/heart_state.dart';
 import 'package:learn_english/ui/state/index.dart';
@@ -18,7 +16,6 @@ import 'package:learn_english/ui/state/state_of_crossword_list.dart';
 import 'package:learn_english/ui/state/the_first_button_state.dart';
 import 'package:learn_english/ui/state/the_second_button_state.dart';
 import 'package:learn_english/ui/state/the_third_button_state.dart';
-
 import 'package:provider/provider.dart';
 
 class VocabularyPage extends StatelessWidget {
@@ -29,7 +26,8 @@ class VocabularyPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         FutureProvider<List<Vocabulary>>.value(
-            value: _database.getVocabByLesson([lessonId]),),
+          value: _database.getVocabByLesson([lessonId]),
+        ),
         ChangeNotifierProvider(
           create: (context) => Index(),
         ),
@@ -64,9 +62,6 @@ class VocabularyPage extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AccountUser(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => ActionSoundState(),
-        )
       ],
       child: VocabList(),
     );

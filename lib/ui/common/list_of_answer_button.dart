@@ -1,25 +1,17 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:learn_english/ui/state/action_sound_state.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
 import 'package:learn_english/ui/state/the_first_button_state.dart';
 import 'package:learn_english/ui/state/the_second_button_state.dart';
 import 'package:learn_english/ui/state/the_third_button_state.dart';
 import 'package:provider/provider.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 
 class AnswerButtons extends StatelessWidget {
-  final FlutterTts flutterTts = FlutterTts();
-
   List<dynamic> answers;
   AnswerButtons({this.answers});
 
-  void play(String sentence) async {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.speak(sentence);
-  }
+  AudioPlayer playAudio = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +23,7 @@ class AnswerButtons extends StatelessWidget {
         Provider.of<TheThirdButtonState>(context);
     ContinueButtonState continueButtonState =
         Provider.of<ContinueButtonState>(context);
-    
+
     return Column(
       children: <Widget>[
         Stack(
@@ -63,8 +55,9 @@ class AnswerButtons extends StatelessWidget {
                 child: FlatButton(
                     onPressed: (continueButtonState.getActive)
                         ? () {
+                            playAudio.playClickSound();
                             theFirstButtonState.setClicked(answers[0]);
-                            // play(answers[0]);
+
                             theSecondButtonState.fetchState();
                             theThirdButtonState.fetchState();
                           }
@@ -111,6 +104,7 @@ class AnswerButtons extends StatelessWidget {
                 child: FlatButton(
                     onPressed: (continueButtonState.getActive)
                         ? () {
+                            playAudio.playClickSound();
                             theSecondButtonState.setClicked(answers[1]);
                             // play(answers[1]);
                             theFirstButtonState.fetchState();
@@ -159,6 +153,7 @@ class AnswerButtons extends StatelessWidget {
                 child: FlatButton(
                     onPressed: (continueButtonState.getActive)
                         ? () {
+                            playAudio.playClickSound();
                             theThirdButtonState.setClicked(answers[2]);
                             // play(answers[2]);
                             theSecondButtonState.fetchState();

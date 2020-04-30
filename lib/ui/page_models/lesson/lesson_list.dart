@@ -10,6 +10,7 @@ class LessonList extends StatelessWidget {
   List<Lesson> value;
   AccountUser accountUser;
   LessonList({this.value, this.accountUser});
+
   @override
   Widget build(BuildContext context) {
     if (value == null || accountUser.user == null) return LoadingPage();

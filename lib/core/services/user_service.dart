@@ -53,4 +53,20 @@ class UserService {
     return;
   }
 
+  Future<Null> updateMatrix3by3HighScore(
+      String userId, int score) async {
+    await Firestore.instance.collection('users').document(userId).updateData({
+      'matrix3by3': score,
+    });
+    return;
+  }
+
+  Future<Null> updateMatrix4by4HighScore(
+      String userId, int score) async {
+    await Firestore.instance.collection('users').document(userId).updateData({
+      'matrix4by4': score,
+    });
+    return;
+  }
+
 }

@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
 import 'package:learn_english/ui/common/speaker.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 
 class ListenAndChooseCorrectAnswer extends StatelessWidget {
+
   Vocabulary vocabulary;
   List<dynamic> answers = [];
   bool loading = true;
   ListenAndChooseCorrectAnswer({this.vocabulary});
-
+  AudioPlayer playAudio = AudioPlayer();
   void generateAnswers() {
     answers.add(vocabulary.vocab);
     var tmp = vocabulary.otherWord;
@@ -22,19 +23,11 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
     answers.shuffle();
   }
 
-  final FlutterTts flutterTts = FlutterTts();
-
-  void play() async {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.speak(vocabulary.vocab);
-  }
-
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      play();
+      playAudio.playCustomAudioFile(vocabulary.audioFile);
       generateAnswers();
-
       loading = false;
     }
     
@@ -76,7 +69,9 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
                               ),
                               SizedBox(height: 10),
                               GestureDetector(
-                                onTap: play,
+                                onTap: (){
+                                  playAudio.playCustomAudioFile(vocabulary.audioFile);
+                                },
                                 child: Speaker(),
                               ),
                             ],

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 
@@ -16,6 +17,8 @@ class FinishLessonPage extends StatelessWidget {
   bool loading = true;
   UserService userService = UserService();
   AccountUser accountUser = AccountUser();
+  AudioPlayer audioPlayer = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
     ContinueButtonState continueButtonState =
@@ -25,6 +28,7 @@ class FinishLessonPage extends StatelessWidget {
         Provider.of<ResultLearningState>(context);
 
     if (loading) {
+      audioPlayer.playFinishLessonSound();
       resultLearningState.setPercentCorrect(
           (continueButtonState.getCorrectAnswerNum /
                   sliderState.getMaxOfSlider *
@@ -64,18 +68,23 @@ class FinishLessonPage extends StatelessWidget {
                             TextSpan(text: ' EXP'),
                           ]),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.width / 2,
-                      decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        image: DecorationImage(
-                            image: Image.asset('assets/carrot.gif').image,
-                            fit: BoxFit.fitHeight),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 30.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.width / 2,
+                        decoration: BoxDecoration(
+                          color: Colors.yellow,
+                          image: DecorationImage(
+                              image: Image.asset('assets/carrot.gif').image,
+                              fit: BoxFit.fitHeight),
+                        ),
                       ),
                     ),
                     FlatButton(
                       onPressed: () {
+                        audioPlayer.playClickSound();
+                        
                         Map<String, dynamic> map = Map();
                         if (accountUser.user.learningState != null)
                           map = accountUser.user.learningState;
@@ -108,7 +117,7 @@ class FinishLessonPage extends StatelessWidget {
                             RouteName.homePage,
                             (Route<dynamic> route) => false);
                       },
-                      child: Text('Next'),
+                      child: Text('Next', style: TextStyle(fontSize: 20),),
                       color: Colors.green,
                     ),
                   ],

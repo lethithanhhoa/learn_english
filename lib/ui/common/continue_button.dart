@@ -1,13 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_english/ui/modules/route_name.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
-import 'package:learn_english/ui/state/heart_state.dart';
 import 'package:learn_english/ui/state/index.dart';
 import 'package:learn_english/ui/state/recording.dart';
-import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
 import 'package:learn_english/ui/state/the_first_button_state.dart';
@@ -18,6 +15,7 @@ import 'package:provider/provider.dart';
 
 class ContinueButton extends StatelessWidget {
   String temp = '';
+  AudioPlayer playAudio = AudioPlayer();
   @override
   Widget build(BuildContext context) {
     Index index = Provider.of<Index>(context);
@@ -73,6 +71,7 @@ class ContinueButton extends StatelessWidget {
                   onPressed: continueButtonState.getDisable
                       ? null
                       : () {
+                        playAudio.playClickSound();
                           continueButtonState.incrementClickedNum();
                           if (continueButtonState.getClickedNum == 1) {
                             if (!crosswordAnswerState.getAnswer.isEmpty) {
@@ -101,12 +100,17 @@ class ContinueButton extends StatelessWidget {
                               temp,
                               correctAnswer.getCorrectAnswer,
                             ));
-                            (temp.toLowerCase() ==
+                            if (temp.toLowerCase() ==
                                     correctAnswer.getCorrectAnswer
                                         .toLowerCase())
-                                ? continueButtonState
-                                    .incrementCorrectAnswerNum()
-                                : null;
+                                {
+                                  playAudio.playCorrectSound();
+                                  continueButtonState
+                                    .incrementCorrectAnswerNum();
+                                }
+                                else{
+                                  playAudio.playWrongSound();
+                                };
 
                             continueButtonState.setNameToContinue();
                             continueButtonState.inActive();
@@ -271,55 +275,4 @@ class ContinueButton extends StatelessWidget {
 
     continueButtonState.fetchState();
   }
-
-  // Widget tradeExpDialog(
-  //     BuildContext context,
-  //     HeartState heartState,
-  //     Index index,
-  //     ContinueButtonState continueButtonState,
-  //     CrosswordAnswerState crosswordAnswerState,
-  //     Recording recording,
-  //     TheFirstButtonState theFirstButtonState,
-  //     TheSecondButtonState theSecondButtonState,
-  //     TheThirdButtonState theThirdButtonState) {
-  //   return AlertDialog(
-  //     title: Text('No more lives'),
-  //     content: RichText(
-  //       text: TextSpan(
-  //           style: DefaultTextStyle.of(context).style,
-  //           children: <TextSpan>[
-  //             TextSpan(text: 'Do you want to use '),
-  //             TextSpan(
-  //                 text: '20 EXP',
-  //                 style: TextStyle(color: Colors.blue, fontSize: 20)),
-  //             TextSpan(text: 'to give'),
-  //             TextSpan(
-  //                 text: '5 lives',
-  //                 style: TextStyle(color: Colors.red, fontSize: 20)),
-  //           ]),
-  //     ),
-  //     actions: <Widget>[
-  //       FlatButton(
-  //           onPressed: () {
-  //             heartState.setHeartNum(5);
-  //             action(
-  //                 index,
-  //                 continueButtonState,
-  //                 crosswordAnswerState,
-  //                 recording,
-  //                 theFirstButtonState,
-  //                 theSecondButtonState,
-  //                 theThirdButtonState);
-  //             Navigator.pop(context);
-  //           },
-  //           child: Text('Yes')),
-  //       FlatButton(
-  //           onPressed: () {
-  //             Navigator.pushNamedAndRemoveUntil(
-  //                 context, RouteName.homePage, (Route<dynamic> route) => false);
-  //           },
-  //           child: Text('No')),
-  //     ],
-  //   );
-  // }
 }

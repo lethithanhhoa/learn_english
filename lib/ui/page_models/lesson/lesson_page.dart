@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 class LessonPage extends StatelessWidget {
   Database database = Database();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,30 +37,14 @@ class LessonPage extends StatelessWidget {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              IconButton(
-                                
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(
-                                    Icons.settings,
-                                    size: 30,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, RouteName.settingPage);
-                                  }),
-                              IconButton(
-                                padding: EdgeInsets.all(0.0),
-                                icon: Icon(Icons.list,
-                                    size: 30, color: Colors.white),
-                                onPressed: (){
-                                  Navigator.pushNamed(
-                                        context, RouteName.learnedWordsPage);
-                                },
-                              ),
-                            ],
+                          IconButton(
+                            padding: EdgeInsets.all(0.0),
+                            icon:
+                                Icon(Icons.list, size: 40, color: Colors.white),
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RouteName.learnedWordsPage);
+                            },
                           ),
                           Text(
                             'Lessons',

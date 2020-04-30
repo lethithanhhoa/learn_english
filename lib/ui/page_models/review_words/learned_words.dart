@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/database_service.dart';
@@ -8,21 +7,16 @@ import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 
 class LearnedWords extends StatelessWidget {
   Database database = Database();
   List<String> lessonList;
-
-  final FlutterTts flutterTts = FlutterTts();
-
-  void play(String vocab) async {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.speak(vocab);
-  }
+  AudioPlayer playAudio = AudioPlayer();
 
   Future<List<Vocabulary>> getVocabByLesson(List<String> lessonId) async {
     var list = await database.getVocabByLesson(lessonId);
-    print(list);
+
     return list;
   }
 
@@ -33,17 +27,17 @@ class LearnedWords extends StatelessWidget {
     if (accountUser.user.learningState == null)
       return Scaffold(
         appBar: AppBar(
-              title: Text(
-                'Learned Word',
-                style: GoogleFonts.handlee(
-                  textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              backgroundColor: Colors.green[300],
+          title: Text(
+            'Learned Words',
+            style: GoogleFonts.handlee(
+              textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600),
             ),
+          ),
+          backgroundColor: Colors.green[300],
+        ),
         body: Center(child: Text('No data')),
       );
     lessonList = accountUser.user.learningState.keys.toList();
@@ -52,7 +46,7 @@ class LearnedWords extends StatelessWidget {
         : Scaffold(
             appBar: AppBar(
               title: Text(
-                'Learned Word',
+                'Learned Words',
                 style: GoogleFonts.handlee(
                   textStyle: TextStyle(
                       color: Colors.white,
@@ -62,12 +56,13 @@ class LearnedWords extends StatelessWidget {
               ),
               backgroundColor: Colors.green[300],
             ),
+            backgroundColor: Colors.white,
             body: SafeArea(
               child: FutureBuilder(
                 future: getVocabByLesson(lessonList),
                 builder: (context, AsyncSnapshot<List<Vocabulary>> value) {
                   if (value.data == null) return LoadingPage();
-                  print(value.data.length);
+
                   return ListView.builder(
                       itemCount: value.data.length,
                       itemBuilder: (context, index) {
@@ -83,7 +78,8 @@ class LearnedWords extends StatelessWidget {
                           trailing: IconButton(
                               padding: EdgeInsets.all(0.0),
                               onPressed: () {
-                                play(value.data[index].vocab);
+                                playAudio.playCustomAudioFile(
+                                    value.data[index].audioFile);
                               },
                               icon: Icon(
                                 Icons.volume_up,

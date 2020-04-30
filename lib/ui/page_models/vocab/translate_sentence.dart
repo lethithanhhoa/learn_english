@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/crossword.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
 import 'package:learn_english/ui/state/state_of_crossword_list.dart';
@@ -15,12 +15,7 @@ class TranslateSentence extends StatelessWidget {
   Vocabulary vocabulary;
   TranslateSentence({this.vocabulary});
   bool loading = true;
-  final FlutterTts flutterTts = FlutterTts();
-
-  void play(String word) async {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.speak(word);
-  }
+  AudioPlayer playAudio = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +92,10 @@ class TranslateSentence extends StatelessWidget {
                                                 onTap: (continueButtonState
                                                         .getActive)
                                                     ? () {
+                                                        playAudio.playDropSound();
                                                         crosswordAnswerState
                                                             .removeFromList(i);
-                                                        print(
-                                                            crosswordAnswerState
-                                                                .getAnswer);
+                                                        
                                                       }
                                                     : null,
                                                 child: CrossWord(
@@ -129,8 +123,7 @@ class TranslateSentence extends StatelessWidget {
                                             onTap: (continueButtonState
                                                     .getActive)
                                                 ? () {
-                                                    play(stateOfCrossWordList
-                                                        .list[index]);
+                                                    playAudio.playDragSound();
                                                     crosswordAnswerState
                                                         .addToList(
                                                             stateOfCrossWordList

@@ -1,34 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/state/detail_word_state.dart';
 import 'package:learn_english/ui/state/index.dart';
 import 'package:provider/provider.dart';
-
-class DetailWordPage extends StatelessWidget {
-  List<Vocabulary> vocabList;
-  int index;
-  DetailWordPage({this.vocabList, this.index});
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => Index(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => DetailWordState(),
-        )
-      ],
-      child: DetailWord(
-        vocabList: vocabList,
-        index: index,
-      ),
-    );
-  }
-}
+import 'package:learn_english/ui/modules/audio_player.dart';
 
 class DetailWord extends StatelessWidget {
   List<Vocabulary> vocabList;
@@ -36,12 +12,7 @@ class DetailWord extends StatelessWidget {
   DetailWord({this.vocabList, this.index});
 
   bool loading = true;
-
-  final FlutterTts flutterTts = FlutterTts();
-  void play(String vocab) async {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.speak(vocab);
-  }
+  AudioPlayer playAudio = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +40,7 @@ class DetailWord extends StatelessWidget {
                     ),
                     child: GestureDetector(
                       onTap: () {
+                        playAudio.playClickSound();
                         Navigator.of(context).pop();
                       },
                       child: Icon(
@@ -84,6 +56,7 @@ class DetailWord extends StatelessWidget {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
+                        playAudio.playClickSound();
                         detailWordState.setState();
                       },
                       child: Container(
@@ -122,8 +95,9 @@ class DetailWord extends StatelessWidget {
                                             color: Colors.orange[300],
                                           ),
                                           onPressed: () {
-                                            play(vocabList[_index.getIndex]
-                                                .vocab);
+                                            playAudio.playCustomAudioFile(
+                                                vocabList[_index.getIndex]
+                                                    .audioFile);
                                           }),
                                     ),
                                     Container(
@@ -184,6 +158,7 @@ class DetailWord extends StatelessWidget {
                             onTap: (_index.getIndex == 0)
                                 ? null
                                 : () {
+                                  playAudio.playClickSound();
                                     detailWordState.setStateToTrue();
                                     _index.decrement();
                                   }),
@@ -200,6 +175,7 @@ class DetailWord extends StatelessWidget {
                             onTap: (_index.getIndex == vocabList.length - 1)
                                 ? null
                                 : () {
+                                  playAudio.playClickSound();
                                     detailWordState.setStateToTrue();
                                     _index.increment();
                                   }),
