@@ -5,6 +5,6 @@
 - Cài đặt Flutter trên máy (xem chi tiết ở https://flutter.dev/docs/get-started/install)
 - Clone source code và từ folder clone về thực thi câu lệnh "flutter run" để chạy chương trình
 
-# Build file apk
+# Build file apk và cài đặt trên máy
 - Thực thi câu lện "flutter build apk --debug" để build debug version hoặc "flutter build apk" (hoặc "flutter build apk --split-per-abi") để build release version 
 - Và cài đặt trên máy bằng câu lệnh "flutter install"
