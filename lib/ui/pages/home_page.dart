@@ -5,7 +5,6 @@ import 'package:learn_english/ui/page_models/game/game_page.dart';
 import 'package:learn_english/ui/page_models/lesson/lesson_page.dart';
 import 'package:learn_english/ui/page_models/rank/rank_page.dart';
 import 'package:learn_english/ui/pages/account_page.dart';
-import 'package:learn_english/ui/pages/starting_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);

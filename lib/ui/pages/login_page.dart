@@ -178,6 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.pink[400],
                             ),
                           ),
+                          
                         ],
                       ),
                       Column(

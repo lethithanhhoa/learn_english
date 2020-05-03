@@ -32,6 +32,7 @@ dependencies:
   flutter_sequence_animation: "^3.0.0"
   sa_anicoto: ^1.0.0
   sa_stateless_animation: ^1.0.0
+  auto_size_text: ^2.1.0
 
 
   # firebase dependence
@@ -57,9 +58,6 @@ dependencies:
 
   #access permission
   permission_handler: ^4.4.0+hotfix.2
-
-  #others
-  scrollable_positioned_list: ^0.1.4
   
 dev_dependencies:
   flutter_test:

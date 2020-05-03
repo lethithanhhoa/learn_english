@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
@@ -69,10 +70,15 @@ class DetailWord extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width,
                                 alignment: Alignment.center,
                                 color: Colors.white,
-                                child: Text(
-                                  vocabList[_index.getIndex].mean,
-                                  style: TextStyle(
-                                      color: Colors.blue[400], fontSize: 40),
+                                child: Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: AutoSizeText(
+                                    vocabList[_index.getIndex].mean,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.blue[400], fontSize: 40),
+                                  ),
                                 ),
                               )
                             : Container(
@@ -82,24 +88,7 @@ class DetailWord extends StatelessWidget {
                                 color: Colors.white,
                                 child: Stack(
                                   children: <Widget>[
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.width -
-                                              40.0,
-                                      width: MediaQuery.of(context).size.width,
-                                      alignment: Alignment.topRight,
-                                      child: IconButton(
-                                          icon: Icon(
-                                            Icons.volume_up,
-                                            size: 40,
-                                            color: Colors.orange[300],
-                                          ),
-                                          onPressed: () {
-                                            playAudio.playCustomAudioFile(
-                                                vocabList[_index.getIndex]
-                                                    .audioFile);
-                                          }),
-                                    ),
+                                    
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.width -
@@ -129,14 +118,37 @@ class DetailWord extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Text(
-                                            vocabList[_index.getIndex].vocab,
-                                            style: TextStyle(
-                                                fontSize: 45,
-                                                color: Colors.green),
+                                          Padding(
+                                            padding:  EdgeInsets.symmetric(horizontal: 5),
+                                            child: AutoSizeText(
+                                              vocabList[_index.getIndex].vocab,
+                                              maxLines: 1,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 45,
+                                                  color: Colors.green),
+                                            ),
                                           ),
                                         ],
                                       ),
+                                    ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.width -
+                                              40.0,
+                                      width: MediaQuery.of(context).size.width,
+                                      alignment: Alignment.topRight,
+                                      child: IconButton(
+                                          icon: Icon(
+                                            Icons.volume_up,
+                                            size: 40,
+                                            color: Colors.orange[300],
+                                          ),
+                                          onPressed: () {
+                                            playAudio.playCustomAudioFile(
+                                                vocabList[_index.getIndex]
+                                                    .audioFile);
+                                          }),
                                     ),
                                   ],
                                 ),

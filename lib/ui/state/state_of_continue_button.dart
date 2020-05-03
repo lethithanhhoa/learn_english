@@ -8,7 +8,8 @@ class ContinueButtonState extends ChangeNotifier {
       true; //this parameter is used to disable choose other answer after clicking 'check it' button
   int _screenCode = 0;
   int _correctAnswerNum = 0;
-  int _heartNum = 5;
+  // int _heartNum = 5;
+  String _answer = '';
 
   bool get getDisable => _disable;
   String get getNameButton => _nameButton;
@@ -16,22 +17,29 @@ class ContinueButtonState extends ChangeNotifier {
   bool get getActive => _active;
   int get getScreenCode => _screenCode;
   int get getCorrectAnswerNum => _correctAnswerNum;
-  int get getHeartNum => _heartNum;
+  // int get getHeartNum => _heartNum;
+  String get getAnswer => _answer;
+
+  setAnswer(String string){
+    _answer = string;
+    // _answer.trim();
+    notifyListeners();
+  }
 
   incrementCorrectAnswerNum() {
     _correctAnswerNum++;
     notifyListeners();
   }
 
-  decrementHeart() {
-    _heartNum--;
-    notifyListeners();
-  }
+  // decrementHeart() {
+  //   _heartNum--;
+  //   notifyListeners();
+  // }
 
-  setHeartNum(int number) {
-    _heartNum = number;
-    notifyListeners();
-  }
+  // setHeartNum(int number) {
+  //   _heartNum = number;
+  //   notifyListeners();
+  // }
 
   inActive() {
     _active = false;

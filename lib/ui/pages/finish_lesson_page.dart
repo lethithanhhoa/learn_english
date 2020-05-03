@@ -62,7 +62,7 @@ class FinishLessonPage extends StatelessWidget {
                             TextSpan(text: '+ '),
                             TextSpan(
                                 text:
-                                    '${continueButtonState.getCorrectAnswerNum * 5}',
+                                    '${continueButtonState.getCorrectAnswerNum * 3}',
                                 style: TextStyle(
                                     color: Colors.orange, fontSize: 50)),
                             TextSpan(text: ' EXP'),
@@ -110,7 +110,7 @@ class FinishLessonPage extends StatelessWidget {
                               accountUser.user.userId,
                               currentExp +
                                   (continueButtonState.getCorrectAnswerNum *
-                                      5));
+                                      3));
                         }
                         Navigator.pushNamedAndRemoveUntil(
                             context,

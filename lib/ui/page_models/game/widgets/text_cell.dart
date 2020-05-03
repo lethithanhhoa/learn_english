@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
@@ -23,11 +24,15 @@ class TextCell extends Cell {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Center(
-          child: Text(
-            vocabulary.vocab,
-            style: TextStyle(
-              fontSize: textSize,
-              color: Colors.blue[300],
+          child: Padding(
+            padding: EdgeInsets.all(borderRadius / 2),
+            child: AutoSizeText(
+              vocabulary.vocab,
+              maxLines: 1,
+              style: TextStyle(
+                fontSize: textSize,
+                color: Colors.blue[300],
+              ),
             ),
           ),
         ),

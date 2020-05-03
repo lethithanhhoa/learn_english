@@ -16,6 +16,7 @@ import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:provider/provider.dart';
 
 class VocabList extends StatelessWidget {
+  bool loading = true;
   @override
   Widget build(BuildContext context) {
     Index index = Provider.of<Index>(context);
@@ -27,7 +28,10 @@ class VocabList extends StatelessWidget {
       if (value == null) return LoadingPage();
 
       sliderState.setMaxOfSlider(value.length);
-
+      if (loading){
+        value.shuffle();
+        loading = false;
+      }
       if (index.getIndex >= value.length)
         return FinishLessonPage();
       else {

@@ -14,7 +14,7 @@ import 'package:learn_english/ui/state/the_third_button_state.dart';
 import 'package:provider/provider.dart';
 
 class ContinueButton extends StatelessWidget {
-  String temp = '';
+  // String temp = '';
   AudioPlayer playAudio = AudioPlayer();
   @override
   Widget build(BuildContext context) {
@@ -75,32 +75,38 @@ class ContinueButton extends StatelessWidget {
                           continueButtonState.incrementClickedNum();
                           if (continueButtonState.getClickedNum == 1) {
                             if (!crosswordAnswerState.getAnswer.isEmpty) {
+                              continueButtonState.setAnswer('');
                               crosswordAnswerState.getAnswer.forEach((item) {
-                                temp = temp + item + " ";
+                            
+                                continueButtonState.setAnswer((continueButtonState.getAnswer + " " + item).trim());
                               });
-                              temp = temp.trim();
-                              temp = temp.replaceAll("I am", "I'm");
+                              // temp = temp.trim();
+                              // temp = temp.replaceAll("I am", "I'm");
                               continueButtonState.setScreenCode(1);
                             } else if (recording.getTextResult != '') {
-                              temp = recording.getTextResult;
+                              continueButtonState.setAnswer(recording.getTextResult);
+                              
                               continueButtonState.setScreenCode(2);
                             } else if (theFirstButtonState.getClicked) {
-                              temp = theFirstButtonState.getValue;
+                              continueButtonState.setAnswer(theFirstButtonState.getValue);
+                              
                               continueButtonState.setScreenCode(3);
                             } else if (theSecondButtonState.getClicked) {
-                              temp = theSecondButtonState.getValue;
+                               continueButtonState.setAnswer(theSecondButtonState.getValue);
+                             
                               continueButtonState.setScreenCode(4);
                             } else if (theThirdButtonState.getClicked) {
-                              temp = theThirdButtonState.getValue;
+                              continueButtonState.setAnswer(theThirdButtonState.getValue);
+                             
                               continueButtonState.setScreenCode(5);
                             }
 
                             Scaffold.of(context).showSnackBar(snackBar(
                               context,
-                              temp,
+                              continueButtonState.getAnswer,
                               correctAnswer.getCorrectAnswer,
                             ));
-                            if (temp.toLowerCase() ==
+                            if (continueButtonState.getAnswer.toLowerCase() ==
                                     correctAnswer.getCorrectAnswer
                                         .toLowerCase())
                                 {
@@ -146,15 +152,18 @@ class ContinueButton extends StatelessWidget {
   }
 
   Widget snackBar(BuildContext context, String answer, String correctAnswer) {
+    bool value = (answer.toLowerCase() == correctAnswer.toLowerCase());
+    print(answer);
+    print(correctAnswer);
     return SnackBar(
       duration: Duration(seconds: 2),
-      backgroundColor: (answer.toLowerCase() == correctAnswer.toLowerCase())
+      backgroundColor: value
           ? Colors.lightGreen[100].withOpacity(0.8)
           : Colors.pink[100].withOpacity(0.8),
       content: Container(
         height: 120,
         alignment: Alignment.topLeft,
-        child: (answer.toLowerCase() != correctAnswer.toLowerCase())
+        child: !value
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

@@ -1,6 +1,17 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
+import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/ui/page_models/game/widgets/cell.dart';
+import 'package:learn_english/ui/page_models/game/widgets/image_cell.dart';
+import 'package:learn_english/ui/page_models/game/widgets/text_cell.dart';
 
 class Matrix2By2State extends ChangeNotifier {
+  int firstIndex = 0;
+  int secondIndex = 0;
+  List<Cell> widgets = [];
+  int numberClicked = 0;
+
   bool _loading = true;
   int _score = 0;
   bool _isFirstWidget = false;
@@ -29,17 +40,58 @@ class Matrix2By2State extends ChangeNotifier {
   bool get getLoading => _loading;
   int get getScore => _score;
 
+  setWidgets(List<Vocabulary> vocabList){  
+    Random random = Random();
+      firstIndex = random.nextInt(vocabList.length);
+      do {
+        secondIndex = random.nextInt(vocabList.length);
+      } while (firstIndex == secondIndex);
+
+      widgets = [
+        ImageCell(
+          vocabulary: vocabList[firstIndex],
+          textSize: 18,
+          borderRadius: 15,
+        ),
+        TextCell(
+          vocabulary: vocabList[firstIndex],
+          textSize: 40,
+          borderRadius: 15,
+        ),
+        ImageCell(
+          vocabulary: vocabList[secondIndex],
+          textSize: 18,
+          borderRadius: 15,
+        ),
+        TextCell(
+          vocabulary: vocabList[secondIndex],
+          textSize: 40,
+          borderRadius: 15,
+        )
+      ];
+    widgets.shuffle();
+    notifyListeners();
+  }
+
+
+  setFirstIndex(int number){
+    firstIndex = number;
+    notifyListeners();
+  }
+
+  setSecondIndex(int number){
+    secondIndex = number;
+    notifyListeners();
+  }
+
   setLoading(bool loading) {
     _loading = loading;
     notifyListeners();
   }
 
-  load() {
-    if (_firstWidgetIsCorrect == 1 &&
-        _secondWidgetIsCorrect == 1 &&
-        _thirdWidgetIsCorrect == 1 &&
-        _forWidgetIsCorrect == 1) {
-      _loading = true;
+  load(List<Vocabulary> vocabList) {
+    if (numberClicked == 4) {
+      setWidgets(vocabList);
       _isFirstWidget = false;
       _isSecondWidget = false;
       _isThirdWidget = false;
@@ -51,15 +103,15 @@ class Matrix2By2State extends ChangeNotifier {
       _forWidgetIsCorrect = 0;
 
       _checkIsWrong = false;
-      // notifyListeners();
+      numberClicked = 0;
+      notifyListeners();
     }
   }
 
   checkAnswer() {
-    print(_answers);
     if (_answers.length == 2) {
       if (_answers[0] == _answers[1]) {
-        print('TRUE');
+        
         if (_isFirstWidget) {
           _isFirstWidget = false;
           _firstWidgetIsCorrect = 1;
@@ -77,8 +129,9 @@ class Matrix2By2State extends ChangeNotifier {
           _forWidgetIsCorrect = 1;
         }
         _score++;
+        numberClicked = numberClicked + 2;
       } else {
-        print('FALSE');
+       
         if (_isFirstWidget) _firstWidgetIsCorrect = 2;
         if (_isSecondWidget) _secondWidgetIsCorrect = 2;
         if (_isThirdWidget) _thirdWidgetIsCorrect = 2;
