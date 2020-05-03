@@ -6,10 +6,12 @@ class StateOfCrossWordList extends ChangeNotifier {
   List<dynamic> list = [];
 
   generateCrosswords(Vocabulary vocabulary) {
-    list = vocabulary.vocab.replaceAll("I'm", "I am").split(' ');
+    list = vocabulary.vocab
+    // .replaceAll("I'm", "I am")
+    .split(' ');
     vocabulary.otherWord.forEach((f) => f
         .toString()
-        .replaceAll("I'm", "I am")
+        // .replaceAll("I'm", "I am")
         .split(' ')
         .forEach((item) => (list.contains(item) ? null : list.add(item))));
     if (list.length > 10) list = list.getRange(0, 10).toList();

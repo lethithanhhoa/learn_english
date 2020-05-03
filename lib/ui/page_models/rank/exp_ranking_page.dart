@@ -5,7 +5,6 @@ import 'package:learn_english/ui/page_models/rank/rank_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ExpRankingPage extends StatelessWidget {
   // final ItemScrollController itemScrollController = ItemScrollController();

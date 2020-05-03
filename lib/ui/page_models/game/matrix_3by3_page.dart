@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/user_service.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
-import 'package:learn_english/ui/page_models/game/widgets/cell.dart';
 import 'package:learn_english/ui/page_models/game/widgets/image_cell.dart';
 import 'package:learn_english/ui/page_models/game/widgets/text_cell.dart';
 import 'package:learn_english/ui/state/account_user.dart';
@@ -19,13 +18,6 @@ class Matrix3By3Page extends StatelessWidget {
   Matrix3By3Page({this.vocabList});
   AudioPlayer audioPlayer = AudioPlayer();
   UserService userService = UserService();
-  List<Cell> widgets;
-
-  int firstIndex = 0;
-  int secondIndex = 0;
-  int thirdIndex = 0;
-  int forIndex = 0;
-  int fiveIndex = 0;
 
   Future<bool> onWillPop() {
     Fluttertoast.showToast(msg: "Press close icon to back");
@@ -127,7 +119,7 @@ class Matrix3By3Page extends StatelessWidget {
                         accountUser.user.userId, matrix3by3state.getScore);
                   }
                 }
-                
+
                 Navigator.of(context).pop();
               },
             ),
@@ -138,76 +130,77 @@ class Matrix3By3Page extends StatelessWidget {
 
     if (matrix3by3state.getLoading) {
       Random random = Random();
-      firstIndex = random.nextInt(vocabList.length);
+      matrix3by3state.setFirstIndex(random.nextInt(vocabList.length));
       do {
-        secondIndex = random.nextInt(vocabList.length);
-      } while (secondIndex == firstIndex);
+        matrix3by3state.setSecondIndex(random.nextInt(vocabList.length));
+      } while (matrix3by3state.secondIndex == matrix3by3state.firstIndex);
 
       do {
-        thirdIndex = random.nextInt(vocabList.length);
-      } while (secondIndex == thirdIndex || firstIndex == thirdIndex);
+        matrix3by3state.setThirdIndex(random.nextInt(vocabList.length));
+      } while (matrix3by3state.secondIndex == matrix3by3state.thirdIndex ||
+          matrix3by3state.firstIndex == matrix3by3state.thirdIndex);
 
       do {
-        forIndex = random.nextInt(vocabList.length);
-      } while (thirdIndex == forIndex ||
-          secondIndex == forIndex ||
-          firstIndex == forIndex);
+        matrix3by3state.setForIndex(random.nextInt(vocabList.length));
+      } while (matrix3by3state.thirdIndex == matrix3by3state.forIndex ||
+          matrix3by3state.secondIndex == matrix3by3state.forIndex ||
+          matrix3by3state.firstIndex == matrix3by3state.forIndex);
 
       do {
-        fiveIndex = random.nextInt(vocabList.length);
-      } while (forIndex == fiveIndex ||
-          thirdIndex == fiveIndex ||
-          secondIndex == fiveIndex ||
-          firstIndex == fiveIndex);
+        matrix3by3state.setFiveIndex(random.nextInt(vocabList.length));
+      } while (matrix3by3state.forIndex == matrix3by3state.fiveIndex ||
+          matrix3by3state.thirdIndex == matrix3by3state.fiveIndex ||
+          matrix3by3state.secondIndex == matrix3by3state.fiveIndex ||
+          matrix3by3state.firstIndex == matrix3by3state.fiveIndex);
 
-      widgets = [
+      matrix3by3state.setWidgets([
         ImageCell(
-          vocabulary: vocabList[firstIndex],
+          vocabulary: vocabList[matrix3by3state.firstIndex],
           textSize: 15,
           borderRadius: 10,
         ),
         TextCell(
-          vocabulary: vocabList[firstIndex],
+          vocabulary: vocabList[matrix3by3state.firstIndex],
           textSize: 30,
           borderRadius: 10,
         ),
         ImageCell(
-          vocabulary: vocabList[secondIndex],
+          vocabulary: vocabList[matrix3by3state.secondIndex],
           textSize: 15,
           borderRadius: 10,
         ),
         TextCell(
-          vocabulary: vocabList[secondIndex],
+          vocabulary: vocabList[matrix3by3state.secondIndex],
           textSize: 30,
           borderRadius: 10,
         ),
         ImageCell(
-          vocabulary: vocabList[thirdIndex],
+          vocabulary: vocabList[matrix3by3state.thirdIndex],
           textSize: 15,
           borderRadius: 10,
         ),
         TextCell(
-          vocabulary: vocabList[thirdIndex],
+          vocabulary: vocabList[matrix3by3state.thirdIndex],
           textSize: 30,
           borderRadius: 10,
         ),
         ImageCell(
-          vocabulary: vocabList[forIndex],
+          vocabulary: vocabList[matrix3by3state.forIndex],
           textSize: 15,
           borderRadius: 10,
         ),
         TextCell(
-          vocabulary: vocabList[forIndex],
+          vocabulary: vocabList[matrix3by3state.forIndex],
           textSize: 30,
           borderRadius: 10,
         ),
         ImageCell(
-          vocabulary: vocabList[fiveIndex],
+          vocabulary: vocabList[matrix3by3state.fiveIndex],
           textSize: 15,
           borderRadius: 10,
         ),
-      ];
-      widgets.shuffle();
+      ]);
+      
       matrix3by3state.setLoading(false);
     }
 
@@ -279,7 +272,7 @@ class Matrix3By3Page extends StatelessWidget {
                                       ? () {
                                           audioPlayer.playDragSound();
                                           matrix3by3state.setFirstWidgetState(
-                                              widgets[0].vocabulary.vocab);
+                                             matrix3by3state.widgets[0].vocabulary.vocab);
                                         }
                                       : null,
                                   child: (matrix3by3state
@@ -295,7 +288,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[0],
+                                                matrix3by3state.widgets[0],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -328,7 +321,7 @@ class Matrix3By3Page extends StatelessWidget {
                                       ? () {
                                           audioPlayer.playDragSound();
                                           matrix3by3state.setSecondWidgetState(
-                                              widgets[1].vocabulary.vocab);
+                                              matrix3by3state.widgets[1].vocabulary.vocab);
                                         }
                                       : null,
                                   child: (matrix3by3state
@@ -344,7 +337,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[1],
+                                                matrix3by3state.widgets[1],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -377,7 +370,7 @@ class Matrix3By3Page extends StatelessWidget {
                                       ? () {
                                           audioPlayer.playDragSound();
                                           matrix3by3state.setThirdWidgetState(
-                                              widgets[2].vocabulary.vocab);
+                                              matrix3by3state.widgets[2].vocabulary.vocab);
                                         }
                                       : null,
                                   child: (matrix3by3state
@@ -393,7 +386,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[2],
+                                                matrix3by3state.widgets[2],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -432,7 +425,7 @@ class Matrix3By3Page extends StatelessWidget {
                                           ? () {
                                               audioPlayer.playDragSound();
                                               matrix3by3state.setForWidgetState(
-                                                  widgets[3].vocabulary.vocab);
+                                                  matrix3by3state.widgets[3].vocabulary.vocab);
                                             }
                                           : null,
                                   child: (matrix3by3state
@@ -448,7 +441,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[3],
+                                                matrix3by3state.widgets[3],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -481,7 +474,7 @@ class Matrix3By3Page extends StatelessWidget {
                                       ? () {
                                           audioPlayer.playDragSound();
                                           matrix3by3state.setFiveWidgetState(
-                                              widgets[4].vocabulary.vocab);
+                                              matrix3by3state.widgets[4].vocabulary.vocab);
                                         }
                                       : null,
                                   child: (matrix3by3state
@@ -497,7 +490,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[4],
+                                                matrix3by3state.widgets[4],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -530,7 +523,7 @@ class Matrix3By3Page extends StatelessWidget {
                                           ? () {
                                               audioPlayer.playDragSound();
                                               matrix3by3state.setSixWidgetState(
-                                                  widgets[5].vocabulary.vocab);
+                                                  matrix3by3state.widgets[5].vocabulary.vocab);
                                             }
                                           : null,
                                   child: (matrix3by3state
@@ -546,7 +539,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[5],
+                                                matrix3by3state.widgets[5],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -585,7 +578,7 @@ class Matrix3By3Page extends StatelessWidget {
                                       ? () {
                                           audioPlayer.playDragSound();
                                           matrix3by3state.setSevenWidgetState(
-                                              widgets[6].vocabulary.vocab);
+                                              matrix3by3state.widgets[6].vocabulary.vocab);
                                         }
                                       : null,
                                   child: (matrix3by3state
@@ -601,7 +594,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[6],
+                                                matrix3by3state.widgets[6],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -634,7 +627,7 @@ class Matrix3By3Page extends StatelessWidget {
                                       ? () {
                                           audioPlayer.playDragSound();
                                           matrix3by3state.setEightWidgetState(
-                                              widgets[7].vocabulary.vocab);
+                                              matrix3by3state.widgets[7].vocabulary.vocab);
                                         }
                                       : null,
                                   child: (matrix3by3state
@@ -650,7 +643,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[7],
+                                                matrix3by3state.widgets[7],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size
@@ -683,7 +676,7 @@ class Matrix3By3Page extends StatelessWidget {
                                       ? () {
                                           audioPlayer.playDragSound();
                                           matrix3by3state.setNineWidgetState(
-                                              widgets[8].vocabulary.vocab);
+                                              matrix3by3state.widgets[8].vocabulary.vocab);
                                         }
                                       : null,
                                   child: (matrix3by3state
@@ -699,7 +692,7 @@ class Matrix3By3Page extends StatelessWidget {
                                             padding: EdgeInsets.all(2.5),
                                             child: Stack(
                                               children: <Widget>[
-                                                widgets[8],
+                                                matrix3by3state.widgets[8],
                                                 Container(
                                                   height: MediaQuery.of(context)
                                                       .size

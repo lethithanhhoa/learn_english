@@ -20,14 +20,6 @@ class Matrix4By4Page extends StatelessWidget {
   UserService userService = UserService();
   AudioPlayer audioPlayer = AudioPlayer();
   List<Cell> widgets;
-  int firstIndex = 0;
-  int secondIndex = 0;
-  int thirdIndex = 0;
-  int forIndex = 0;
-  int fiveIndex = 0;
-  int sixIndex = 0;
-  int sevenIndex = 0;
-  int eightIndex = 0;
 
   Future<bool> onWillPop() {
     Fluttertoast.showToast(msg: "Press close icon to back");
@@ -141,130 +133,131 @@ class Matrix4By4Page extends StatelessWidget {
 
     if (matrix4by4state.getLoading) {
       Random random = Random();
-      firstIndex = random.nextInt(vocabList.length);
+      matrix4by4state.setFirstIndex(random.nextInt(vocabList.length));
       do {
-        secondIndex = random.nextInt(vocabList.length);
-      } while (secondIndex == firstIndex);
+        matrix4by4state.setSecondIndex(random.nextInt(vocabList.length));
+      } while (matrix4by4state.secondIndex == matrix4by4state.firstIndex);
 
       do {
-        thirdIndex = random.nextInt(vocabList.length);
-      } while (secondIndex == thirdIndex || firstIndex == thirdIndex);
+        matrix4by4state.setThirdIndex(random.nextInt(vocabList.length));
+      } while (matrix4by4state.secondIndex == matrix4by4state.thirdIndex ||
+          matrix4by4state.firstIndex == matrix4by4state.thirdIndex);
 
       do {
-        forIndex = random.nextInt(vocabList.length);
-      } while (thirdIndex == forIndex ||
-          secondIndex == forIndex ||
-          firstIndex == forIndex);
+        matrix4by4state.setForIndex(random.nextInt(vocabList.length));
+      } while (matrix4by4state.thirdIndex == matrix4by4state.forIndex ||
+          matrix4by4state.secondIndex == matrix4by4state.forIndex ||
+          matrix4by4state.firstIndex == matrix4by4state.forIndex);
 
       do {
-        fiveIndex = random.nextInt(vocabList.length);
-      } while (forIndex == fiveIndex ||
-          thirdIndex == fiveIndex ||
-          secondIndex == fiveIndex ||
-          firstIndex == fiveIndex);
+        matrix4by4state.setFiveIndex(random.nextInt(vocabList.length));
+      } while (matrix4by4state.forIndex == matrix4by4state.fiveIndex ||
+          matrix4by4state.thirdIndex == matrix4by4state.fiveIndex ||
+          matrix4by4state.secondIndex == matrix4by4state.fiveIndex ||
+          matrix4by4state.firstIndex == matrix4by4state.fiveIndex);
       do {
-        sixIndex = random.nextInt(vocabList.length);
-      } while (fiveIndex == sixIndex ||
-          forIndex == sixIndex ||
-          thirdIndex == sixIndex ||
-          secondIndex == sixIndex ||
-          firstIndex == sixIndex);
+        matrix4by4state.setSixIndex(random.nextInt(vocabList.length));
+      } while (matrix4by4state.fiveIndex == matrix4by4state.sixIndex ||
+          matrix4by4state.forIndex == matrix4by4state.sixIndex ||
+          matrix4by4state.thirdIndex == matrix4by4state.sixIndex ||
+          matrix4by4state.secondIndex == matrix4by4state.sixIndex ||
+          matrix4by4state.firstIndex == matrix4by4state.sixIndex);
       do {
-        sevenIndex = random.nextInt(vocabList.length);
-      } while (sixIndex == sevenIndex ||
-          fiveIndex == sevenIndex ||
-          forIndex == sevenIndex ||
-          thirdIndex == sevenIndex ||
-          secondIndex == sevenIndex ||
-          firstIndex == sevenIndex);
+        matrix4by4state.setSevenIndex(random.nextInt(vocabList.length));
+      } while (matrix4by4state.sixIndex == matrix4by4state.sevenIndex ||
+          matrix4by4state.fiveIndex == matrix4by4state.sevenIndex ||
+          matrix4by4state.forIndex == matrix4by4state.sevenIndex ||
+          matrix4by4state.thirdIndex == matrix4by4state.sevenIndex ||
+          matrix4by4state.secondIndex == matrix4by4state.sevenIndex ||
+          matrix4by4state.firstIndex == matrix4by4state.sevenIndex);
       do {
-        eightIndex = random.nextInt(vocabList.length);
-      } while (sevenIndex == eightIndex ||
-          sixIndex == eightIndex ||
-          fiveIndex == eightIndex ||
-          forIndex == eightIndex ||
-          thirdIndex == eightIndex ||
-          secondIndex == eightIndex ||
-          firstIndex == eightIndex);
+        matrix4by4state.setEightIndex(random.nextInt(vocabList.length));
+      } while (matrix4by4state.sevenIndex == matrix4by4state.eightIndex ||
+          matrix4by4state.sixIndex == matrix4by4state.eightIndex ||
+          matrix4by4state.fiveIndex == matrix4by4state.eightIndex ||
+          matrix4by4state.forIndex == matrix4by4state.eightIndex ||
+          matrix4by4state.thirdIndex == matrix4by4state.eightIndex ||
+          matrix4by4state.secondIndex == matrix4by4state.eightIndex ||
+          matrix4by4state.firstIndex == matrix4by4state.eightIndex);
 
       widgets = [
         ImageCell(
-          vocabulary: vocabList[firstIndex],
+          vocabulary: vocabList[matrix4by4state.firstIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[firstIndex],
+          vocabulary: vocabList[matrix4by4state.firstIndex],
           textSize: 25,
           borderRadius: 8,
         ),
         ImageCell(
-          vocabulary: vocabList[secondIndex],
+          vocabulary: vocabList[matrix4by4state.secondIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[secondIndex],
+          vocabulary: vocabList[matrix4by4state.secondIndex],
           textSize: 25,
           borderRadius: 8,
         ),
         ImageCell(
-          vocabulary: vocabList[thirdIndex],
+          vocabulary: vocabList[matrix4by4state.thirdIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[thirdIndex],
+          vocabulary: vocabList[matrix4by4state.thirdIndex],
           textSize: 25,
           borderRadius: 8,
         ),
         ImageCell(
-          vocabulary: vocabList[forIndex],
+          vocabulary: vocabList[matrix4by4state.forIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[forIndex],
+          vocabulary: vocabList[matrix4by4state.forIndex],
           textSize: 25,
           borderRadius: 8,
         ),
         ImageCell(
-          vocabulary: vocabList[fiveIndex],
+          vocabulary: vocabList[matrix4by4state.fiveIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[fiveIndex],
+          vocabulary: vocabList[matrix4by4state.fiveIndex],
           textSize: 25,
           borderRadius: 8,
         ),
         ImageCell(
-          vocabulary: vocabList[sixIndex],
+          vocabulary: vocabList[matrix4by4state.sixIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[sixIndex],
+          vocabulary: vocabList[matrix4by4state.sixIndex],
           textSize: 25,
           borderRadius: 8,
         ),
         ImageCell(
-          vocabulary: vocabList[sevenIndex],
+          vocabulary: vocabList[matrix4by4state.sevenIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[sevenIndex],
+          vocabulary: vocabList[matrix4by4state.sevenIndex],
           textSize: 25,
           borderRadius: 8,
         ),
         ImageCell(
-          vocabulary: vocabList[eightIndex],
+          vocabulary: vocabList[matrix4by4state.eightIndex],
           textSize: 14,
           borderRadius: 8,
         ),
         TextCell(
-          vocabulary: vocabList[eightIndex],
+          vocabulary: vocabList[matrix4by4state.eightIndex],
           textSize: 25,
           borderRadius: 8,
         ),

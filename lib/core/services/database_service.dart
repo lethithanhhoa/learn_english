@@ -41,6 +41,7 @@ class Database {
     var ref = await _vocabs.getDocuments();
     List<Vocabulary> listOfVocab =
         ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
+    listOfVocab.shuffle();
     return listOfVocab;
   }
 
@@ -48,6 +49,7 @@ class Database {
     var ref = await _vocabs.where('lessonId', whereIn: lessonId).getDocuments();
     List<Vocabulary> listOfVocab =
         ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
+    // listOfVocab.shuffle();
     return listOfVocab;
   }
 
@@ -55,6 +57,7 @@ class Database {
     var ref = await _vocabs.where('type', whereIn: [1, 2]).getDocuments();
     List<Vocabulary> listOfVocab =
         ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
+    listOfVocab.shuffle();
     return listOfVocab;
   }
   

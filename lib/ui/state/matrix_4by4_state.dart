@@ -1,6 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
 class Matrix4By4State extends ChangeNotifier {
+  int firstIndex = 0;
+  int secondIndex = 0;
+  int thirdIndex = 0;
+  int forIndex = 0;
+  int fiveIndex = 0;
+  int sixIndex = 0;
+  int sevenIndex = 0;
+  int eightIndex = 0;
+
   bool _loading = true;
   int numberClickedCell = 0;
   int _score = 0;
@@ -84,6 +93,46 @@ class Matrix4By4State extends ChangeNotifier {
   bool get getLoading => _loading;
   int get getScore => _score;
 
+  setFirstIndex(int number) {
+    firstIndex = number;
+    notifyListeners();
+  }
+
+  setSecondIndex(int number) {
+    secondIndex = number;
+    notifyListeners();
+  }
+
+  setThirdIndex(int number) {
+    thirdIndex = number;
+    notifyListeners();
+  }
+
+  setForIndex(int number) {
+    forIndex = number;
+    notifyListeners();
+  }
+
+  setFiveIndex(int number) {
+    fiveIndex = number;
+    notifyListeners();
+  }
+
+  setSixIndex(int number) {
+    sixIndex = number;
+    notifyListeners();
+  }
+
+  setSevenIndex(int number) {
+    sevenIndex = number;
+    notifyListeners();
+  }
+
+  setEightIndex(int number) {
+    eightIndex = number;
+    notifyListeners();
+  }
+
   checkAnswer() {
     if (_answers.length == 2) {
       if (_answers[0] == _answers[1]) {
@@ -157,7 +206,6 @@ class Matrix4By4State extends ChangeNotifier {
         numberClickedCell = numberClickedCell + 2;
         print(_answers);
       } else {
-        
         if (_isFirstWidget) _firstWidgetIsCorrect = 2;
         if (_isSecondWidget) _secondWidgetIsCorrect = 2;
         if (_isThirdWidget) _thirdWidgetIsCorrect = 2;
@@ -291,11 +339,11 @@ class Matrix4By4State extends ChangeNotifier {
       _thirteenWidgetIsCorrect = 0;
       _forteenWidgetIsCorrect = 0;
       _fifteenWidgetIsCorrect = 0;
-      _sixteenWidgetIsCorrect =0;
+      _sixteenWidgetIsCorrect = 0;
 
       _checkIsWrong = false;
       numberClickedCell = 0;
-      // notifyListeners();
+      notifyListeners();
     }
   }
 
@@ -406,6 +454,7 @@ class Matrix4By4State extends ChangeNotifier {
     }
     notifyListeners();
   }
+
   setTenWidgetState(String value) {
     if (_isTenWidget) {
       _isTenWidget = false;

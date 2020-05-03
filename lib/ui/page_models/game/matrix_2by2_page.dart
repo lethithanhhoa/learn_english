@@ -1,13 +1,9 @@
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/user_service.dart';
-import 'package:learn_english/ui/page_models/game/widgets/cell.dart';
-import 'package:learn_english/ui/page_models/game/widgets/image_cell.dart';
-import 'package:learn_english/ui/page_models/game/widgets/text_cell.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:learn_english/ui/state/matrix_2by2_state.dart';
 import 'package:provider/provider.dart';
@@ -18,17 +14,13 @@ class Matrix2By2Page extends StatelessWidget {
   Matrix2By2Page({this.vocabList});
   UserService userService = UserService();
   AudioPlayer audioPlayer = AudioPlayer();
-  int firstIndex = 0;
-  int secondIndex = 0;
-  List<Cell> widgets;
-
-
+  bool loading = true;
   Future<bool> onWillPop() {
     Fluttertoast.showToast(msg: "Press close icon to back");
     return Future.value(false);
   }
 
-  Future<bool> onWillPopAlertMessage(){
+  Future<bool> onWillPopAlertMessage() {
     return Future.value(false);
   }
 
@@ -36,7 +28,11 @@ class Matrix2By2Page extends StatelessWidget {
   Widget build(BuildContext context) {
     Matrix2By2State matrix2by2state = Provider.of<Matrix2By2State>(context);
     AccountUser accountUser = Provider.of<AccountUser>(context);
-    matrix2by2state.load();
+    if (loading) {
+      matrix2by2state.setWidgets(vocabList);
+      loading =false;
+    }
+    matrix2by2state.load(vocabList);
 
     if (matrix2by2state.getCheckIsWrong) {
       int currentExp = accountUser.exp;
@@ -130,40 +126,6 @@ class Matrix2By2Page extends StatelessWidget {
       );
     }
 
-    if (matrix2by2state.getLoading) {
-      Random random = Random();
-      firstIndex = random.nextInt(vocabList.length);
-      do {
-        secondIndex = random.nextInt(vocabList.length);
-      } while (secondIndex == firstIndex);
-
-      widgets = [
-        ImageCell(
-          vocabulary: vocabList[firstIndex],
-          textSize: 18,
-          borderRadius: 15,
-        ),
-        TextCell(
-          vocabulary: vocabList[firstIndex],
-          textSize: 40,
-          borderRadius: 15,
-        ),
-        ImageCell(
-          vocabulary: vocabList[secondIndex],
-          textSize: 18,
-          borderRadius: 15,
-        ),
-        TextCell(
-          vocabulary: vocabList[secondIndex],
-          textSize: 40,
-          borderRadius: 15,
-        )
-      ];
-      widgets.shuffle();
-
-      matrix2by2state.setLoading(false);
-    }
-
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
@@ -196,7 +158,8 @@ class Matrix2By2Page extends StatelessWidget {
                                   accountUser.user.matrix2by2;
                               if (currentHighScore < matrix2by2state.getScore) {
                                 userService.updateMatrix2by2HighScore(
-                                    accountUser.user.userId, matrix2by2state.getScore);
+                                    accountUser.user.userId,
+                                    matrix2by2state.getScore);
                               }
                             }
                             Navigator.of(context).pop();
@@ -216,7 +179,7 @@ class Matrix2By2Page extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.center,
                   child: Container(
-                    height: MediaQuery.of(context).size.width-20,
+                    height: MediaQuery.of(context).size.width - 20,
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: <Widget>[
@@ -225,15 +188,16 @@ class Matrix2By2Page extends StatelessWidget {
                             children: <Widget>[
                               Expanded(
                                 child: GestureDetector(
-                                  onTap: (matrix2by2state
-                                              .getResultOfFirstWidget ==
-                                          0)
-                                      ? () {
-                                          audioPlayer.playDragSound();
-                                          matrix2by2state.setFirstWidgetState(
-                                              widgets[0].vocabulary.vocab);
-                                        }
-                                      : null,
+                                  onTap: () {
+                                    if (matrix2by2state
+                                            .getResultOfFirstWidget ==
+                                        0) {
+                                      audioPlayer.playDragSound();
+                                      matrix2by2state.setFirstWidgetState(
+                                          matrix2by2state
+                                              .widgets[0].vocabulary.vocab);
+                                    }
+                                  },
                                   child: (matrix2by2state
                                               .getResultOfFirstWidget ==
                                           1)
@@ -247,7 +211,8 @@ class Matrix2By2Page extends StatelessWidget {
                                             children: <Widget>[
                                               Padding(
                                                 padding: EdgeInsets.all(5.0),
-                                                child: widgets[0],
+                                                child:
+                                                    matrix2by2state.widgets[0],
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.all(5.0),
@@ -278,15 +243,16 @@ class Matrix2By2Page extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: GestureDetector(
-                                  onTap: (matrix2by2state
-                                              .getResultOfSecondWidget ==
-                                          0)
-                                      ? () {
-                                          audioPlayer.playDragSound();
-                                          matrix2by2state.setSecondWidgetState(
-                                              widgets[1].vocabulary.vocab);
-                                        }
-                                      : null,
+                                  onTap: () {
+                                    if (matrix2by2state
+                                            .getResultOfSecondWidget ==
+                                        0) {
+                                      audioPlayer.playDragSound();
+                                      matrix2by2state.setSecondWidgetState(
+                                          matrix2by2state
+                                              .widgets[1].vocabulary.vocab);
+                                    }
+                                  },
                                   child: (matrix2by2state
                                               .getResultOfSecondWidget ==
                                           1)
@@ -300,7 +266,8 @@ class Matrix2By2Page extends StatelessWidget {
                                             children: <Widget>[
                                               Padding(
                                                 padding: EdgeInsets.all(5.0),
-                                                child: widgets[1],
+                                                child:
+                                                    matrix2by2state.widgets[1],
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.all(5.0),
@@ -338,15 +305,16 @@ class Matrix2By2Page extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: GestureDetector(
-                                  onTap: (matrix2by2state
-                                              .getResultOfThirdWidget ==
-                                          0)
-                                      ? () {
-                                          audioPlayer.playDragSound();
-                                          matrix2by2state.setThirdWidgetState(
-                                              widgets[2].vocabulary.vocab);
-                                        }
-                                      : null,
+                                  onTap: () {
+                                    if (matrix2by2state
+                                            .getResultOfThirdWidget ==
+                                        0) {
+                                      audioPlayer.playDragSound();
+                                      matrix2by2state.setThirdWidgetState(
+                                          matrix2by2state
+                                              .widgets[2].vocabulary.vocab);
+                                    }
+                                  },
                                   child: (matrix2by2state
                                               .getResultOfThirdWidget ==
                                           1)
@@ -360,7 +328,8 @@ class Matrix2By2Page extends StatelessWidget {
                                             children: <Widget>[
                                               Padding(
                                                 padding: EdgeInsets.all(5.0),
-                                                child: widgets[2],
+                                                child:
+                                                    matrix2by2state.widgets[2],
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.all(5.0),
@@ -391,15 +360,16 @@ class Matrix2By2Page extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: GestureDetector(
-                                    onTap: (matrix2by2state
-                                                .getResultOfForWidget ==
-                                            0)
-                                        ? () {
-                                            audioPlayer.playDragSound();
-                                            matrix2by2state.setForWidgetState(
-                                                widgets[3].vocabulary.vocab);
-                                          }
-                                        : null,
+                                    onTap: () {
+                                      if (matrix2by2state
+                                              .getResultOfForWidget ==
+                                          0) {
+                                        audioPlayer.playDragSound();
+                                        matrix2by2state.setForWidgetState(
+                                            matrix2by2state
+                                                .widgets[3].vocabulary.vocab);
+                                      }
+                                    },
                                     child: (matrix2by2state
                                                 .getResultOfForWidget ==
                                             1)
@@ -413,7 +383,8 @@ class Matrix2By2Page extends StatelessWidget {
                                               children: <Widget>[
                                                 Padding(
                                                   padding: EdgeInsets.all(5.0),
-                                                  child: widgets[3],
+                                                  child: matrix2by2state
+                                                      .widgets[3],
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsets.all(5.0),

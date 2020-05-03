@@ -1,6 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:learn_english/ui/page_models/game/widgets/cell.dart';
 
 class Matrix3By3State extends ChangeNotifier {
+  int firstIndex = 0;
+  int secondIndex = 0;
+  int thirdIndex = 0;
+  int forIndex = 0;
+  int fiveIndex = 0;
+  List<Cell> widgets = [];
+
   bool _loading = true;
   int numberClickedCell = 0;
   int _score = 0;
@@ -55,6 +63,37 @@ class Matrix3By3State extends ChangeNotifier {
   bool get getCheckIsWrong => _checkIsWrong;
   bool get getLoading => _loading;
   int get getScore => _score;
+
+  setWidgets(List<Cell> list){
+    widgets = list;
+    widgets.shuffle();
+    notifyListeners();
+  }
+
+  setFirstIndex(int number) {
+    firstIndex = number;
+    notifyListeners();
+  }
+
+  setSecondIndex(int number) {
+    secondIndex = number;
+    notifyListeners();
+  }
+
+  setThirdIndex(int number) {
+    thirdIndex = number;
+    notifyListeners();
+  }
+
+  setForIndex(int number) {
+    forIndex = number;
+    notifyListeners();
+  }
+
+  setFiveIndex(int number) {
+    fiveIndex = number;
+    notifyListeners();
+  }
 
   checkAnswer() {
     if (_answers.length == 2) {
@@ -154,8 +193,7 @@ class Matrix3By3State extends ChangeNotifier {
       _nineWidgetIsCorrect = 0;
     }
     _checkIsWrong = false;
-    print(
-        '1: ${_firstWidgetIsCorrect} /n 2: ${_secondWidgetIsCorrect} /n 1: ${_thirdWidgetIsCorrect} /n');
+
     notifyListeners();
   }
 
@@ -189,7 +227,7 @@ class Matrix3By3State extends ChangeNotifier {
 
       _checkIsWrong = false;
       numberClickedCell = 0;
-      // notifyListeners();
+      notifyListeners();
     }
   }
 
