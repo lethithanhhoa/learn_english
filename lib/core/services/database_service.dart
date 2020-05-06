@@ -3,7 +3,7 @@ import 'package:learn_english/core/models/lesson.dart';
 import 'package:learn_english/core/models/user.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 
-class Database {
+class DatabaseService {
   final CollectionReference _lessons = Firestore.instance.collection('lessons');
 
   final CollectionReference _users = Firestore.instance.collection('users');
@@ -22,7 +22,7 @@ class Database {
     var ref = await _lessons.getDocuments();
     List<Lesson> listOfLesson =
         ref.documents.map((doc) => Lesson.fromSnapshot(doc)).toList();
-    listOfLesson.sort((Lesson a, Lesson b) => a.index.compareTo(b.index));
+    // listOfLesson.sort((Lesson a, Lesson b) => a.index.compareTo(b.index));
     return listOfLesson;
   }
 
@@ -31,13 +31,13 @@ class Database {
         await _lessons.document(lessonId).collection('vocab').getDocuments();
     List<Vocabulary> listOfVocab =
         ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
-       
+
     listOfVocab.shuffle();
 
     return listOfVocab;
   }
 
-  Future<List<Vocabulary>> getAllVocab() async{
+  Future<List<Vocabulary>> getAllVocab() async {
     var ref = await _vocabs.getDocuments();
     List<Vocabulary> listOfVocab =
         ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
@@ -45,7 +45,7 @@ class Database {
     return listOfVocab;
   }
 
-  Future<List<Vocabulary>> getVocabByLesson(List<String> lessonId) async{
+  Future<List<Vocabulary>> getVocabByLesson(List<String> lessonId) async {
     var ref = await _vocabs.where('lessonId', whereIn: lessonId).getDocuments();
     List<Vocabulary> listOfVocab =
         ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
@@ -53,12 +53,11 @@ class Database {
     return listOfVocab;
   }
 
-  Future<List<Vocabulary>> getVocabByTypeOfWord() async{
+  Future<List<Vocabulary>> getVocabByTypeOfWord() async {
     var ref = await _vocabs.where('type', whereIn: [1, 2]).getDocuments();
     List<Vocabulary> listOfVocab =
         ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
     listOfVocab.shuffle();
     return listOfVocab;
   }
-  
 }

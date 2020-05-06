@@ -12,7 +12,7 @@ class Matrix2By2State extends ChangeNotifier {
   List<Cell> widgets = [];
   int numberClicked = 0;
 
-  bool _loading = true;
+  // bool _loading = true;
   int _score = 0;
   bool _isFirstWidget = false;
   bool _isSecondWidget = false;
@@ -37,7 +37,7 @@ class Matrix2By2State extends ChangeNotifier {
   int get getResultOfForWidget => _forWidgetIsCorrect;
 
   bool get getCheckIsWrong => _checkIsWrong;
-  bool get getLoading => _loading;
+  // bool get getLoading => _loading;
   int get getScore => _score;
 
   setWidgets(List<Vocabulary> vocabList){  
@@ -74,20 +74,20 @@ class Matrix2By2State extends ChangeNotifier {
   }
 
 
-  setFirstIndex(int number){
-    firstIndex = number;
-    notifyListeners();
-  }
+  // setFirstIndex(int number){
+  //   firstIndex = number;
+  //   notifyListeners();
+  // }
 
-  setSecondIndex(int number){
-    secondIndex = number;
-    notifyListeners();
-  }
+  // setSecondIndex(int number){
+  //   secondIndex = number;
+  //   notifyListeners();
+  // }
 
-  setLoading(bool loading) {
-    _loading = loading;
-    notifyListeners();
-  }
+  // setLoading(bool loading) {
+  //   _loading = loading;
+  //   notifyListeners();
+  // }
 
   load(List<Vocabulary> vocabList) {
     if (numberClicked == 4) {

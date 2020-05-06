@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/user.dart';
@@ -10,8 +11,8 @@ class Matrix2by2RankingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<List<User>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
-      value.sort((a, b) => b.matrix2by2.compareTo(a.exp));
-      
+      value.sort((a, b) => b.matrix2by2.compareTo(a.matrix2by2));
+
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -87,14 +88,14 @@ class Matrix2by2RankingPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[2].name}',
                                             maxLines: 1,
-                                            softWrap: false,
                                             overflow: TextOverflow.fade,
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[2].matrix2by2}',
+                                            maxLines: 1,
                                             style: TextStyle(
                                               fontSize: 16,
                                             ),
@@ -145,14 +146,14 @@ class Matrix2by2RankingPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Text(
+                                    AutoSizeText(
                                       '${value[0].name}',
                                       maxLines: 1,
-                                      softWrap: false,
                                       overflow: TextOverflow.fade,
                                     ),
-                                    Text(
+                                    AutoSizeText(
                                       '${value[0].matrix2by2}',
+                                      maxLines: 1,
                                       style: TextStyle(
                                         fontSize: 18,
                                       ),
@@ -207,14 +208,14 @@ class Matrix2by2RankingPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[1].name}',
                                             maxLines: 1,
-                                            softWrap: false,
                                             overflow: TextOverflow.fade,
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[1].matrix2by2}',
+                                            maxLines: 1,
                                             style: TextStyle(
                                               fontSize: 17,
                                             ),

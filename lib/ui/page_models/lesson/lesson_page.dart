@@ -7,16 +7,18 @@ import 'package:learn_english/ui/page_models/lesson/lesson_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:learn_english/core/helper/gsheet_data.dart';
+import 'package:learn_english/core/services/lesson_service.dart';
 
 class LessonPage extends StatelessWidget {
-  Database database = Database();
-
+  LessonService _lessonService = LessonService();
+  // GSheetData _gSheetData = GSheetData();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         FutureProvider<List<Lesson>>.value(
-          value: database.getListOfLesson(),
+          value: _lessonService.getAllLesson(),
         ),
         ChangeNotifierProvider(
           create: (_) => AccountUser(),
@@ -28,6 +30,7 @@ class LessonPage extends StatelessWidget {
           child: Consumer<List<Lesson>>(builder: (context, value, child) {
             AccountUser accountUser = Provider.of<AccountUser>(context);
             if (value == null || accountUser.user == null) return LoadingPage();
+            print(value);
             return Column(
               children: <Widget>[
                 Padding(

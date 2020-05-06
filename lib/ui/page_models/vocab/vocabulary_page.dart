@@ -5,7 +5,6 @@ import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/page_models/vocab/vocab_list.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
-import 'package:learn_english/ui/state/heart_state.dart';
 import 'package:learn_english/ui/state/index.dart';
 import 'package:learn_english/ui/state/recording.dart';
 import 'package:learn_english/ui/state/result_learning_state.dart';
@@ -17,16 +16,18 @@ import 'package:learn_english/ui/state/the_first_button_state.dart';
 import 'package:learn_english/ui/state/the_second_button_state.dart';
 import 'package:learn_english/ui/state/the_third_button_state.dart';
 import 'package:provider/provider.dart';
+import 'package:learn_english/core/services/vocab_service.dart';
 
 class VocabularyPage extends StatelessWidget {
-  Database _database = Database();
+  // DatabaseService _database = DatabaseService();
+  VocabService _vocabService = VocabService();
   String lessonId;
   VocabularyPage({this.lessonId});
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         FutureProvider<List<Vocabulary>>.value(
-          value: _database.getVocabByLesson([lessonId]),
+          value: _vocabService.getVocabListByLessonId(lessonId),
         ),
         ChangeNotifierProvider(
           create: (context) => Index(),

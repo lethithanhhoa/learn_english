@@ -11,7 +11,7 @@ import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 
 class RankPage extends StatelessWidget {
-  Database database = Database();
+  DatabaseService database = DatabaseService();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

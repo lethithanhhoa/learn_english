@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,14 +9,16 @@ import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
+import 'package:learn_english/core/services/vocab_service.dart';
 
 class LearnedWords extends StatelessWidget {
-  Database database = Database();
+  // DatabaseService database = DatabaseService();
+  VocabService _vocabService = VocabService();
   List<String> lessonList;
   AudioPlayer playAudio = AudioPlayer();
 
-  Future<List<Vocabulary>> getVocabByLesson(List<String> lessonId) async {
-    var list = await database.getVocabByLesson(lessonId);
+  Future<List<Vocabulary>> getVocabByLesson(List<String> lessonIdList) async {
+    var list = await _vocabService.getVocabListByListOfLessonId(lessonIdList);
 
     return list;
   }
@@ -41,9 +44,12 @@ class LearnedWords extends StatelessWidget {
         body: Center(child: Text('No data')),
       );
     lessonList = accountUser.user.learningState.keys.toList();
-    return (lessonList == null)
+   
+    return 
+    (lessonList == null)
         ? LoadingPage()
-        : Scaffold(
+        : 
+        Scaffold(
             appBar: AppBar(
               title: Text(
                 'Learned Words',
@@ -61,7 +67,8 @@ class LearnedWords extends StatelessWidget {
               child: FutureBuilder(
                 future: getVocabByLesson(lessonList),
                 builder: (context, AsyncSnapshot<List<Vocabulary>> value) {
-                  if (value.data == null) return LoadingPage();
+                  if (value.data == null) 
+                  return LoadingPage();
 
                   return ListView.builder(
                       itemCount: value.data.length,
@@ -71,9 +78,13 @@ class LearnedWords extends StatelessWidget {
                             value.data[index].vocab,
                             style: TextStyle(fontSize: 22),
                           ),
-                          subtitle: Text(
+                          
+                          subtitle: AutoSizeText(
                             value.data[index].mean,
-                            style: TextStyle(fontSize: 16),
+                            maxLines: 1,
+                            style: GoogleFonts.farsan(
+                              textStyle: TextStyle(fontSize: 18),
+                            ),
                           ),
                           trailing: IconButton(
                               padding: EdgeInsets.all(0.0),

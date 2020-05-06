@@ -11,24 +11,27 @@ class GamePage extends StatefulWidget {
 }
 
 class _GameState extends State<GamePage> {
-  List<Vocabulary> list = new List();
-  Database database = Database();
+  // List<Vocabulary> list = new List();
+  // DatabaseService database = DatabaseService();
 
-  @override
-  void initState() {
-    super.initState();
-    database.getVocabByTypeOfWord().then((data) {
-      setState(() {
-        list = data;
-      });
-    });
-  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   database.getVocabByTypeOfWord().then((data) {
+  //     setState(() {
+  //       list = data;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return (list.length == 0)
-        ? LoadingPage()
-        : Scaffold(
+    return 
+    // (list.length == 0)
+    //     ? LoadingPage()
+    //     : 
+        Scaffold(
             backgroundColor: Colors.green[200],
             body: SafeArea(
               child: Column(
@@ -74,8 +77,8 @@ class _GameState extends State<GamePage> {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, RouteName.matrix4by4,
-                                  arguments: list);
+                              // Navigator.pushNamed(context, RouteName.matrix4by4,
+                              //     arguments: list);
                             },
                             child: Container(
                               alignment: Alignment.topRight,
@@ -121,8 +124,8 @@ class _GameState extends State<GamePage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, RouteName.matrix2by2,
-                                  arguments: list);
+                              // Navigator.pushNamed(context, RouteName.matrix2by2,
+                              //     arguments: list);
                             },
                             child: Container(
                               alignment: Alignment.bottomRight,
@@ -168,8 +171,8 @@ class _GameState extends State<GamePage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, RouteName.matrix3by3,
-                                  arguments: list);
+                              // Navigator.pushNamed(context, RouteName.matrix3by3,
+                              //     arguments: list);
                             },
                             child: Container(
                               alignment: Alignment.bottomLeft,

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/state/detail_word_state.dart';
 import 'package:learn_english/ui/state/index.dart';
@@ -76,8 +77,11 @@ class DetailWord extends StatelessWidget {
                                     vocabList[_index.getIndex].mean,
                                     maxLines: 2,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.blue[400], fontSize: 40),
+                                    style: GoogleFonts.charm(
+                                      textStyle: TextStyle(
+                                          color: Colors.blue[400],
+                                          fontSize: 50),
+                                    ),
                                   ),
                                 ),
                               )
@@ -88,7 +92,6 @@ class DetailWord extends StatelessWidget {
                                 color: Colors.white,
                                 child: Stack(
                                   children: <Widget>[
-                                    
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.width -
@@ -119,7 +122,8 @@ class DetailWord extends StatelessWidget {
                                             ),
                                           ),
                                           Padding(
-                                            padding:  EdgeInsets.symmetric(horizontal: 5),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5),
                                             child: AutoSizeText(
                                               vocabList[_index.getIndex].vocab,
                                               maxLines: 1,
@@ -170,7 +174,7 @@ class DetailWord extends StatelessWidget {
                             onTap: (_index.getIndex == 0)
                                 ? null
                                 : () {
-                                  playAudio.playClickSound();
+                                    playAudio.playClickSound();
                                     detailWordState.setStateToTrue();
                                     _index.decrement();
                                   }),
@@ -187,7 +191,7 @@ class DetailWord extends StatelessWidget {
                             onTap: (_index.getIndex == vocabList.length - 1)
                                 ? null
                                 : () {
-                                  playAudio.playClickSound();
+                                    playAudio.playClickSound();
                                     detailWordState.setStateToTrue();
                                     _index.increment();
                                   }),
