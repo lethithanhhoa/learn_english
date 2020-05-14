@@ -1,6 +1,7 @@
 import 'package:gsheets/gsheets.dart';
 import 'package:learn_english/core/models/lesson.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/core/models/db_version.dart';
 
 class GSheetData {
 // your google auth credentials
@@ -56,5 +57,13 @@ class GSheetData {
           lessonId: element[0], lessonName: element[1], image: element[2]));
     });
     return list;
+  }
+
+  Future<DBVersion> getVersionDatabaseFromGSheet() async {
+    final gsheets = GSheets(_credentials);
+    final ss = await gsheets.spreadsheet(_spreadsheetId);
+    var sheet = ss.worksheetByTitle('Overview');
+    var data = await sheet.values.value(column: 3, row: 4);
+    return DBVersion(version: data);
   }
 }

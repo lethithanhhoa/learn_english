@@ -4,6 +4,7 @@ import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/modules/router.dart';
 import 'package:learn_english/ui/pages/home_page.dart';
 import 'package:learn_english/ui/pages/login_page.dart';
+import 'package:learn_english/ui/pages/starting_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,8 +22,8 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: LoginPage(),
-      initialRoute: RouteName.loginPage,
+      home: StartingPage(),
+      initialRoute: RouteName.startingPage,
       onGenerateRoute: Router.generateRoute,
     );
   }

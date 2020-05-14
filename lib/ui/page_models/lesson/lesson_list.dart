@@ -29,7 +29,7 @@ class LessonList extends StatelessWidget {
   }
 
   Widget ItemWidget(BuildContext context, Lesson currentLesson, int percent) {
-    print(currentLesson.image);
+    
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 5, 20, 5),
       child: GestureDetector(

@@ -17,8 +17,8 @@ class LessonService {
   }
 
   Future<List<Lesson>> getAllLesson() async {
-    final recordSnapshot = await _folder.find(await _db);
-    return recordSnapshot.map((snapshot) {
+    final records = await _folder.find(await _db);
+    return records.map((snapshot) {
       final vocab = Lesson.fromMap(snapshot.value);
       return vocab;
     }).toList();

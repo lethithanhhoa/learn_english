@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learn_english/ui/common/close_lesson.dart';
-import 'package:learn_english/ui/common/hearts.dart';
 import 'package:learn_english/ui/common/slider_at_learning_vocab.dart';
 
 Widget appBar = AppBar(

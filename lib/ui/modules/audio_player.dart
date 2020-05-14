@@ -31,4 +31,9 @@ class AudioPlayer {
     player.play('finish.mp3');
   }
 
+  playOhNoSound(){
+    player.play('oh_no.mp3');
+  }
+
+
 }
