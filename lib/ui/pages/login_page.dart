@@ -7,9 +7,6 @@ import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -26,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+
     checkUserSignedIn();
   }
 
@@ -44,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.pushNamed(context, RouteName.homePage);
     }
+
     this.setState(() {
       loading = false;
     });
@@ -152,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                                 width: 210,
                                 height: 210,
                                 decoration: BoxDecoration(
+                                  color: Colors.white,
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                       image:
@@ -178,7 +178,6 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.pink[400],
                             ),
                           ),
-                          
                         ],
                       ),
                       Column(
@@ -189,8 +188,8 @@ class _LoginPageState extends State<LoginPage> {
                               width: 240,
                               height: 50,
                               decoration: BoxDecoration(
-                                  border:
-                                      Border.all(width: 1.2, color: Colors.pink[300]),
+                                  border: Border.all(
+                                      width: 1.2, color: Colors.pink[300]),
                                   borderRadius: BorderRadius.circular(50)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -222,8 +221,8 @@ class _LoginPageState extends State<LoginPage> {
                               width: 240,
                               height: 50,
                               decoration: BoxDecoration(
-                                  border:
-                                      Border.all(width: 1.2, color: Colors.pink[300]),
+                                  border: Border.all(
+                                      width: 1.2, color: Colors.pink[300]),
                                   borderRadius: BorderRadius.circular(50)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -240,7 +239,6 @@ class _LoginPageState extends State<LoginPage> {
                                     style: TextStyle(
                                       fontSize: 17.5,
                                       color: Colors.pink[400],
-                                      
                                     ),
                                   ),
                                 ],

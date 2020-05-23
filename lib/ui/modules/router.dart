@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/ui/page_models/game/matrix_2by2.dart';
-import 'package:learn_english/ui/page_models/game/matrix_3by3.dart';
-import 'package:learn_english/ui/page_models/game/matrix_4by4.dart';
+import 'package:learn_english/ui/page_models/game/taptap/end_game_page.dart';
+import 'package:learn_english/ui/page_models/game/taptap/taptap_game.dart';
+import 'package:learn_english/ui/page_models/game/taptap/taptap_detail_page.dart';
 import 'package:learn_english/ui/page_models/review_words/detail_word_page.dart';
 import 'package:learn_english/ui/page_models/review_words/learned_words_page.dart';
 import 'package:learn_english/ui/page_models/vocab/vocabulary_page.dart';
@@ -30,6 +30,10 @@ class Router {
 
       case 'LearnedWords':
         return MaterialPageRoute(builder: (context) => LearnedWordsPage());
+
+      case 'EndGame':
+        return MaterialPageRoute(builder: (context) => EndGamePage());
+        
       case 'DetailWord':
         {
           List<dynamic> arg = settings.arguments as List<dynamic>;
@@ -40,29 +44,20 @@ class Router {
                   ));
         }
 
-      case 'Matrix2by2':
+      case 'TapTap':
         {
           List<Vocabulary> vocabList = settings.arguments as List<Vocabulary>;
           return MaterialPageRoute(
-              builder: (context) => Matrix2By2(
-                    vocabList: vocabList,
+              builder: (context) => TapTapGame(
+                    listVocab: vocabList,
                   ));
         }
 
-      case 'Matrix3by3':
+      case 'TapTapDetail':
         {
           List<Vocabulary> vocabList = settings.arguments as List<Vocabulary>;
           return MaterialPageRoute(
-              builder: (context) => Matrix3By3(
-                    vocabList: vocabList,
-                  ));
-        }
-
-      case 'Matrix4by4':
-        {
-          List<Vocabulary> vocabList = settings.arguments as List<Vocabulary>;
-          return MaterialPageRoute(
-              builder: (context) => Matrix4By4(
+              builder: (context) => TapTapDetailPage(
                     vocabList: vocabList,
                   ));
         }

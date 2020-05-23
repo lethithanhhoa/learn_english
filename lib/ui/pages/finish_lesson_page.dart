@@ -10,6 +10,7 @@ import 'package:learn_english/ui/state/account_user.dart';
 import 'package:learn_english/ui/state/result_learning_state.dart';
 import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class FinishLessonPage extends StatelessWidget {
   UserService userService = UserService();
   AccountUser accountUser = AccountUser();
   AudioPlayer audioPlayer = AudioPlayer();
+  Color _color;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,14 @@ class FinishLessonPage extends StatelessWidget {
                   sliderState.getMaxOfSlider *
                   100)
               .toInt());
+      if (resultLearningState.getPercentCorrect <= 40)
+        _color = Colors.red;
+      else if (resultLearningState.getPercentCorrect <= 60)
+        _color = Colors.orange;
+      else if (resultLearningState.getPercentCorrect < 100)
+        _color = Colors.teal;
+      else if (resultLearningState.getPercentCorrect == 100)
+        _color = Colors.green;
 
       loading = false;
     }
@@ -69,22 +79,40 @@ class FinishLessonPage extends StatelessWidget {
                           ]),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 30.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.width / 2,
-                        decoration: BoxDecoration(
-                          color: Colors.yellow,
-                          image: DecorationImage(
-                              image: Image.asset('assets/carrot.gif').image,
-                              fit: BoxFit.fitHeight),
-                        ),
+                      padding: EdgeInsets.only(bottom: 20.0),
+                      child: Column(
+                        children: [
+                          CircularPercentIndicator(
+                            radius: 150.0,
+                            lineWidth: 5.0,
+                            percent:
+                                resultLearningState.getPercentCorrect / 100,
+                            center: Container(
+                              height: 142,
+                              width: 142,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.yellow,
+                                image: DecorationImage(
+                                    image:
+                                        Image.asset('assets/carrot.gif').image,
+                                    fit: BoxFit.fitHeight),
+                              ),
+                            ),
+                            backgroundColor: Colors.grey[300],
+                            progressColor: _color,
+                          ),
+                          Text(
+                            '${resultLearningState.getPercentCorrect}%',
+                            style: TextStyle(fontSize: 25, color: _color),
+                          ),
+                        ],
                       ),
                     ),
                     FlatButton(
                       onPressed: () {
                         audioPlayer.playClickSound();
-                        
+
                         Map<String, dynamic> map = Map();
                         if (accountUser.user.learningState != null)
                           map = accountUser.user.learningState;
@@ -117,7 +145,10 @@ class FinishLessonPage extends StatelessWidget {
                             RouteName.homePage,
                             (Route<dynamic> route) => false);
                       },
-                      child: Text('Next', style: TextStyle(fontSize: 20),),
+                      child: Text(
+                        'Next',
+                        style: TextStyle(fontSize: 20),
+                      ),
                       color: Colors.green,
                     ),
                   ],

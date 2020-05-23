@@ -17,12 +17,10 @@ class ContinueButtonState extends ChangeNotifier {
   bool get getActive => _active;
   int get getScreenCode => _screenCode;
   int get getCorrectAnswerNum => _correctAnswerNum;
-  // int get getHeartNum => _heartNum;
   String get getAnswer => _answer;
 
   setAnswer(String string){
     _answer = string;
-    // _answer.trim();
     notifyListeners();
   }
 
@@ -30,16 +28,6 @@ class ContinueButtonState extends ChangeNotifier {
     _correctAnswerNum++;
     notifyListeners();
   }
-
-  // decrementHeart() {
-  //   _heartNum--;
-  //   notifyListeners();
-  // }
-
-  // setHeartNum(int number) {
-  //   _heartNum = number;
-  //   notifyListeners();
-  // }
 
   inActive() {
     _active = false;

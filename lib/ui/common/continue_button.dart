@@ -32,7 +32,7 @@ class ContinueButton extends StatelessWidget {
         Provider.of<TheThirdButtonState>(context);
     CorrectAnswer correctAnswer = Provider.of<CorrectAnswer>(context);
 
-    if (recording.getTextResult != '' ||
+    if ((recording.getFinalResult != '') ||
         crosswordAnswerState.getAnswer.isEmpty == false ||
         (theFirstButtonState.getClicked ||
             theSecondButtonState.getClicked ||
@@ -71,33 +71,38 @@ class ContinueButton extends StatelessWidget {
                   onPressed: continueButtonState.getDisable
                       ? null
                       : () {
-                        playAudio.playClickSound();
+                          playAudio.playClickSound();
                           continueButtonState.incrementClickedNum();
                           if (continueButtonState.getClickedNum == 1) {
                             if (!crosswordAnswerState.getAnswer.isEmpty) {
                               continueButtonState.setAnswer('');
                               crosswordAnswerState.getAnswer.forEach((item) {
-                            
-                                continueButtonState.setAnswer((continueButtonState.getAnswer + " " + item).trim());
+                                continueButtonState.setAnswer(
+                                    (continueButtonState.getAnswer + " " + item)
+                                        .trim());
                               });
                               // temp = temp.trim();
                               // temp = temp.replaceAll("I am", "I'm");
                               continueButtonState.setScreenCode(1);
-                            } else if (recording.getTextResult != '') {
-                              continueButtonState.setAnswer(recording.getTextResult);
-                              
+                            } else if (recording.getFinalResult != '') {
+                              continueButtonState
+                                  .setAnswer(recording.getFinalResult);
+
                               continueButtonState.setScreenCode(2);
                             } else if (theFirstButtonState.getClicked) {
-                              continueButtonState.setAnswer(theFirstButtonState.getValue);
-                              
+                              continueButtonState
+                                  .setAnswer(theFirstButtonState.getValue);
+
                               continueButtonState.setScreenCode(3);
                             } else if (theSecondButtonState.getClicked) {
-                               continueButtonState.setAnswer(theSecondButtonState.getValue);
-                             
+                              continueButtonState
+                                  .setAnswer(theSecondButtonState.getValue);
+
                               continueButtonState.setScreenCode(4);
                             } else if (theThirdButtonState.getClicked) {
-                              continueButtonState.setAnswer(theThirdButtonState.getValue);
-                             
+                              continueButtonState
+                                  .setAnswer(theThirdButtonState.getValue);
+
                               continueButtonState.setScreenCode(5);
                             }
 
@@ -107,16 +112,13 @@ class ContinueButton extends StatelessWidget {
                               correctAnswer.getCorrectAnswer,
                             ));
                             if (continueButtonState.getAnswer.toLowerCase() ==
-                                    correctAnswer.getCorrectAnswer
-                                        .toLowerCase())
-                                {
-                                  playAudio.playCorrectSound();
-                                  continueButtonState
-                                    .incrementCorrectAnswerNum();
-                                }
-                                else{
-                                  playAudio.playWrongSound();
-                                };
+                                correctAnswer.getCorrectAnswer.toLowerCase()) {
+                              playAudio.playCorrectSound();
+                              continueButtonState.incrementCorrectAnswerNum();
+                            } else {
+                              playAudio.playWrongSound();
+                            }
+                            ;
 
                             continueButtonState.setNameToContinue();
                             continueButtonState.inActive();
@@ -153,76 +155,51 @@ class ContinueButton extends StatelessWidget {
 
   Widget snackBar(BuildContext context, String answer, String correctAnswer) {
     bool value = (answer.toLowerCase() == correctAnswer.toLowerCase());
-    print(answer);
-    print(correctAnswer);
     return SnackBar(
-      duration: Duration(seconds: 2),
-      backgroundColor: value
-          ? Colors.lightGreen[100].withOpacity(0.8)
-          : Colors.pink[100].withOpacity(0.8),
-      content: Container(
-        height: 120,
-        alignment: Alignment.topLeft,
-        child: !value
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.close,
-                        size: 40,
-                        color: Colors.red,
-                      ),
-                      Text(
-                        'Wrong!',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+        duration: Duration(seconds: 3),
+        // backgroundColor: value
+        //     ? Colors.lightGreen[100].withOpacity(0.7)
+        //     : Colors.pink[100].withOpacity(0.7),
+        backgroundColor: Colors.white,
+        content: Container(
+          height: 160,
+          alignment: Alignment.topLeft,
+          child: !value
+              ? Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: Image.asset('assets/noo.jpg').image)),
                         ),
                       ),
+                      Text(
+                        'Keep fighting. You can do it.',
+                        style: TextStyle(color: Colors.red, fontSize: 25),
+                      )
                     ],
                   ),
-                  SizedBox(height: 5),
-                  Row(
-                    children: <Widget>[
-                      SizedBox(width: 40),
-                      Text(
-                        correctAnswer,
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 18.0,
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: Image.asset('assets/correct.jpg').image,
+                              fit: BoxFit.scaleDown),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              )
-            : Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.done,
-                        size: 40,
-                        color: Colors.green,
-                      ),
-                      Text(
-                        'Correct!',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-      ),
-    );
+                    ),
+                    Text(
+                      'Excellent!',
+                      style: TextStyle(color: Colors.green, fontSize: 25),
+                    )
+                  ],
+                ),
+        ));
   }
 
   Widget resultText(BuildContext context, String text, String resultRecording) {

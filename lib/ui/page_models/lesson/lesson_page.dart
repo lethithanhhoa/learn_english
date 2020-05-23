@@ -1,22 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/lesson.dart';
-import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/page_models/lesson/lesson_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:learn_english/core/services/lesson_service.dart';
 
 class LessonPage extends StatelessWidget {
-  Database database = Database();
-
+  LessonService _lessonService = LessonService();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         FutureProvider<List<Lesson>>.value(
-          value: database.getListOfLesson(),
+          value: _lessonService.getAllLesson(),
         ),
         ChangeNotifierProvider(
           create: (_) => AccountUser(),
@@ -28,6 +27,7 @@ class LessonPage extends StatelessWidget {
           child: Consumer<List<Lesson>>(builder: (context, value, child) {
             AccountUser accountUser = Provider.of<AccountUser>(context);
             if (value == null || accountUser.user == null) return LoadingPage();
+
             return Column(
               children: <Widget>[
                 Padding(

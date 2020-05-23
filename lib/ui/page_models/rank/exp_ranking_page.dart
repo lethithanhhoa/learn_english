@@ -5,19 +5,22 @@ import 'package:learn_english/ui/page_models/rank/rank_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ExpRankingPage extends StatelessWidget {
-  // final ItemScrollController itemScrollController = ItemScrollController();
-  // ItemScrollController _scrollController = ItemScrollController();
-  int temp = 0;
+  int index = -1;
   @override
   Widget build(BuildContext context) {
     AccountUser accountUser = Provider.of<AccountUser>(context);
 
     return Consumer<List<User>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
+
       value.sort((a, b) => b.exp.compareTo(a.exp));
-      // itemScrollController.jumpTo(index: temp);
+
+      index = value
+          .indexWhere((element) => element.userId == accountUser.user.userId);
+      if (index != -1)
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -93,14 +96,15 @@ class ExpRankingPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[2].name}',
                                             maxLines: 1,
-                                            softWrap: false,
                                             overflow: TextOverflow.fade,
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[2].exp}',
+                                            maxLines: 1,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 16,
                                             ),
@@ -151,14 +155,15 @@ class ExpRankingPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Text(
+                                    AutoSizeText(
                                       '${value[0].name}',
                                       maxLines: 1,
-                                      softWrap: false,
                                       overflow: TextOverflow.fade,
                                     ),
-                                    Text(
+                                    AutoSizeText(
                                       '${value[0].exp}',
+                                      maxLines: 1,
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 18,
                                       ),
@@ -213,14 +218,15 @@ class ExpRankingPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[1].name}',
                                             maxLines: 1,
-                                            softWrap: false,
                                             overflow: TextOverflow.fade,
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             '${value[1].exp}',
+                                            maxLines: 1,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 17,
                                             ),
@@ -251,6 +257,7 @@ class ExpRankingPage extends StatelessWidget {
                   child: RankList(
                     value: value,
                     typeOfCode: 0,
+                    index: index,
                   ),
                 ),
               )),

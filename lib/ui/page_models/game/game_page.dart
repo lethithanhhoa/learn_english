@@ -1,225 +1,169 @@
+import 'dart:math';
+
+import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/core/services/database_service.dart';
+import 'package:learn_english/core/services/vocab_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
-import 'package:learn_english/ui/page_models/game/tap_tap_animation.dart';
-import 'package:learn_english/ui/pages/loading_page.dart';
+import 'package:learn_english/ui/page_models/game/taptap/tap_tap_animation.dart';
 
 class GamePage extends StatefulWidget {
   _GameState createState() => _GameState();
 }
 
+
 class _GameState extends State<GamePage> {
-  List<Vocabulary> list = new List();
-  Database database = Database();
+  VocabService _vocabService = VocabService();
+  List<Vocabulary> vocabList = [];
+  List<Vocabulary> vocabListByType = [];
 
   @override
   void initState() {
     super.initState();
-    database.getVocabByTypeOfWord().then((data) {
+    _vocabService.getAllVocab().then((value) {
       setState(() {
-        list = data;
+        vocabList = value;
+      });
+      value.forEach((element) {
+        if (element.type == 1 || element.type == 2) {
+          setState(() {
+            vocabListByType.add(element);
+          });
+        }
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return (list.length == 0)
-        ? LoadingPage()
-        : Scaffold(
-            backgroundColor: Colors.green[200],
-            body: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Expanded(
-                    child: Transform.rotate(
-                      angle: -0.4,
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(0),
-                              child: Transform.rotate(
-                                  angle: -0.8, child: TapTapAnimatedWidget()),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(0),
-                              child: Transform.rotate(
-                                  angle: 0.2, child: TapTapAnimatedWidget()),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 2 / 3,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(
-                          300,
-                        ),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                      child: Stack(
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, RouteName.matrix4by4,
-                                  arguments: list);
-                            },
-                            child: Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 50.0),
-                                child: Transform.rotate(
-                                  angle: -0.8,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image: Image.asset(
-                                                        'assets/dog4.png')
-                                                    .image)),
-                                      ),
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.green[200]),
-                                            color:
-                                                Colors.white.withOpacity(0.15),
-                                            shape: BoxShape.circle),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, RouteName.matrix2by2,
-                                  arguments: list);
-                            },
-                            child: Container(
-                              alignment: Alignment.bottomRight,
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 30, 30),
-                                child: Transform.rotate(
-                                  angle: -0.7,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image: Image.asset(
-                                                        'assets/dog2.png')
-                                                    .image)),
-                                      ),
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.green[200]),
-                                          shape: BoxShape.circle,
-                                          color: Colors.white.withOpacity(0.15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, RouteName.matrix3by3,
-                                  arguments: list);
-                            },
-                            child: Container(
-                              alignment: Alignment.bottomLeft,
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(40, 0, 0, 150),
-                                child: Transform.rotate(
-                                  angle: 0.5,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image: Image.asset(
-                                                        'assets/dog3.png')
-                                                    .image)),
-                                      ),
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.15),
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: Colors.green[200])),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+    // final imageWidth = 320.0;
+    // final imageHeight = 170.0;
+    final toleranceFactor = 0.033;
+    final widthFactor = 0.125;
+    final heightFactor = 0.5;
+
+    final random = Random();
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        // mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            // mainAxisSize: MainAxisSize.min,
+            children: [0, 1, 2, 3, 4, 5, 6, 7]
+                .map((count) => FlipPanel.stream(
+                      itemStream: Stream.fromFuture(Future.delayed(
+                          Duration(milliseconds: random.nextInt(20) * 100),
+                          () => 1)),
+                      itemBuilder: (_, value) => value <= 0
+                          ? Container(
+                              color: Colors.white,
+                              width: widthFactor *
+                                  MediaQuery.of(context).size.width,
+                              height: heightFactor *
+                                  MediaQuery.of(context).size.height /
+                                  2.5,
+                            )
+                          : ClipRect(
+                              child: Align(
+                                  alignment: Alignment(
+                                      -1.0 +
+                                          count * 2 * 0.125 +
+                                          count * toleranceFactor,
+                                      -1.0),
+                                  widthFactor: widthFactor,
+                                  heightFactor: heightFactor,
+                                  child: Image.asset(
+                                    'assets/find.png',
+                                    fit: BoxFit.scaleDown,
+                                    height:
+                                        MediaQuery.of(context).size.height / 2.5,
+                                    width: MediaQuery.of(context).size.width,
+                                  ))),
+                      initValue: 0,
+                      spacing: 0.0,
+                      direction: FlipDirection.up,
+                    ))
+                .toList(),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+            ]
+                .map((count) => FlipPanel.stream(
+                      itemStream: Stream.fromFuture(Future.delayed(
+                          Duration(milliseconds: random.nextInt(20) * 100),
+                          () => 1)),
+                      itemBuilder: (_, value) => value <= 0
+                          ? Container(
+                              color: Colors.white,
+                              width: widthFactor *
+                                  MediaQuery.of(context).size.width,
+                              height: heightFactor *
+                                  MediaQuery.of(context).size.height /
+                                  2.5,
+                            )
+                          : ClipRect(
+                              child: Align(
+                                  alignment: Alignment(
+                                      -1.0 +
+                                          count * 2 * 0.125 +
+                                          count * toleranceFactor,
+                                      1.0),
+                                  widthFactor: widthFactor,
+                                  heightFactor: heightFactor,
+                                  child: Image.asset(
+                                    'assets/find.png',
+                                    fit: BoxFit.scaleDown,
+                                    height:
+                                        MediaQuery.of(context).size.height / 2.5,
+                                    width: MediaQuery.of(context).size.width,
+                                  ))),
+                      initValue: 0,
+                      spacing: 0.0,
+                      direction: FlipDirection.down,
+                    ))
+                .toList(),
+          ),
+          // FlatButton(
+          //   onPressed: () {
+          //     Navigator.pushNamed(context, RouteName.taptap,
+          //         arguments: vocabListByType);
+          //   },
+          //   child: Text('TapTap'),
+          //   color: Colors.green[200],
+          // ),
+
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, RouteName.taptap,
+                  arguments: vocabListByType);
+            },
+            child: TapTapAnimatedWidget(title: 'Tap Tap', imageName: 'bee1.png')),
+
+          TapTapAnimatedWidget(title: 'Flappy Bird', imageName: 'duck.png'),
+          // FlatButton(
+          //   onPressed: () {
+          //     // Navigator.pushNamed(context, RouteName.taptap,
+          //     //     arguments: vocabListByType);
+          //   },
+          //   child: Text('Flappy Bird'),
+          //   color: Colors.green[200],
+          // ),
+        ],
+      ),
+    );
   }
 }

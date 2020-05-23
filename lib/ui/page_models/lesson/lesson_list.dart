@@ -29,6 +29,7 @@ class LessonList extends StatelessWidget {
   }
 
   Widget ItemWidget(BuildContext context, Lesson currentLesson, int percent) {
+    
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 5, 20, 5),
       child: GestureDetector(
@@ -72,7 +73,7 @@ class LessonList extends StatelessWidget {
                       height: 160,
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                        currentLesson.name,
+                        currentLesson.lessonName,
                         overflow: TextOverflow.fade,
                         softWrap: true,
                         maxLines: 2,
