@@ -21,6 +21,11 @@ class ListenAndCompleteSentence extends StatelessWidget {
   bool loading = true;
   AudioPlayer playAudio = AudioPlayer();
 
+  Future<bool> onWillPop() {
+    Fluttertoast.showToast(msg: "Press close icon to back");
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     ContinueButtonState continueButtonState =
@@ -35,10 +40,7 @@ class ListenAndCompleteSentence extends StatelessWidget {
       playAudio.playCustomAudioFile(vocabulary.audioFile);
       loading = false;
     }
-    Future<bool> onWillPop() {
-      Fluttertoast.showToast(msg: "Press close icon to back");
-      return Future.value(false);
-    }
+
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
@@ -100,7 +102,8 @@ class ListenAndCompleteSentence extends StatelessWidget {
                                                           .getActive
                                                       ? () {
                                                           crosswordAnswerState
-                                                              .removeFromList(i);
+                                                              .removeFromList(
+                                                                  i);
                                                           playAudio
                                                               .playDropSound();
                                                         }
@@ -125,7 +128,8 @@ class ListenAndCompleteSentence extends StatelessWidget {
                                         Stack(
                                           children: <Widget>[
                                             GestureDetector(
-                                              onTap: continueButtonState.getActive
+                                              onTap: continueButtonState
+                                                      .getActive
                                                   ? () {
                                                       playAudio.playDragSound();
                                                       crosswordAnswerState

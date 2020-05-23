@@ -44,7 +44,7 @@ class TapTapDetailState extends State<TapTapDetail>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 150));
+        AnimationController(vsync: this, duration: Duration(seconds: 10));
     startTime();
   }
 
@@ -74,6 +74,7 @@ class TapTapDetailState extends State<TapTapDetail>
 
     if (levelState.getIsFinish || animationController.value == 0.00)
       return EndGamePage();
+
     if (levelState.getIsFalse)
       stopTime();
     else
@@ -90,26 +91,26 @@ class TapTapDetailState extends State<TapTapDetail>
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: Image.asset('assets/bg.jpg').image,
+                    image: Image.asset('assets/cover.jpg').image,
                     fit: BoxFit.cover),
               ),
             ),
             SafeArea(
               child: Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Stack(
-                      children: [
-                        Container(
-                          alignment: Alignment.topRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
+                  Stack(
+                    children: [
+                      Container(
+                        alignment: Alignment.topLeft,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(5.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.indigo[50].withOpacity(0.8),
                                 borderRadius: BorderRadius.circular(6.0),
                               ),
                               child: Padding(
@@ -118,109 +119,104 @@ class TapTapDetailState extends State<TapTapDetail>
                                 child: Text(
                                   'Close',
                                   style: TextStyle(
-                                      color: Colors.black.withOpacity(0.7),
+                                      color: Colors.black.withOpacity(0.8),
                                       fontSize: 16),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.0),
-                              child: Container(
-                                height: 140,
-                                width: MediaQuery.of(context).size.width,
-                                child: Expanded(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Align(
-                                          alignment: FractionalOffset.center,
-                                          child: AspectRatio(
-                                            aspectRatio: 1.0,
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Positioned.fill(
-                                                  child: AnimatedBuilder(
-                                                    animation:
-                                                        animationController,
-                                                    builder:
-                                                        (BuildContext context,
-                                                            Widget child) {
-                                                      return CustomPaint(
-                                                        painter: TimerPainter(
-                                                          animation:
-                                                              animationController,
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          // color: Theme.of(context).accentColor),
-                                                          color:
-                                                              Colors.orange[700],
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.0),
+                            child: Container(
+                              height: 140,
+                              width: MediaQuery.of(context).size.width,
+                              child: Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Align(
+                                        alignment: FractionalOffset.center,
+                                        child: AspectRatio(
+                                          aspectRatio: 1.0,
+                                          child: Stack(
+                                            children: <Widget>[
+                                              Positioned.fill(
+                                                child: AnimatedBuilder(
+                                                  animation:
+                                                      animationController,
+                                                  builder:
+                                                      (BuildContext context,
+                                                          Widget child) {
+                                                    return CustomPaint(
+                                                      painter: TimerPainter(
+                                                        animation:
+                                                            animationController,
+                                                        backgroundColor:
+                                                            Colors.indigo[50],
+                                                        // color: Theme.of(context).accentColor),
+                                                        color: Colors.blue[300],
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
-                                                Align(
-                                                  alignment:
-                                                      FractionalOffset.center,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      AnimatedBuilder(
-                                                          animation:
-                                                              animationController,
-                                                          builder: (_,
-                                                              Widget child) {
-                                                            return Text(
-                                                              timerString,
-                                                              style: TextStyle(
-                                                                  color: (animationController.value == 0.00)
-                                                                      ? Colors
-                                                                          .orange[700]
-                                                                      : Colors
-                                                                          .white,
-                                                                  fontSize: 35,
-                                                                  ),
-                                                            );
-                                                          })
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    FractionalOffset.center,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    AnimatedBuilder(
+                                                        animation:
+                                                            animationController,
+                                                        builder:
+                                                            (_, Widget child) {
+                                                          return Text(
+                                                            timerString,
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .blue[400],
+                                                              fontSize: 35,
+                                                            ),
+                                                          );
+                                                        })
+                                                  ],
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Text(
-                                'Level: ${levelState.getCurrentLevel}',
-                                style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontFamily: 'Arial'),
-                              ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Text(
+                              'Level: ${levelState.getCurrentLevel}',
+                              style: TextStyle(
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue[300],
+                                  fontFamily: 'Arial'),
                             ),
-                            levelState.getCurWidget
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                          levelState.getCurWidget
+                        ],
+                      ),
+                    ],
                   ),
                   (levelState.getIsFalse)
                       ? AlertDialog(
@@ -269,7 +265,9 @@ class TapTapDetailState extends State<TapTapDetail>
                               child: Text('Yes'),
                             ),
                             FlatButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                levelState.setFinishIsTrue();
+                              },
                               child: Text('No'),
                             ),
                           ],

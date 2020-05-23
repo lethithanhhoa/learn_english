@@ -4,15 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/user.dart';
 import 'package:learn_english/ui/page_models/rank/rank_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
+import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 
 class Matrix3by3RankingPage extends StatelessWidget {
+  int index = -1;
   @override
   Widget build(BuildContext context) {
+    AccountUser accountUser = Provider.of<AccountUser>(context);
     return Consumer<List<User>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
       value.sort((a, b) => b.matrix3by3.compareTo(a.matrix3by3));
 
+      index = value
+          .indexWhere((element) => element.userId == accountUser.user.userId);
+      if (index != -1)
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -248,6 +254,7 @@ class Matrix3by3RankingPage extends StatelessWidget {
                   child: RankList(
                     value: value,
                     typeOfCode: 2,
+                    index: index,
                   ),
                 ),
               )),

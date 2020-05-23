@@ -14,11 +14,12 @@ class AccountUser extends ChangeNotifier {
     });
   }
 
-  incrementExp(int newExp){
+  incrementExp(int newExp) {
     exp = exp + newExp;
     notifyListeners();
   }
-  decrementExp(int newExp){
+
+  decrementExp(int newExp) {
     exp = exp - newExp;
     notifyListeners();
   }

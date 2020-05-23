@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
+import 'package:learn_english/ui/page_models/review_words/detail_word_page.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/core/services/vocab_service.dart';
@@ -44,12 +45,10 @@ class LearnedWords extends StatelessWidget {
         body: Center(child: Text('No data')),
       );
     lessonList = accountUser.user.learningState.keys.toList();
-   
-    return 
-    (lessonList == null)
+
+    return (lessonList == null)
         ? LoadingPage()
-        : 
-        Scaffold(
+        : Scaffold(
             appBar: AppBar(
               title: Text(
                 'Learned Words',
@@ -67,8 +66,7 @@ class LearnedWords extends StatelessWidget {
               child: FutureBuilder(
                 future: getVocabByLesson(lessonList),
                 builder: (context, AsyncSnapshot<List<Vocabulary>> value) {
-                  if (value.data == null) 
-                  return LoadingPage();
+                  if (value.data == null) return LoadingPage();
 
                   return ListView.builder(
                       itemCount: value.data.length,
@@ -78,7 +76,6 @@ class LearnedWords extends StatelessWidget {
                             value.data[index].vocab,
                             style: TextStyle(fontSize: 22),
                           ),
-                          
                           subtitle: AutoSizeText(
                             value.data[index].mean,
                             maxLines: 1,
@@ -97,8 +94,18 @@ class LearnedWords extends StatelessWidget {
                                 size: 20,
                               )),
                           onTap: () {
-                            Navigator.pushNamed(context, RouteName.detailWord,
-                                arguments: [value.data, index]);
+                            // Navigator.pushNamed(context, RouteName.detailWord,
+                            //     arguments: [value.data, index]);
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type:
+                                        PageTransitionType.rightToLeftWithFade,
+                                    duration: Duration(milliseconds: 300),
+                                    child: DetailWordPage(
+                                      vocabList: value.data,
+                                      index: index,
+                                    )));
                           },
                         );
                       });

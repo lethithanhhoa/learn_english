@@ -37,17 +37,17 @@ class RankPage extends StatelessWidget {
           controller: controller,
         ),
         Container(
-          margin: EdgeInsets.all(8.0),
+          margin: EdgeInsets.all(5.0),
           alignment: Alignment.topCenter,
           child: SmoothPageIndicator(
             controller: controller, // PageController
             count: 4,
             effect: ExpandingDotsEffect(
               dotColor: Colors.white.withOpacity(0.5),
-              dotWidth: 5.0,
-              dotHeight: 5.0,
+              dotWidth: 8.0,
+              dotHeight: 4.0,
               activeDotColor: Colors.white,
-              spacing: 10.0
+              spacing: 15.0
             ), // your preferred effect
           ),
         ),

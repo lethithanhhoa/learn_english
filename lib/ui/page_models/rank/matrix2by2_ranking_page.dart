@@ -4,15 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/user.dart';
 import 'package:learn_english/ui/page_models/rank/rank_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
+import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class Matrix2by2RankingPage extends StatelessWidget {
+  int index = -1;
+
   @override
   Widget build(BuildContext context) {
+    AccountUser accountUser = Provider.of<AccountUser>(context);
     return Consumer<List<User>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
       value.sort((a, b) => b.matrix2by2.compareTo(a.matrix2by2));
 
+      index = value
+          .indexWhere((element) => element.userId == accountUser.user.userId);
+      if (index != -1)
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -246,6 +254,7 @@ class Matrix2by2RankingPage extends StatelessWidget {
                   child: RankList(
                     value: value,
                     typeOfCode: 1,
+                    index: index,
                   ),
                 ),
               )),

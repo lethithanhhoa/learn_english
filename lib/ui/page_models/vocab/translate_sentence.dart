@@ -20,6 +20,10 @@ class TranslateSentence extends StatelessWidget {
   bool loading = true;
   AudioPlayer playAudio = AudioPlayer();
 
+  Future<bool> onWillPop() {
+      Fluttertoast.showToast(msg: "Press close icon to back");
+      return Future.value(false);
+    }
   @override
   Widget build(BuildContext context) {
     ContinueButtonState continueButtonState =
@@ -32,11 +36,6 @@ class TranslateSentence extends StatelessWidget {
     if (loading == true) {
       stateOfCrossWordList.generateCrosswords(vocabulary);
       loading = false;
-    }
-
-    Future<bool> onWillPop() {
-      Fluttertoast.showToast(msg: "Press close icon to back");
-      return Future.value(false);
     }
 
     return WillPopScope(

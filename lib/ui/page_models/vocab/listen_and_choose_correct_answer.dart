@@ -9,12 +9,12 @@ import 'package:learn_english/ui/common/speaker.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
 
 class ListenAndChooseCorrectAnswer extends StatelessWidget {
-
   Vocabulary vocabulary;
   List<dynamic> answers = [];
   bool loading = true;
   ListenAndChooseCorrectAnswer({this.vocabulary});
   AudioPlayer playAudio = AudioPlayer();
+
   void generateAnswers() {
     answers.add(vocabulary.vocab);
     var tmp = vocabulary.otherWord;
@@ -24,6 +24,11 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
     answers.shuffle();
   }
 
+  Future<bool> onWillPop() {
+    Fluttertoast.showToast(msg: "Press close icon to back");
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (loading) {
@@ -31,12 +36,7 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
       generateAnswers();
       loading = false;
     }
-    
-    Future<bool> onWillPop() {
-      Fluttertoast.showToast(msg: "Press close icon to back");
-      return Future.value(false);
-    }
-    
+
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
@@ -76,8 +76,9 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 GestureDetector(
-                                  onTap: (){
-                                    playAudio.playCustomAudioFile(vocabulary.audioFile);
+                                  onTap: () {
+                                    playAudio.playCustomAudioFile(
+                                        vocabulary.audioFile);
                                   },
                                   child: Speaker(),
                                 ),

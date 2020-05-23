@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,24 +15,52 @@ import 'package:learn_english/ui/state/recording.dart';
 
 import 'package:provider/provider.dart';
 
-class ListenAndRepeat extends StatelessWidget {
+class ListenAndRepeat extends StatefulWidget {
   Vocabulary vocabulary;
   ListenAndRepeat({this.vocabulary});
-  bool loading = true;
+  _ListenAndRepeatState createState() => _ListenAndRepeatState();
+}
+
+class _ListenAndRepeatState extends State<ListenAndRepeat> {
   AudioPlayer playAudio = AudioPlayer();
+  String recordingText;
+  @override
+  void initState() {
+    super.initState();
+    playAudio.playCustomAudioFile(widget.vocabulary.audioFile);
+  }
+
+  Future<bool> onWillPop() {
+    Fluttertoast.showToast(msg: "Press close icon to back");
+    return Future.value(false);
+  }
 
   @override
   Widget build(BuildContext context) {
     Recording recording = Provider.of<Recording>(context);
-    if (loading == true) {
-      playAudio.playCustomAudioFile(vocabulary.audioFile);
-      loading = false;
+    if (recording.getBestResult == widget.vocabulary.vocab)
+      setState(() {
+        recordingText = recording.getBestResult;
+      });
+    else {
+      int i = 0;
+      recording.getListResult.forEach((element) {
+        // print(element.recognizedWords);
+        if (element.recognizedWords.toLowerCase() ==
+            widget.vocabulary.vocab.toLowerCase())
+          setState(() {
+            recordingText = element.recognizedWords;
+            return;
+          });
+        else
+          i++;
+      });
+      if (i == recording.getListResult.length)
+        recordingText = recording.getBestResult;
     }
 
-    Future<bool> onWillPop() {
-      Fluttertoast.showToast(msg: "Press close icon to back");
-      return Future.value(false);
-    }
+    recording.setFinalResult(recordingText);
+    // print(recording.getFinalResult);
 
     return WillPopScope(
       onWillPop: onWillPop,
@@ -76,12 +105,14 @@ class ListenAndRepeat extends StatelessWidget {
                                   child: Stack(
                                     children: <Widget>[
                                       Container(
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         height: 250,
                                         decoration: BoxDecoration(
                                             image: DecorationImage(
-                                                image: Image.asset('assets/c.jpg')
-                                                    .image,
+                                                image:
+                                                    Image.asset('assets/c.jpg')
+                                                        .image,
                                                 fit: BoxFit.fill)),
                                       ),
                                       Center(
@@ -113,10 +144,10 @@ class ListenAndRepeat extends StatelessWidget {
                                                         // color: Colors.pink,
                                                         image: DecorationImage(
                                                             image: Image.network(
-                                                                    '${vocabulary.image}')
+                                                                    '${widget.vocabulary.image}')
                                                                 .image,
-                                                            fit:
-                                                                BoxFit.scaleDown),
+                                                            fit: BoxFit
+                                                                .scaleDown),
                                                       ),
                                                     ),
                                                   ),
@@ -129,9 +160,12 @@ class ListenAndRepeat extends StatelessWidget {
                                                               .size
                                                               .width,
                                                       height: 40,
-                                                      child: Text(
-                                                        vocabulary.vocab,
+                                                      child: AutoSizeText(
+                                                        widget.vocabulary.vocab,
                                                         style: TextStyle(
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    0.7),
                                                             fontSize: 35.0),
                                                         textAlign:
                                                             TextAlign.right,
@@ -147,8 +181,9 @@ class ListenAndRepeat extends StatelessWidget {
                                       Container(
                                         alignment: Alignment.bottomLeft,
                                         child: GestureDetector(
-                                          onTap: (){
-                                            playAudio.playCustomAudioFile(vocabulary.audioFile);
+                                          onTap: () {
+                                            playAudio.playCustomAudioFile(
+                                                widget.vocabulary.audioFile);
                                           },
                                           child: Speaker(),
                                         ),
@@ -162,7 +197,7 @@ class ListenAndRepeat extends StatelessWidget {
                               children: <Widget>[
                                 Microphone(),
                                 _textResult(
-                                    recording.getTextResult, vocabulary.vocab),
+                                    recordingText, widget.vocabulary.vocab),
                               ],
                             ),
                           ],

@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,97 +27,82 @@ class DetailWord extends StatelessWidget {
     }
     return Scaffold(
       backgroundColor: Colors.green[100],
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.bottomRight,
-                child: Container(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: Image.asset('assets/bg2.jpg').image,
+                  fit: BoxFit.cover),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    playAudio.playClickSound();
+                    detailWordState.setState();
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.width - 80.0,
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      shape: BoxShape.circle,
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: GestureDetector(
-                      onTap: () {
-                        playAudio.playClickSound();
-                        Navigator.of(context).pop();
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.grey,
-                        size: 30,
-                      ),
-                    )),
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        playAudio.playClickSound();
-                        detailWordState.setState();
-                      },
-                      child: Container(
-                        height: MediaQuery.of(context).size.width - 60.0,
-                        width: MediaQuery.of(context).size.width,
-                        child: !detailWordState.getState
-                            ? Container(
-                                height:
-                                    MediaQuery.of(context).size.width - 40.0,
-                                width: MediaQuery.of(context).size.width,
-                                alignment: Alignment.center,
+                    child: !detailWordState.getState
+                        ? Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
                                 color: Colors.white,
-                                child: Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: AutoSizeText(
-                                    vocabList[_index.getIndex].mean,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.charm(
-                                      textStyle: TextStyle(
-                                          color: Colors.blue[400],
-                                          fontSize: 50),
-                                    ),
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(color: Colors.green, width: 2.0, ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: AutoSizeText(
+                                  vocabList[_index.getIndex].mean,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.charm(
+                                    textStyle: TextStyle(
+                                        color: Colors.blue[400], fontSize: 40),
                                   ),
                                 ),
-                              )
-                            : Container(
-                                height:
-                                    MediaQuery.of(context).size.width - 40.0,
-                                width: MediaQuery.of(context).size.width,
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
                                 color: Colors.white,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.width -
-                                              40.0,
-                                      width: MediaQuery.of(context).size.width,
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(color: Colors.green, width: 2.0, ),
+                              ),
+                              child: Stack(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Container(
                                       child: Column(
                                         children: <Widget>[
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsets.all(20.0),
-                                              child: Container(
-                                                height: MediaQuery.of(context)
-                                                    .size
-                                                    .height,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: Image.network(
-                                                              vocabList[_index
-                                                                      .getIndex]
-                                                                  .image)
-                                                          .image,
-                                                      fit: BoxFit.scaleDown),
+                                              child: Expanded(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: Image.network(
+                                                                vocabList[_index
+                                                                        .getIndex]
+                                                                    .image)
+                                                            .image,
+                                                        fit: BoxFit.scaleDown),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -129,80 +115,79 @@ class DetailWord extends StatelessWidget {
                                               maxLines: 1,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  fontSize: 45,
-                                                  color: Colors.green),
+                                                  fontSize: 40,
+                                                  color: Colors.blue[400]),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.width -
-                                              40.0,
-                                      width: MediaQuery.of(context).size.width,
-                                      alignment: Alignment.topRight,
-                                      child: IconButton(
-                                          icon: Icon(
-                                            Icons.volume_up,
-                                            size: 40,
-                                            color: Colors.orange[300],
-                                          ),
-                                          onPressed: () {
-                                            playAudio.playCustomAudioFile(
-                                                vocabList[_index.getIndex]
-                                                    .audioFile);
-                                          }),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.width -
+                                        40.0,
+                                    width: MediaQuery.of(context).size.width,
+                                    alignment: Alignment.topRight,
+                                    child: IconButton(
+                                        icon: Icon(
+                                          Icons.volume_up,
+                                          size: 40,
+                                          color: Colors.yellow[600],
+                                        ),
+                                        onPressed: () {
+                                          playAudio.playCustomAudioFile(
+                                              vocabList[_index.getIndex]
+                                                  .audioFile);
+                                        }),
+                                  ),
+                                ],
                               ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        GestureDetector(
-                            // padding: EdgeInsets.only(left: 0.0),
-                            child: Icon(
-                              Icons.keyboard_arrow_left,
-                              size: 60,
-                              color: (_index.getIndex == 0)
-                                  ? Colors.grey[400]
-                                  : Colors.white,
                             ),
-                            onTap: (_index.getIndex == 0)
-                                ? null
-                                : () {
-                                    playAudio.playClickSound();
-                                    detailWordState.setStateToTrue();
-                                    _index.decrement();
-                                  }),
-                        GestureDetector(
-                            // padding: EdgeInsets.only(right: 35.0),
-
-                            child: Icon(
-                              Icons.keyboard_arrow_right,
-                              size: 60,
-                              color: (_index.getIndex == vocabList.length - 1)
-                                  ? Colors.grey[400]
-                                  : Colors.white,
-                            ),
-                            onTap: (_index.getIndex == vocabList.length - 1)
-                                ? null
-                                : () {
-                                    playAudio.playClickSound();
-                                    detailWordState.setStateToTrue();
-                                    _index.increment();
-                                  }),
-                      ],
-                    )
-                  ],
+                          ),
+                  ),
                 ),
-              ),
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    GestureDetector(
+                        // padding: EdgeInsets.only(left: 0.0),
+                        child: Icon(
+                          Icons.keyboard_arrow_left,
+                          size: 60,
+                          color: (_index.getIndex == 0)
+                              ? Colors.grey[400]
+                              : Colors.green,
+                        ),
+                        onTap: (_index.getIndex == 0)
+                            ? null
+                            : () {
+                                playAudio.playClickSound();
+                                detailWordState.setStateToTrue();
+                                _index.decrement();
+                              }),
+                    GestureDetector(
+                        // padding: EdgeInsets.only(right: 35.0),
+
+                        child: Icon(
+                          Icons.keyboard_arrow_right,
+                          size: 60,
+                          color: (_index.getIndex == vocabList.length - 1)
+                              ? Colors.grey[400]
+                              : Colors.green,
+                        ),
+                        onTap: (_index.getIndex == vocabList.length - 1)
+                            ? null
+                            : () {
+                                playAudio.playClickSound();
+                                detailWordState.setStateToTrue();
+                                _index.increment();
+                              }),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

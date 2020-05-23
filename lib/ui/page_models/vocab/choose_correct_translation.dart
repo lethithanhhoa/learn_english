@@ -22,16 +22,16 @@ class ChooseCorrectTranslate extends StatelessWidget {
     answers.shuffle();
   }
 
+  Future<bool> onWillPop() {
+    Fluttertoast.showToast(msg: "Press close icon to back");
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (loading) {
       generateAnswers();
       loading = false;
-    }
-
-    Future<bool> onWillPop() {
-      Fluttertoast.showToast(msg: "Press close icon to back");
-      return Future.value(false);
     }
 
     return WillPopScope(

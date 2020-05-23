@@ -72,13 +72,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<bool> onWillPop() {
-    DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "Press again to exit app");
-      return Future.value(false);
-    }
-    return Future.value(true);
+    // DateTime now = DateTime.now();
+    // if (currentBackPressTime == null ||
+    //     now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+    //   currentBackPressTime = now;
+    //   Fluttertoast.showToast(msg: "Press back again to exit");
+    //   return Future.value(false);
+    // }
+    return Future.value(false);
   }
 }

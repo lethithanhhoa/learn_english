@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -59,7 +60,7 @@ class AccountChildPage extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      height: 170,
+                      height: 180,
                       decoration: BoxDecoration(
                           color: Colors.green[200],
                           image: DecorationImage(
@@ -87,36 +88,18 @@ class AccountChildPage extends StatelessWidget {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          Stack(
-                            children: [
-                              Container(
-                                height: 180,
-                                width: 180,
-                                decoration: BoxDecoration(
-                                    color: Colors.green[300],
-                                    shape: BoxShape.circle,
-                                ),
-                              ),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                left: 0,
-                                bottom: 5,
-                                child: Container(
-                                  height: 180,
-                                  width: 180,
-                                  decoration: BoxDecoration(
-                                    // color: Colors.yellow[100],
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: Image.network(
-                                                accountUser.user.avatarUrl)
-                                            .image,
-                                        fit: BoxFit.fill),
-                                  ),
-                                ),
-                              ),
-                            ],
+                          Container(
+                            height: 160,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              color: Colors.yellow[100],
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: Image.network(
+                                          accountUser.user.avatarUrl)
+                                      .image,
+                                  fit: BoxFit.fill),
+                            ),
                           ),
                           AutoSizeText(
                             accountUser.user.name,
@@ -164,30 +147,37 @@ class AccountChildPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
-                                          Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: Colors.white,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: AutoSizeText(
-                                                  '${count}',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: 40,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
+                                          FlipPanel.builder(
+                                              itemsCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  height: 100,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    color: Colors.white,
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                      child: AutoSizeText(
+                                                        '${count}',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: 40,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black
+                                                              .withOpacity(0.7),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0),
@@ -217,30 +207,37 @@ class AccountChildPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
-                                          Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: Colors.white,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: AutoSizeText(
-                                                  '${accountUser.user.exp}',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: 40,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
+                                          FlipPanel.builder(
+                                              itemsCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  height: 100,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    color: Colors.white,
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                      child: AutoSizeText(
+                                                        '${accountUser.user.exp}',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: 40,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black
+                                                              .withOpacity(0.7),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0),
@@ -270,30 +267,37 @@ class AccountChildPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
-                                          Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: Colors.white,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: AutoSizeText(
-                                                  '${accountUser.user.matrix2by2}',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: 40,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
+                                          FlipPanel.builder(
+                                              itemsCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  height: 100,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    color: Colors.white,
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                      child: AutoSizeText(
+                                                        '${accountUser.user.matrix2by2}',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: 40,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black
+                                                              .withOpacity(0.7),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0),
@@ -323,30 +327,37 @@ class AccountChildPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
-                                          Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: Colors.white,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: AutoSizeText(
-                                                  '${accountUser.user.matrix3by3}',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: 40,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
+                                          FlipPanel.builder(
+                                              itemsCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  height: 100,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    color: Colors.white,
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                      child: AutoSizeText(
+                                                        '${accountUser.user.matrix3by3}',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: 40,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black
+                                                              .withOpacity(0.7),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0),
@@ -376,30 +387,37 @@ class AccountChildPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: <Widget>[
-                                          Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: Colors.white,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Center(
-                                                child: AutoSizeText(
-                                                  '${accountUser.user.matrix4by4}',
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    fontSize: 40,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
+                                          FlipPanel.builder(
+                                              itemsCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  height: 100,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                    color: Colors.white,
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    child: Center(
+                                                      child: AutoSizeText(
+                                                        '${accountUser.user.matrix4by4}',
+                                                        maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: 40,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black
+                                                              .withOpacity(0.7),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0),

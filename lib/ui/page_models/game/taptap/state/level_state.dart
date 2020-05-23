@@ -28,7 +28,7 @@ class LevelState extends ChangeNotifier {
   bool _isFalse = false;
   bool _isFinish = false;
   Map<int, String> map = Map();
-
+  int _score = 0;
   List<Cell> _widgets = List();
   Widget _curWidget;
 
@@ -46,6 +46,7 @@ class LevelState extends ChangeNotifier {
   List<Widget> get getWidgets => _widgets;
   bool get getIsFalse => _isFalse;
   bool get getIsFinish => _isFinish;
+  int get getScore => _score;
 
   bool getWidgetState(int index) {
     return _widgetsState[index];
@@ -94,6 +95,7 @@ class LevelState extends ChangeNotifier {
         setValueForListByMap(true);
         // _audioPlayer.playCorrectSound();
         _numOfCorrectWidgets += 2;
+        _score ++;
         removeMap();
       } else {
         setValueForListByMap(false);

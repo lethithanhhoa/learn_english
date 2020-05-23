@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class MySlider extends StatelessWidget {
@@ -11,35 +12,17 @@ class MySlider extends StatelessWidget {
     SliderState sliderState = Provider.of<SliderState>(context);
     ContinueButtonState continueButtonState =
         Provider.of<ContinueButtonState>(context);
-    return Container(
-      width: MediaQuery.of(context).size.width,
+    return Expanded(
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Center(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    height: 18,
-                    width: 220,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white.withOpacity(0.4),
-                    ),
-                     
-                  ),
-                  Container(
-                    height: 18,
-                    width: 220*
-                        continueButtonState.getCorrectAnswerNum /
-                        sliderState.getMaxOfSlider,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
+            child: LinearPercentIndicator(
+              // width: MediaQuery.of(context).size.width,
+              lineHeight: 18.0,
+              percent: continueButtonState.getCorrectAnswerNum /
+                  sliderState.getMaxOfSlider,
+              backgroundColor: Colors.white.withOpacity(0.3),
+              progressColor: Colors.white,
             ),
           ),
           Padding(
