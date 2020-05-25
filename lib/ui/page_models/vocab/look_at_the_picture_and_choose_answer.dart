@@ -54,6 +54,7 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,

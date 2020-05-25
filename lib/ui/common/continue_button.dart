@@ -166,8 +166,8 @@ class ContinueButton extends StatelessWidget {
           height: 220,
           alignment: Alignment.topLeft,
           child: !value
-              ? Expanded(
-                  child: Column(
+              ? 
+                  Column(
                     children: [
                       Expanded(
                         child: Container(
@@ -184,8 +184,8 @@ class ContinueButton extends StatelessWidget {
                         ),
                       )
                     ],
-                  ),
-                )
+                  )
+                
               : Column(
                   children: [
                     Expanded(

@@ -92,7 +92,7 @@ class FinishLessonPage extends StatelessWidget {
                               width: 142,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.yellow,
+                                color: Colors.yellow.withOpacity(0.1),
                                 image: DecorationImage(
                                     image:
                                         Image.asset('assets/carrot.gif').image,

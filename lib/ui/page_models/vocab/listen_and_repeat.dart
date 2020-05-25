@@ -84,6 +84,7 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,

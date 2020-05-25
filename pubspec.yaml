@@ -75,6 +75,7 @@ dependencies:
 
   #access permission
   permission_handler: ^4.4.0+hotfix.2
+  flutter_webrtc: ^0.2.8
   
 dev_dependencies:
   flutter_test:

@@ -10,11 +10,11 @@ import 'package:learn_english/core/services/lesson_service.dart';
 import 'package:learn_english/core/services/vocab_service.dart';
 import 'package:learn_english/core/helper/gsheet_data.dart';
 
-class StartingPage extends StatefulWidget {
-  _StartingPageState createState() => _StartingPageState();
+class SplashPage extends StatefulWidget {
+  _SplashPageState createState() => _SplashPageState();
 }
 
-class _StartingPageState extends State<StartingPage> {
+class _SplashPageState extends State<SplashPage> {
   LessonService _lessonService = LessonService();
   VocabService _vocabService = VocabService();
   GSheetData _gSheetData = GSheetData();

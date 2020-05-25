@@ -155,7 +155,7 @@ class _GameState extends State<GamePage> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, RouteName.detail_taptap,
+                        Navigator.pushNamed(context, RouteName.taptap,
                             arguments: vocabListByType);
                       },
                       child: TapTapAnimatedWidget(
@@ -166,7 +166,7 @@ class _GameState extends State<GamePage> {
                             arguments: vocabListByType);
                       },
                     child: TapTapAnimatedWidget(
-                        title: 'Piano Tile', imageName: 'duck.png'),
+                        title: 'Piano Title', imageName: 'duck.png'),
                   ),
                 ],
               ),

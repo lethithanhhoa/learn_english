@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:learn_english/ui/page_models/game/game_page.dart';
 import 'package:learn_english/ui/page_models/lesson/lesson_page.dart';
 import 'package:learn_english/ui/page_models/rank/rank_page.dart';
@@ -18,10 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   final _pageOption = [
     LessonPage(),
-    GamePage(),
-    
+    GamePage(), 
     RankPage(),
-    // StartingPage(),
     AccountPage(),
   ];
 
@@ -72,13 +69,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<bool> onWillPop() {
-    // DateTime now = DateTime.now();
-    // if (currentBackPressTime == null ||
-    //     now.difference(currentBackPressTime) > Duration(seconds: 2)) {
-    //   currentBackPressTime = now;
-    //   Fluttertoast.showToast(msg: "Press back again to exit");
-    //   return Future.value(false);
-    // }
     return Future.value(false);
   }
 }

@@ -12,7 +12,7 @@
     ]
   },
   "storage": {
-    "rules": "storage.rules"
+    "rules": "n"
   },
   "database": {
     "rules": "database.rules.json"

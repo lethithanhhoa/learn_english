@@ -56,6 +56,7 @@ class ChooseCorrectTranslate extends StatelessWidget {
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

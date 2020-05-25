@@ -43,7 +43,7 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: appBar,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             return SingleChildScrollView(
@@ -58,6 +58,7 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,

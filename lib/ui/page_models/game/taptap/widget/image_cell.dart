@@ -9,7 +9,8 @@ class ImageCell extends Cell {
   double textSize;
   double borderRadius;
   double padding;
-  ImageCell({this.vocabulary, this.textSize, this.borderRadius, this.padding}) : super();
+  ImageCell({this.vocabulary, this.textSize, this.borderRadius, this.padding})
+      : super();
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +29,14 @@ class ImageCell extends Cell {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(borderRadius),
-                    image: DecorationImage(
-                        image: Image.network(vocabulary.image).image,
-                        fit: BoxFit.scaleDown),
-                  ),
+                  alignment: Alignment.center,
+                  child: Image.network(vocabulary.image),
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(borderRadius),
+                  //   image: DecorationImage(
+                  //       image: Image.network(vocabulary.image).image,
+                  //       fit: BoxFit.scaleDown),
+                  // ),
                 ),
               ),
             ),

@@ -9,13 +9,13 @@ import 'package:learn_english/ui/page_models/review_words/learned_words_page.dar
 import 'package:learn_english/ui/page_models/vocab/vocabulary_page.dart';
 import 'package:learn_english/ui/pages/home_page.dart';
 import 'package:learn_english/ui/pages/login_page.dart';
-import 'package:learn_english/ui/pages/starting_page.dart';
+import 'package:learn_english/ui/pages/splash_page.dart';
 
 class Router {
   static Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (context) => StartingPage());
+        return MaterialPageRoute(builder: (context) => SplashPage());
 
       case '/login':
         return MaterialPageRoute(builder: (context) => LoginPage());
