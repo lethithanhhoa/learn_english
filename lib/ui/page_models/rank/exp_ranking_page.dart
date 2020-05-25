@@ -7,8 +7,19 @@ import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class ExpRankingPage extends StatelessWidget {
-  int index = -1;
+class ExpRankingPage extends StatefulWidget {
+  _ExpRankingState createState() => _ExpRankingState();
+}
+
+class _ExpRankingState extends State<ExpRankingPage> {
+  int index = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     AccountUser accountUser = Provider.of<AccountUser>(context);
@@ -18,9 +29,13 @@ class ExpRankingPage extends StatelessWidget {
 
       value.sort((a, b) => b.exp.compareTo(a.exp));
 
-      index = value
-          .indexWhere((element) => element.userId == accountUser.user.userId);
-      if (index != -1)
+      Future.delayed(const Duration(milliseconds: 100), () {
+        setState(() {
+          index = value.indexWhere(
+              (element) => element.userId == accountUser.user.userId);
+        });
+      });
+
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(

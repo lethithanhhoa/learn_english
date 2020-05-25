@@ -20,7 +20,7 @@ class _TapTapAnimatedWidgetState extends State<TapTapAnimatedWidget>
 
   @override
   void initState() {
-    size = 0.0.tweenTo(250.0).animatedBy(
+    size = 0.0.tweenTo(300.0).animatedBy(
         controller); // Connect tween and controller and apply to animation variable
     controller.play(duration: Duration(milliseconds: 900)); // Start the animation playback
     super.initState();

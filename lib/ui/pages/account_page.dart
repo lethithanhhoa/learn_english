@@ -444,7 +444,7 @@ class AccountChildPage extends StatelessWidget {
                           handleSignOut();
                           Navigator.pushNamedAndRemoveUntil(
                               context,
-                              RouteName.loginPage,
+                              RouteName.login,
                               (Route<dynamic> route) => false);
                         },
                         child: Padding(

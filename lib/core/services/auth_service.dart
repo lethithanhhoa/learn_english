@@ -40,10 +40,9 @@ class AuthService {
     return user;
   }
 
-  Future<Null> signOut() async {
+  Future signOut() async {
     await FirebaseAuth.instance.signOut();
     await _googleSignIn.signOut();
-    return;
   }
 
   Future<bool> isSignedIn() async {

@@ -19,7 +19,7 @@ class CloseLesson extends StatelessWidget {
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(context, RouteName.homePage,
+                    Navigator.pushNamedAndRemoveUntil(context, RouteName.home,
                         (Route<dynamic> route) => false);
                   },
                   child: Text('Exit')),

@@ -54,8 +54,8 @@ class VocabService {
     }).toList();
   }
 
-  Future<Null> clearAllVocab() async {
+  Future  clearAllVocab() async {
     await _folder.delete(await _db);
-    return;
+ 
   }
 }

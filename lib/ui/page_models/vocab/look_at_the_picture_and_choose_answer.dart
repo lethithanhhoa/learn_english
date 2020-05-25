@@ -22,9 +22,9 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
   }
 
   Future<bool> onWillPop() {
-      Fluttertoast.showToast(msg: "Press close icon to back");
-      return Future.value(false);
-    }
+    Fluttertoast.showToast(msg: "Press close icon to back");
+    return Future.value(false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,24 +70,29 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black54),
                                 ),
-                                Container(
-                                  height: 220,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: Image.asset('assets/board.png')
-                                              .image,
-                                          fit: BoxFit.fill)),
-                                  child: Center(
-                                    child: FadeInImage.assetNetwork(
-                                      height: 130,
-                                      width: MediaQuery.of(context).size.width *
-                                          2.5 /
-                                          4,
-                                      placeholder: 'assets/waiting_image.gif',
-                                      image: '${vocabulary.image}',
-                                      fit: BoxFit.scaleDown,
-                                      fadeInCurve: Curves.bounceIn,
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 30),
+                                  child: Container(
+                                    height: 200,
+                                    width: MediaQuery.of(context).size.width,
+                                    alignment: Alignment.bottomCenter,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image:
+                                                Image.asset('assets/board2.jpg')
+                                                    .image,
+                                            fit: BoxFit.scaleDown)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(20.0),
+                                      child: FadeInImage.assetNetwork(
+                                        height: 100,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        placeholder: 'assets/waiting_image.gif',
+                                        image: '${vocabulary.image}',
+                                        fit: BoxFit.scaleDown,
+                                        fadeInCurve: Curves.bounceIn,
+                                      ),
                                     ),
                                   ),
                                 ),

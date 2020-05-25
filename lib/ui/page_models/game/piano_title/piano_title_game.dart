@@ -4,9 +4,9 @@ import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:flip_panel/flip_panel.dart';
 
-class TapTapGame extends StatelessWidget {
+class PianoTitleGame extends StatelessWidget {
   List<Vocabulary> listVocab;
-  TapTapGame({this.listVocab});
+  PianoTitleGame({this.listVocab});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

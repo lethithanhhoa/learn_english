@@ -43,7 +43,7 @@ class LessonPage extends StatelessWidget {
                                 Icon(Icons.list, size: 40, color: Colors.white),
                             onPressed: () {
                               Navigator.pushNamed(
-                                  context, RouteName.learnedWordsPage);
+                                  context, RouteName.review);
                             },
                           ),
                           Text(

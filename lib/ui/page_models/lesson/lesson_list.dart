@@ -34,7 +34,7 @@ class LessonList extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(0, 5, 20, 5),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, RouteName.vocab,
+          Navigator.pushNamed(context, RouteName.learn,
               arguments: currentLesson.lessonId);
         },
         child: Column(
@@ -50,7 +50,7 @@ class LessonList extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    height: 160,
+                    height:  160,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -70,7 +70,7 @@ class LessonList extends StatelessWidget {
                             bottomRight: Radius.circular(25),
                             topRight: Radius.circular(25)),
                       ),
-                      height: 160,
+                      height:  160,
                       width: MediaQuery.of(context).size.width,
                       child: Text(
                         currentLesson.lessonName,

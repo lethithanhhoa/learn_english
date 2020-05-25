@@ -38,7 +38,8 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
   @override
   Widget build(BuildContext context) {
     Recording recording = Provider.of<Recording>(context);
-    if (recording.getBestResult == widget.vocabulary.vocab)
+    if (recording.getBestResult.toLowerCase() ==
+        widget.vocabulary.vocab.toLowerCase())
       setState(() {
         recordingText = recording.getBestResult;
       });
@@ -47,12 +48,12 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
       recording.getListResult.forEach((element) {
         // print(element.recognizedWords);
         if (element.recognizedWords.toLowerCase() ==
-            widget.vocabulary.vocab.toLowerCase())
+            widget.vocabulary.vocab.toLowerCase()) {
           setState(() {
             recordingText = element.recognizedWords;
-            return;
           });
-        else
+          return;
+        } else
           i++;
       });
       if (i == recording.getListResult.length)
@@ -101,93 +102,78 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
                                 ),
                                 Container(
                                   width: MediaQuery.of(context).size.width,
-                                  height: 250,
+                                  height: 280,
                                   child: Stack(
                                     children: <Widget>[
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        height: 250,
+                                        height: 280,
                                         decoration: BoxDecoration(
                                             image: DecorationImage(
-                                                image:
-                                                    Image.asset('assets/c.jpg')
-                                                        .image,
-                                                fit: BoxFit.fill)),
-                                      ),
-                                      Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 60, 10, 0),
-                                          child: Transform.rotate(
-                                            angle: -pi / 95,
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  2.8 /
-                                                  4,
-                                              height: 150,
-                                              // color: Colors.yellow.withOpacity(0.7),
-                                              child: Stack(
-                                                children: <Widget>[
-                                                  Center(
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              2.5 /
-                                                              4,
-                                                      height: 120,
-                                                      decoration: BoxDecoration(
-                                                        // color: Colors.pink,
-                                                        image: DecorationImage(
-                                                            image: Image.network(
-                                                                    '${widget.vocabulary.image}')
-                                                                .image,
-                                                            fit: BoxFit
-                                                                .scaleDown),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      height: 40,
-                                                      child: AutoSizeText(
-                                                        widget.vocabulary.vocab,
-                                                        style: TextStyle(
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.7),
-                                                            fontSize: 35.0),
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                                image: Image.asset(
+                                                        'assets/board3.jpg')
+                                                    .image,
+                                                fit: BoxFit.scaleDown)),
                                       ),
                                       Container(
-                                        alignment: Alignment.bottomLeft,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            playAudio.playCustomAudioFile(
-                                                widget.vocabulary.audioFile);
-                                          },
-                                          child: Speaker(),
-                                        ),
-                                      ),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 280,
+                                          alignment: Alignment.bottomCenter,
+                                          child: Container(
+                                            height: 145,
+                                            margin: EdgeInsets.all(5.0),
+                                            // color: Colors.blue.withOpacity(0.5),
+                                            child: Stack(
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: FadeInImage
+                                                          .assetNetwork(
+                                                        placeholder:
+                                                            'assets/waiting_image.gif',
+                                                        image: widget
+                                                            .vocabulary.image,
+                                                        fit: BoxFit.scaleDown,
+                                                        fadeInCurve:
+                                                            Curves.bounceIn,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      height: 45,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          AutoSizeText(
+                                                            '${widget.vocabulary.vocab}',
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .lightGreen[600],
+                                                              fontSize: 50,
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 20),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              playAudio.playCustomAudioFile(
+                                                                  widget
+                                                                      .vocabulary
+                                                                      .audioFile);
+                                                            },
+                                                            child: Speaker(size: 50),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          )),
                                     ],
                                   ),
                                 ),
@@ -221,6 +207,8 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
         alignment: Alignment.bottomCenter,
         child: Text(
           textResult,
+          maxLines: 1,
+          overflow: TextOverflow.visible,
           style: TextStyle(
             color: (textResult.toLowerCase() == text.toLowerCase())
                 ? Colors.lightGreen

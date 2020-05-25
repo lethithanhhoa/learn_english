@@ -80,7 +80,7 @@ class ListenAndCompleteSentence extends StatelessWidget {
                                 playAudio
                                     .playCustomAudioFile(vocabulary.audioFile);
                               },
-                              child: Speaker(),
+                              child: Speaker(size: 80,),
                             ),
                             Container(
                               height: MediaQuery.of(context).size.height / 5,

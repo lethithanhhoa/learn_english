@@ -80,7 +80,7 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
                                     playAudio.playCustomAudioFile(
                                         vocabulary.audioFile);
                                   },
-                                  child: Speaker(),
+                                  child: Speaker(size: 80,),
                                 ),
                               ],
                             ),

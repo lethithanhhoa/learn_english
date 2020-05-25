@@ -142,7 +142,7 @@ class FinishLessonPage extends StatelessWidget {
                         }
                         Navigator.pushNamedAndRemoveUntil(
                             context,
-                            RouteName.homePage,
+                            RouteName.home,
                             (Route<dynamic> route) => false);
                       },
                       child: Text(

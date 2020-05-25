@@ -8,7 +8,6 @@ import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:flutter/services.dart';
 import 'package:learn_english/core/services/lesson_service.dart';
 import 'package:learn_english/core/services/vocab_service.dart';
-import 'package:learn_english/core/services/db_version_service.dart';
 import 'package:learn_english/core/helper/gsheet_data.dart';
 
 class StartingPage extends StatefulWidget {
@@ -19,7 +18,7 @@ class _StartingPageState extends State<StartingPage> {
   LessonService _lessonService = LessonService();
   VocabService _vocabService = VocabService();
   GSheetData _gSheetData = GSheetData();
-  DBVerService _dbVerService = DBVerService();
+  
 
   @override
   void initState() {
@@ -60,7 +59,7 @@ class _StartingPageState extends State<StartingPage> {
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 5), () {
       Navigator.pushNamedAndRemoveUntil(
-          context, RouteName.loginPage, (Route<dynamic> route) => false);
+          context, RouteName.login, (Route<dynamic> route) => false);
     });
     return Scaffold(
       backgroundColor: Colors.white,
