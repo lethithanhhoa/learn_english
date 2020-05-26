@@ -8,8 +8,8 @@ import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class Matrix2by2RankingPage extends StatelessWidget {
-  int index = -1;
+class TapTapPage extends StatelessWidget {
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class Matrix2by2RankingPage extends StatelessWidget {
 
       index = value
           .indexWhere((element) => element.userId == accountUser.user.userId);
-      if (index != -1)
+
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(

@@ -42,138 +42,126 @@ class _GameState extends State<GamePage> {
 
     final random = Random();
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: constraints.copyWith(
-              minHeight: constraints.maxHeight,
-              maxHeight: double.infinity,
-            ),
-            child: IntrinsicHeight(
-              child: Column(
+    Future<bool> onWillPop() {
+      return Future.value(false);
+    }
+
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
+            // mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
                 // mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    // mainAxisSize: MainAxisSize.min,
-                    children: [0, 1, 2, 3, 4, 5, 6, 7]
-                        .map((count) => FlipPanel.stream(
-                              itemStream: Stream.fromFuture(Future.delayed(
-                                  Duration(
-                                      milliseconds: random.nextInt(20) * 100),
-                                  () => 1)),
-                              itemBuilder: (_, value) => value <= 0
-                                  ? Container(
-                                      color: Colors.white,
-                                      width: widthFactor *
-                                          MediaQuery.of(context).size.width,
-                                      height: heightFactor *
-                                          MediaQuery.of(context).size.height /
-                                          2.5,
-                                    )
-                                  : ClipRect(
-                                      child: Align(
-                                          alignment: Alignment(
-                                              -1.0 +
-                                                  count * 2 * 0.125 +
-                                                  count * toleranceFactor,
-                                              -1.0),
-                                          widthFactor: widthFactor,
-                                          heightFactor: heightFactor,
-                                          child: Image.asset(
-                                            'assets/find.png',
-                                            fit: BoxFit.scaleDown,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
+                children: [0, 1, 2, 3, 4, 5, 6, 7]
+                    .map((count) => FlipPanel.stream(
+                          itemStream: Stream.fromFuture(Future.delayed(
+                              Duration(milliseconds: random.nextInt(20) * 100),
+                              () => 1)),
+                          itemBuilder: (_, value) => value <= 0
+                              ? Container(
+                                  color: Colors.white,
+                                  width: widthFactor *
+                                      MediaQuery.of(context).size.width,
+                                  height: heightFactor *
+                                      MediaQuery.of(context).size.height /
+                                      2.5,
+                                )
+                              : ClipRect(
+                                  child: Align(
+                                      alignment: Alignment(
+                                          -1.0 +
+                                              count * 2 * 0.125 +
+                                              count * toleranceFactor,
+                                          -1.0),
+                                      widthFactor: widthFactor,
+                                      heightFactor: heightFactor,
+                                      child: Image.asset(
+                                        'assets/find.png',
+                                        fit: BoxFit.scaleDown,
+                                        height:
+                                            MediaQuery.of(context).size.height /
                                                 2.5,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                          ))),
-                              initValue: 0,
-                              spacing: 0.0,
-                              direction: FlipDirection.up,
-                            ))
-                        .toList(),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      0,
-                      1,
-                      2,
-                      3,
-                      4,
-                      5,
-                      6,
-                      7,
-                    ]
-                        .map((count) => FlipPanel.stream(
-                              itemStream: Stream.fromFuture(Future.delayed(
-                                  Duration(
-                                      milliseconds: random.nextInt(20) * 100),
-                                  () => 1)),
-                              itemBuilder: (_, value) => value <= 0
-                                  ? Container(
-                                      color: Colors.white,
-                                      width: widthFactor *
-                                          MediaQuery.of(context).size.width,
-                                      height: heightFactor *
-                                          MediaQuery.of(context).size.height /
-                                          2.5,
-                                    )
-                                  : ClipRect(
-                                      child: Align(
-                                          alignment: Alignment(
-                                              -1.0 +
-                                                  count * 2 * 0.125 +
-                                                  count * toleranceFactor,
-                                              1.0),
-                                          widthFactor: widthFactor,
-                                          heightFactor: heightFactor,
-                                          child: Image.asset(
-                                            'assets/find.png',
-                                            fit: BoxFit.scaleDown,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                2.5,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                          ))),
-                              initValue: 0,
-                              spacing: 0.0,
-                              direction: FlipDirection.down,
-                            ))
-                        .toList(),
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, RouteName.taptap,
-                            arguments: vocabListByType);
-                      },
-                      child: TapTapAnimatedWidget(
-                          title: 'Tap Tap', imageName: 'bee1.png')),
-                  GestureDetector(
-                    onTap: () {
-                        Navigator.pushNamed(context, RouteName.piano_title,
-                            arguments: vocabListByType);
-                      },
-                    child: TapTapAnimatedWidget(
-                        title: 'Piano Title', imageName: 'duck.png'),
-                  ),
-                ],
+                                        width: MediaQuery.of(context).size.width,
+                                      ))),
+                          initValue: 0,
+                          spacing: 0.0,
+                          direction: FlipDirection.up,
+                        ))
+                    .toList(),
               ),
-            ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                ]
+                    .map((count) => FlipPanel.stream(
+                          itemStream: Stream.fromFuture(Future.delayed(
+                              Duration(milliseconds: random.nextInt(20) * 100),
+                              () => 1)),
+                          itemBuilder: (_, value) => value <= 0
+                              ? Container(
+                                  color: Colors.white,
+                                  width: widthFactor *
+                                      MediaQuery.of(context).size.width,
+                                  height: heightFactor *
+                                      MediaQuery.of(context).size.height /
+                                      2.5,
+                                )
+                              : ClipRect(
+                                  child: Align(
+                                      alignment: Alignment(
+                                          -1.0 +
+                                              count * 2 * 0.125 +
+                                              count * toleranceFactor,
+                                          1.0),
+                                      widthFactor: widthFactor,
+                                      heightFactor: heightFactor,
+                                      child: Image.asset(
+                                        'assets/find.png',
+                                        fit: BoxFit.scaleDown,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                2.5,
+                                        width: MediaQuery.of(context).size.width,
+                                      ))),
+                          initValue: 0,
+                          spacing: 0.0,
+                          direction: FlipDirection.down,
+                        ))
+                    .toList(),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteName.taptap,
+                        arguments: vocabListByType);
+                  },
+                  child: TapTapAnimatedWidget(
+                      title: 'Tap Tap', imageName: 'bee1.png')),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, RouteName.trex,
+                      arguments: vocabListByType);
+                },
+                child: TapTapAnimatedWidget(
+                    title: 'Trex', imageName: 'duck.png'),
+              ),
+            ],
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

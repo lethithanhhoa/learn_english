@@ -7,18 +7,8 @@ import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class ExpRankingPage extends StatefulWidget {
-  _ExpRankingState createState() => _ExpRankingState();
-}
-
-class _ExpRankingState extends State<ExpRankingPage> {
+class ExpRankingPage extends StatelessWidget {
   int index = 0;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +19,12 @@ class _ExpRankingState extends State<ExpRankingPage> {
 
       value.sort((a, b) => b.exp.compareTo(a.exp));
 
-      Future.delayed(const Duration(milliseconds: 100), () {
-        setState(() {
-          index = value.indexWhere(
-              (element) => element.userId == accountUser.user.userId);
-        });
-      });
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   setState(() {
+      index = value
+          .indexWhere((element) => element.userId == accountUser.user.userId);
+      //   });
+      // });
 
       return Scaffold(
         backgroundColor: Colors.white,

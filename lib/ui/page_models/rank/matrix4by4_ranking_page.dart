@@ -8,7 +8,7 @@ import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 
 class Matrix4by4RankingPage extends StatelessWidget {
-  int index = -1;
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {

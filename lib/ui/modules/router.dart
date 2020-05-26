@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/ui/page_models/game/piano_title/piano_title_game.dart';
 import 'package:learn_english/ui/page_models/game/taptap/end_game_page.dart';
 import 'package:learn_english/ui/page_models/game/taptap/taptap_game.dart';
 import 'package:learn_english/ui/page_models/game/taptap/taptap_detail_page.dart';
+import 'package:learn_english/ui/page_models/game/trex/trex_game.dart';
 import 'package:learn_english/ui/page_models/review_words/detail_word_page.dart';
 import 'package:learn_english/ui/page_models/review_words/learned_words_page.dart';
 import 'package:learn_english/ui/page_models/vocab/vocabulary_page.dart';
@@ -19,8 +19,15 @@ class Router {
 
       case '/login':
         return MaterialPageRoute(builder: (context) => LoginPage());
-      case '/home':
-        return MaterialPageRoute(builder: (context) => HomePage());
+
+      case '/home':{
+        List<dynamic> arg = settings.arguments as List<dynamic>;
+        return MaterialPageRoute(builder: (context) => HomePage(initialHomePage: 0, initialRankPage: 0,));
+      }
+
+      case '/game':
+        return MaterialPageRoute(builder: (context) => HomePage(initialHomePage: 1, initialRankPage: 0,));
+        
       case '/learn':
         {
           String lessonId = settings.arguments as String;
@@ -63,15 +70,17 @@ class Router {
                     vocabList: vocabList,
                   ));
         }
+      case 'taptap_rank':{
+        return MaterialPageRoute(
+              builder: (context) => HomePage(initialHomePage: 2, initialRankPage: 1,));
+      }
 
-      case 'piano_title':
-        {
-          List<Vocabulary> vocabList = settings.arguments as List<Vocabulary>;
-          return MaterialPageRoute(
-              builder: (context) => PianoTitleGame(
-                    listVocab: vocabList,
-                  ));
-        }
+      case 'trex': {
+         return MaterialPageRoute(
+              builder: (context) => TRexGameWrapper());
+      }
+
+      
 
       default:
         return MaterialPageRoute(builder: (_) {
