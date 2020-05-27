@@ -1,6 +1,6 @@
 # Giới thiệu
-- Ứng dụng để học tiêng Anh cho học sinh lớp 1 (dữ liệu được lấy trên sachmem.vn) được phát triển bởi framework Flutter kết hợp với Firebase làm backend
-- Các chức năng hiện có:
+### Ứng dụng để học tiếng Anh cho học sinh lớp 1 (dữ liệu được lấy trên sachmem.vn) được phát triển bởi framework Flutter kết hợp với Firebase làm backend
+### Các chức năng hiện có:
 + Đăng nhập với tài khoản Google (tự động đăng nhập lại nếu chưa logout khỏi phiên làm việc trước đó)
 + Học từ (có tính % số câu trả lời đúng cho mỗi bài học)
 + Xem lại các từ đã học
