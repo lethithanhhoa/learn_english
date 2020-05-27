@@ -8,7 +8,7 @@ class ContinueButtonState extends ChangeNotifier {
       true; //this parameter is used to disable choose other answer after clicking 'check it' button
   int _screenCode = 0;
   int _correctAnswerNum = 0;
-  // int _heartNum = 5;
+
   String _answer = '';
 
   bool get getDisable => _disable;

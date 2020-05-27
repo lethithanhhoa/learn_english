@@ -14,6 +14,11 @@ class AccountUser extends ChangeNotifier {
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   incrementExp(int newExp) {
     exp = exp + newExp;
     notifyListeners();

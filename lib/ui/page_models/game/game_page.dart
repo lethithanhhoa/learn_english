@@ -150,13 +150,22 @@ class _GameState extends State<GamePage> {
                   },
                   child: TapTapAnimatedWidget(
                       title: 'Tap Tap', imageName: 'bee1.png')),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pushNamed(context, RouteName.trex,
+              //         arguments: vocabListByType);
+              //   },
+              //   child: TapTapAnimatedWidget(
+              //       title: 'Trex', imageName: 'duck.png'),
+              // ),
+
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, RouteName.trex,
-                      arguments: vocabListByType);
+                  Navigator.pushNamed(context, RouteName.memory, arguments: vocabList
+                      );
                 },
                 child: TapTapAnimatedWidget(
-                    title: 'Trex', imageName: 'duck.png'),
+                    title: 'Memory Card', imageName: 'duck.png'),
               ),
             ],
           ),

@@ -22,10 +22,10 @@ class CloseLesson extends StatelessWidget {
                     Navigator.pushNamedAndRemoveUntil(context, RouteName.home,
                         (Route<dynamic> route) => false);
                   },
-                  child: Text('Exit')),
+                  child: Text('Exit', style: TextStyle(fontSize: 18),)),
               FlatButton(onPressed: (){
                 Navigator.of(context).pop();
-              }, child: Text('Cancel')),
+              }, child: Text('Cancel', style: TextStyle(fontSize: 18),)),
             ],
           ),
         );

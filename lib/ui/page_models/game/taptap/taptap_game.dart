@@ -5,8 +5,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
-import 'package:path/path.dart';
-import 'package:quiver/async.dart';
 
 class TapTapGame extends StatefulWidget {
   List<Vocabulary> listVocab;

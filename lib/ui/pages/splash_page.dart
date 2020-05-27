@@ -18,7 +18,6 @@ class _SplashPageState extends State<SplashPage> {
   LessonService _lessonService = LessonService();
   VocabService _vocabService = VocabService();
   GSheetData _gSheetData = GSheetData();
-  
 
   @override
   void initState() {
@@ -57,80 +56,99 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 8), () {
       Navigator.pushNamedAndRemoveUntil(
           context, RouteName.login, (Route<dynamic> route) => false);
     });
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Container(
-            child: Center(
-              child: Container(
-                height: MediaQuery.of(context).size.width - 20,
-                width: MediaQuery.of(context).size.width - 20,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          // height: 100,
-                          // width: 100,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: Image.asset('assets/letter_e.jpg')
-                                      .image)),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          // height: 100,
-                          // width: 100,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: Image.asset('assets/letter_f.jpg')
-                                      .image)),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          // height: 100,
-                          // width: 100,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: Image.asset('assets/letter_k.jpg')
-                                      .image)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      body: Center(
+        child: Container(
+          height: 300,
+          width: 300,
+          child: SizedBox(
+            child: TextLiquidFill(
+              text: 'EFK',
+              waveColor: Colors.pink,
+              boxBackgroundColor: Colors.white,
+              textStyle: GoogleFonts.audiowide(
+                fontSize: 100.0,
+                fontWeight: FontWeight.bold,
               ),
+              boxHeight: 300,
+              boxWidth: 300,
             ),
           ),
-          Container(
-            alignment: Alignment.center,
-            child: Container(
-              height: MediaQuery.of(context).size.width - 20,
-              width: MediaQuery.of(context).size.width - 20,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.pink[200], width: 1.5),
-                  // color: Colors.white,
-                  image: DecorationImage(
-                      image: Image.asset('assets/leaf_fall.gif').image,
-                      fit: BoxFit.fitHeight)),
-            ),
-          ),
-        ],
+        ),
       ),
+      // body: Stack(
+      //   children: [
+      //     Container(
+      //       child: Center(
+      //         child: Container(
+      //           height: MediaQuery.of(context).size.width - 20,
+      //           width: MediaQuery.of(context).size.width - 20,
+      //           decoration: BoxDecoration(
+      //             shape: BoxShape.circle,
+      //             color: Colors.white,
+      //           ),
+      //           child: Padding(
+      //             padding: EdgeInsets.all(20.0),
+      //             child: Row(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               children: [
+      //                 Expanded(
+      //                   child: Container(
+      //                     // height: 100,
+      //                     // width: 100,
+      //                     decoration: BoxDecoration(
+      //                         image: DecorationImage(
+      //                             image: Image.asset('assets/letter_e.jpg')
+      //                                 .image)),
+      //                   ),
+      //                 ),
+      //                 Expanded(
+      //                   child: Container(
+      //                     // height: 100,
+      //                     // width: 100,
+      //                     decoration: BoxDecoration(
+      //                         image: DecorationImage(
+      //                             image: Image.asset('assets/letter_f.jpg')
+      //                                 .image)),
+      //                   ),
+      //                 ),
+      //                 Expanded(
+      //                   child: Container(
+      //                     // height: 100,
+      //                     // width: 100,
+      //                     decoration: BoxDecoration(
+      //                         image: DecorationImage(
+      //                             image: Image.asset('assets/letter_k.jpg')
+      //                                 .image)),
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //     Container(
+      //       alignment: Alignment.center,
+      //       child: Container(
+      //         height: MediaQuery.of(context).size.width - 20,
+      //         width: MediaQuery.of(context).size.width - 20,
+      //         decoration: BoxDecoration(
+      //             shape: BoxShape.circle,
+      //             border: Border.all(color: Colors.pink[200], width: 1.5),
+      //             // color: Colors.white,
+      //             image: DecorationImage(
+      //                 image: Image.asset('assets/leaf_fall.gif').image,
+      //                 fit: BoxFit.fitHeight)),
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
 
     // Timer(Duration(seconds: 5), () {

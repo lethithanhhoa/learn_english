@@ -6,6 +6,7 @@ import 'package:learn_english/ui/page_models/vocab/vocab_list.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
 import 'package:learn_english/ui/state/index.dart';
+import 'package:learn_english/ui/state/num_of_correct_answer_state.dart';
 import 'package:learn_english/ui/state/recording.dart';
 import 'package:learn_english/ui/state/result_learning_state.dart';
 import 'package:learn_english/ui/state/slider_state.dart';
@@ -63,6 +64,9 @@ class VocabularyPage extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AccountUser(),
         ),
+
+        ChangeNotifierProvider(
+          create: (context) => NumOfCorrectAnswer()),
       ],
       child: VocabList(),
     );

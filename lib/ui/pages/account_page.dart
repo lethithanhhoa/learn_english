@@ -2,15 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_english/core/models/user.dart';
 import 'package:learn_english/core/services/auth_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/core/services/lesson_service.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_english/core/helper/gsheet_data.dart';
 
 class AccountPage extends StatelessWidget {
   @override
@@ -92,7 +89,7 @@ class AccountChildPage extends StatelessWidget {
                             height: 160,
                             width: 160,
                             decoration: BoxDecoration(
-                              color: Colors.yellow[100],
+                              color: Colors.yellow.withOpacity(0.1),
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   image: Image.network(
@@ -284,7 +281,7 @@ class AccountChildPage extends StatelessWidget {
                                                         EdgeInsets.all(5.0),
                                                     child: Center(
                                                       child: AutoSizeText(
-                                                        '${accountUser.user.matrix2by2}',
+                                                        '${accountUser.user.taptap}',
                                                         maxLines: 1,
                                                         style: TextStyle(
                                                           fontSize: 40,
@@ -305,7 +302,7 @@ class AccountChildPage extends StatelessWidget {
                                                 height: 40,
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  'Matrix 2x2 high score',
+                                                  'Tap Tap High Score',
                                                   textAlign: TextAlign.center,
                                                   style:
                                                       TextStyle(fontSize: 16),
@@ -344,7 +341,7 @@ class AccountChildPage extends StatelessWidget {
                                                         EdgeInsets.all(5.0),
                                                     child: Center(
                                                       child: AutoSizeText(
-                                                        '${accountUser.user.matrix3by3}',
+                                                        '${accountUser.user.memory}',
                                                         maxLines: 1,
                                                         style: TextStyle(
                                                           fontSize: 40,
@@ -365,7 +362,7 @@ class AccountChildPage extends StatelessWidget {
                                                 height: 40,
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  'Matrix 3x3 high score',
+                                                  'Memory Card Level',
                                                   textAlign: TextAlign.center,
                                                   style:
                                                       TextStyle(fontSize: 16),
@@ -374,66 +371,66 @@ class AccountChildPage extends StatelessWidget {
                                         ]),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Container(
-                                    height: 150,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.green[200],
-                                    ),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlipPanel.builder(
-                                              itemsCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(5.0),
-                                                    child: Center(
-                                                      child: AutoSizeText(
-                                                        '${accountUser.user.matrix4by4}',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: 40,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black
-                                                              .withOpacity(0.7),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                            child: Container(
-                                                height: 40,
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Matrix 4x4 high score',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                )),
-                                          ),
-                                        ]),
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(5.0),
+                                //   child: Container(
+                                //     height: 150,
+                                //     width: 120,
+                                //     decoration: BoxDecoration(
+                                //       borderRadius: BorderRadius.circular(10.0),
+                                //       color: Colors.green[200],
+                                //     ),
+                                //     child: Column(
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.center,
+                                //         children: <Widget>[
+                                //           FlipPanel.builder(
+                                //               itemsCount: 1,
+                                //               itemBuilder: (context, index) {
+                                //                 return Container(
+                                //                   height: 100,
+                                //                   width: 100,
+                                //                   decoration: BoxDecoration(
+                                //                     borderRadius:
+                                //                         BorderRadius.circular(
+                                //                             10.0),
+                                //                     color: Colors.white,
+                                //                   ),
+                                //                   child: Padding(
+                                //                     padding:
+                                //                         EdgeInsets.all(5.0),
+                                //                     child: Center(
+                                //                       child: AutoSizeText(
+                                //                         '${accountUser.user.matrix4by4}',
+                                //                         maxLines: 1,
+                                //                         style: TextStyle(
+                                //                           fontSize: 40,
+                                //                           fontWeight:
+                                //                               FontWeight.bold,
+                                //                           color: Colors.black
+                                //                               .withOpacity(0.7),
+                                //                         ),
+                                //                       ),
+                                //                     ),
+                                //                   ),
+                                //                 );
+                                //               }),
+                                //           Padding(
+                                //             padding: EdgeInsets.symmetric(
+                                //                 horizontal: 10.0),
+                                //             child: Container(
+                                //                 height: 40,
+                                //                 alignment: Alignment.center,
+                                //                 child: Text(
+                                //                   'Matrix 4x4 high score',
+                                //                   textAlign: TextAlign.center,
+                                //                   style:
+                                //                       TextStyle(fontSize: 16),
+                                //                 )),
+                                //           ),
+                                //         ]),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

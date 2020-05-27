@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   int initialHomePage;
   int initialRankPage;
-  HomePage({this.initialHomePage, this.initialRankPage});
+  HomePage({@required this.initialHomePage, @required this.initialRankPage});
 
   @override
   Widget build(BuildContext context) {

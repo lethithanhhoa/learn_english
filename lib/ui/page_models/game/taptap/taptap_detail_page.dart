@@ -5,8 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/user_service.dart';
-import 'package:learn_english/ui/modules/route_name.dart';
-import 'package:learn_english/ui/modules/router.dart';
 import 'package:learn_english/ui/page_models/game/taptap/end_game_page.dart';
 import 'package:learn_english/ui/page_models/game/taptap/state/level_state.dart';
 import 'package:learn_english/ui/state/account_user.dart';
@@ -51,7 +49,7 @@ class TapTapDetailState extends State<TapTapDetail>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 5));
+        AnimationController(vsync: this, duration: Duration(seconds: 90));
     startTime();
   }
 
@@ -71,7 +69,7 @@ class TapTapDetailState extends State<TapTapDetail>
   }
 
   Future<bool> onWillPop() {
-    Fluttertoast.showToast(msg: "Press 'Close' button to quit");
+    Fluttertoast.showToast(msg: "Tap 'Close' button to quit");
     return Future.value(false);
   }
 
@@ -299,13 +297,13 @@ class TapTapDetailState extends State<TapTapDetail>
                                       accountUser.decrementExp(50);
                                       levelState.backToPreState();
                                     },
-                                    child: Text('Yes'),
+                                    child: Text('Yes', style: TextStyle(fontSize: 18),),
                                   ),
                                   FlatButton(
                                     onPressed: () {
                                       levelState.setFinishIsTrue();
                                     },
-                                    child: Text('No'),
+                                    child: Text('No', style: TextStyle(fontSize: 18),),
                                   ),
                                 ],
                               ),

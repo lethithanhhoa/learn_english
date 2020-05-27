@@ -188,42 +188,42 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Column(
                               children: <Widget>[
-                                GestureDetector(
-                                  onTap: handleSignInWithFacebook,
-                                  child: Container(
-                                    width: 240,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 1.2,
-                                            color: Colors.pink[300]),
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          FontAwesomeIcons.facebookF,
-                                          color: Colors.blue[900],
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "Sign In with Facebook",
-                                          style: TextStyle(
-                                            fontSize: 17.5,
-                                            color: Colors.pink[400],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
+                                // GestureDetector(
+                                //   onTap: handleSignInWithFacebook,
+                                //   child: Container(
+                                //     width: 240,
+                                //     height: 50,
+                                //     decoration: BoxDecoration(
+                                //         border: Border.all(
+                                //             width: 1.2,
+                                //             color: Colors.pink[300]),
+                                //         borderRadius:
+                                //             BorderRadius.circular(50)),
+                                //     child: Row(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.center,
+                                //       children: <Widget>[
+                                //         Icon(
+                                //           FontAwesomeIcons.facebookF,
+                                //           color: Colors.blue[900],
+                                //         ),
+                                //         SizedBox(
+                                //           width: 10,
+                                //         ),
+                                //         Text(
+                                //           "Sign In with Facebook",
+                                //           style: TextStyle(
+                                //             fontSize: 17.5,
+                                //             color: Colors.pink[400],
+                                //           ),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 20,
+                                // ),
                                 GestureDetector(
                                   onTap: handleSignIn,
                                   child: Container(
