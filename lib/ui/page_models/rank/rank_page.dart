@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/user.dart';
 import 'package:learn_english/core/services/database_service.dart';
 import 'package:learn_english/ui/page_models/rank/exp_ranking_page.dart';
-import 'package:learn_english/ui/page_models/rank/matrix2by2_ranking_page.dart';
 import 'package:learn_english/ui/page_models/rank/matrix3by3_ranking_page.dart';
 import 'package:learn_english/ui/page_models/rank/matrix4by4_ranking_page.dart';
+import 'package:learn_english/ui/page_models/rank/taptap_ranking_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -13,9 +13,12 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RankPage extends StatelessWidget {
   DatabaseService database = DatabaseService();
-  final PageController controller = new PageController();
+  int initialPage;
+  RankPage({this.initialPage});
+  
   @override
   Widget build(BuildContext context) {
+    final PageController controller = new PageController(initialPage: initialPage);
     return MultiProvider(
       providers: [
         FutureProvider<List<User>>.value(
@@ -30,7 +33,7 @@ class RankPage extends StatelessWidget {
         PageView(
           children: <Widget>[
             ExpRankingPage(),
-            Matrix2by2RankingPage(),
+            TapTapPage(),
             Matrix3by3RankingPage(),
             Matrix4by4RankingPage(),
           ],

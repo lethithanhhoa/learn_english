@@ -24,7 +24,7 @@ class LessonService {
     }).toList();
   }
 
-  Future<Null> clearAllLesson() async{
+  Future clearAllLesson() async{
     await _folder.delete(await _db);
     print('delete OK...');
     return;

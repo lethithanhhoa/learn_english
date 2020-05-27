@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class ExpRankingPage extends StatelessWidget {
-  int index = -1;
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     AccountUser accountUser = Provider.of<AccountUser>(context);
@@ -18,9 +19,13 @@ class ExpRankingPage extends StatelessWidget {
 
       value.sort((a, b) => b.exp.compareTo(a.exp));
 
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   setState(() {
       index = value
           .indexWhere((element) => element.userId == accountUser.user.userId);
-      if (index != -1)
+      //   });
+      // });
+
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(

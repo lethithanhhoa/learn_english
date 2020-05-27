@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/user.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
@@ -49,30 +50,20 @@ class RankList extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // shape: BoxShape.circle,
-                              border: Border.all(color: (index == i)? Colors.green: Colors.black.withOpacity(0.6))
-                            ),
-                            child: Center(
-                              child: AutoSizeText(
-                                '${i + 1}',
-                                maxLines: 1,
-                                style: TextStyle(
-                                    // fontWeight: (index == i)
-                                    //     ? FontWeight.bold
-                                    //     : FontWeight.normal,
-                                    fontSize: 23,
-                                    
-                                    color:
-                                        (index == i) ? Colors.green[700] : Colors.black.withOpacity(0.6),
-                                    // fontFamily: 'Arial'
-                                    ),
-                              ),
+                          child: AutoSizeText(
+                            '${i + 1}',
+                            maxLines: 1,
+                            style: GoogleFonts.anton(
+                              fontSize: 23,
+                              color: (index == i)
+                                  ? Colors.green[700]
+                                  : Colors.black.withOpacity(0.6),
                             ),
                           ),
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Container(
                           width: 60.0,
                           height: 60.0,
@@ -92,9 +83,10 @@ class RankList extends StatelessWidget {
                               textAlign: TextAlign.left,
                               maxLines: 1,
                               style: TextStyle(
-                                color:
-                                    (index == i) ? Colors.green[700] : Colors.black.withOpacity(0.7),
-                                fontSize: (index == i)? 25 :20,
+                                color: (index == i)
+                                    ? Colors.green[700]
+                                    : Colors.black.withOpacity(0.7),
+                                fontSize: (index == i) ? 25 : 20,
                                 // fontWeight: (index == i)
                                 //     ? FontWeight.bold
                                 //     : FontWeight.normal,
@@ -110,7 +102,9 @@ class RankList extends StatelessWidget {
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               fontSize: 30,
-                              color: (index == i) ? Colors.green[700] : Colors.blue,
+                              color: (index == i)
+                                  ? Colors.green[700]
+                                  : Colors.blue,
                             ),
                           ),
                         ),

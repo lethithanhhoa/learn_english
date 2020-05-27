@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
 import 'package:learn_english/ui/state/index.dart';
@@ -162,11 +163,11 @@ class ContinueButton extends StatelessWidget {
         //     : Colors.pink[100].withOpacity(0.7),
         backgroundColor: Colors.white,
         content: Container(
-          height: 160,
+          height: 220,
           alignment: Alignment.topLeft,
           child: !value
-              ? Expanded(
-                  child: Column(
+              ? 
+                  Column(
                     children: [
                       Expanded(
                         child: Container(
@@ -177,11 +178,14 @@ class ContinueButton extends StatelessWidget {
                       ),
                       Text(
                         'Keep fighting. You can do it.',
-                        style: TextStyle(color: Colors.red, fontSize: 25),
+                        style: GoogleFonts.handlee(
+                          color: Colors.red,
+                          fontSize: 25,
+                        ),
                       )
                     ],
-                  ),
-                )
+                  )
+                
               : Column(
                   children: [
                     Expanded(
@@ -195,8 +199,11 @@ class ContinueButton extends StatelessWidget {
                     ),
                     Text(
                       'Excellent!',
-                      style: TextStyle(color: Colors.green, fontSize: 25),
-                    )
+                      style: GoogleFonts.handlee(
+                        color: Colors.green,
+                        fontSize: 25,
+                      ),
+                    ),
                   ],
                 ),
         ));

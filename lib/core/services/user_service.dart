@@ -12,7 +12,7 @@ class UserService {
     return result.documents;
   }
 
-  Future<Null> saveUser(FirebaseUser userData) async {
+  Future saveUser(FirebaseUser userData) async {
     await Firestore.instance.collection('users').document(userData.uid).setData(
       {
         'name': userData.displayName,
@@ -25,48 +25,45 @@ class UserService {
         'state': null,
       },
     );
-
-    return;
   }
 
-  Future<Null> updateState(
+  Future updateState(
       String userId, Map<String, dynamic> learningState) async {
     await Firestore.instance.collection('users').document(userId).updateData({
       'state': learningState,
     });
-    return;
+  
   }
 
-  Future<Null> updateExp(
+  Future updateExp(
       String userId, int exp) async {
     await Firestore.instance.collection('users').document(userId).updateData({
       'exp': exp,
     });
-    return;
+  
   }
 
-  Future<Null> updateMatrix2by2HighScore(
+  Future updateMatrix2by2HighScore(
       String userId, int score) async {
     await Firestore.instance.collection('users').document(userId).updateData({
       'matrix2by2': score,
     });
-    return;
+    
   }
 
-  Future<Null> updateMatrix3by3HighScore(
+  Future updateMatrix3by3HighScore(
       String userId, int score) async {
     await Firestore.instance.collection('users').document(userId).updateData({
       'matrix3by3': score,
     });
-    return;
+   
   }
 
-  Future<Null> updateMatrix4by4HighScore(
+  Future updateMatrix4by4HighScore(
       String userId, int score) async {
     await Firestore.instance.collection('users').document(userId).updateData({
       'matrix4by4': score,
     });
-    return;
   }
 
 }

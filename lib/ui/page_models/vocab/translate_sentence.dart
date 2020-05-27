@@ -55,6 +55,7 @@ class TranslateSentence extends StatelessWidget {
                 ),
                 child: IntrinsicHeight(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
                         child: Column(

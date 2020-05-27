@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -55,6 +56,7 @@ class ChooseCorrectTranslate extends StatelessWidget {
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,18 +75,32 @@ class ChooseCorrectTranslate extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 20.0),
+                                // SizedBox(height: 10.0),
                                 Container(
-                                  child: Text(
-                                    vocabulary.mean,
-                                    style: GoogleFonts.charm(
-                                      textStyle: TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.black54,
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  alignment: Alignment.bottomCenter,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: Image.asset('assets/board4.jpg')
+                                            .image,
+                                        fit: BoxFit.scaleDown),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 47),
+                                    child: AutoSizeText(
+                                      vocabulary.mean,
+                                      maxLines: 1,
+                                      style: GoogleFonts.charm(
+                                        textStyle: TextStyle(
+                                          fontSize: 30,
+                                          color: Colors.lightGreen[600],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 10)
                               ],
                             ),
                             AnswerButtons(answers: answers),

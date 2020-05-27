@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/page_models/game/taptap/state/level_state.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class EndGamePage extends StatefulWidget {
@@ -10,55 +12,64 @@ class EndGamePage extends StatefulWidget {
 }
 
 class _EndGameState extends State<EndGamePage> {
-  bool _isShowing;
+  Widget currentWidget;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setState(() {
-      _isShowing = true;
+      currentWidget = gift();
     });
+  }
+
+  Future<bool> onWillPop() {
+    return Future.value(false);
   }
 
   @override
   Widget build(BuildContext context) {
     LevelState levelState = Provider.of<LevelState>(context);
-    Timer(Duration(seconds: 2, milliseconds: 300), () {
+    Timer(Duration(milliseconds: 3210), () {
       setState(() {
-        _isShowing = false;
+        currentWidget = result(levelState);
       });
     });
-    return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          Center(
-            child: _isShowing
-                ? Container(
-                    height: MediaQuery.of(context).size.width,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      image: DecorationImage(
-                          image: Image.asset('assets/giftbox.gif').image,
-                          fit: BoxFit.cover),
-                    ),
-                  )
-                : Container(
-                    child: Text(
-                      'Level: ${levelState.getCurrentLevel}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-          ),
-          FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Back')),
-        ],
-      )),
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 300,
+              width: 300,
+              child: Center(child: currentWidget),
+            ),
+            FlatButton(
+                onPressed: () {
+                  // int count = 0;
+                  // Navigator.popUntil(context, (route) {
+                  //   return count++ == 2;
+                  // });
+                  Navigator.pushNamedAndRemoveUntil(context, RouteName.taptap_rank, (route) => false);
+                },
+                child: Text('Back')),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget gift() {
+    return Image.asset('assets/giftbox.gif');
+  }
+
+  Widget result(LevelState levelState) {
+    return Text(
+      'Score: ${levelState.getScore}',
+      textAlign: TextAlign.center,
     );
   }
 }

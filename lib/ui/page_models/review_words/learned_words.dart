@@ -31,6 +31,8 @@ class LearnedWords extends StatelessWidget {
     if (accountUser.user.learningState == null)
       return Scaffold(
         appBar: AppBar(
+          
+          automaticallyImplyLeading: false,
           title: Text(
             'Learned Words',
             style: GoogleFonts.handlee(
@@ -50,6 +52,7 @@ class LearnedWords extends StatelessWidget {
         ? LoadingPage()
         : Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               title: Text(
                 'Learned Words',
                 style: GoogleFonts.handlee(
@@ -94,8 +97,6 @@ class LearnedWords extends StatelessWidget {
                                 size: 20,
                               )),
                           onTap: () {
-                            // Navigator.pushNamed(context, RouteName.detailWord,
-                            //     arguments: [value.data, index]);
                             Navigator.push(
                                 context,
                                 PageTransition(

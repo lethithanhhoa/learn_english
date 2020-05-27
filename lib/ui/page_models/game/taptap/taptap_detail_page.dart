@@ -1,13 +1,17 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/ui/modules/route_name.dart';
+import 'package:learn_english/ui/modules/router.dart';
 import 'package:learn_english/ui/page_models/game/taptap/end_game_page.dart';
 import 'package:learn_english/ui/page_models/game/taptap/state/level_state.dart';
+import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class TapTapDetailPage extends StatelessWidget {
   List<Vocabulary> vocabList;
@@ -20,8 +24,10 @@ class TapTapDetailPage extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => LevelState(vocabList: vocabList),
         ),
+        ChangeNotifierProvider(create: (context) => AccountUser(),)
       ],
       child: TapTapDetail(),
+
     );
   }
 }
@@ -33,6 +39,7 @@ class TapTapDetail extends StatefulWidget {
 class TapTapDetailState extends State<TapTapDetail>
     with TickerProviderStateMixin {
   AnimationController animationController;
+  UserService userService = UserService();
 
   String get timerString {
     Duration duration =
@@ -44,7 +51,7 @@ class TapTapDetailState extends State<TapTapDetail>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 10));
+        AnimationController(vsync: this, duration: Duration(seconds: 5));
     startTime();
   }
 
@@ -71,6 +78,8 @@ class TapTapDetailState extends State<TapTapDetail>
   @override
   Widget build(BuildContext context) {
     LevelState levelState = Provider.of<LevelState>(context);
+    AccountUser accountUser = Provider.of<AccountUser>(context);
+    if (levelState.getIsFalse && accountUser.exp < 50) levelState.setFinishIsTrue();
 
     if (levelState.getIsFinish || animationController.value == 0.00)
       return EndGamePage();
@@ -79,32 +88,147 @@ class TapTapDetailState extends State<TapTapDetail>
       stopTime();
     else
       startTime();
+    
+    
 
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
         backgroundColor: Colors.green[100],
-        body: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: Image.asset('assets/cover.jpg').image,
-                    fit: BoxFit.cover),
-              ),
-            ),
-            SafeArea(
-              child: Stack(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        child: GestureDetector(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: Image.asset('assets/cover.jpg').image,
+                fit: BoxFit.cover),
+          ),
+          child: SafeArea(
+            child: Stack(children: [
+              LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: constraints.copyWith(
+                      minHeight: constraints.maxHeight,
+                      maxHeight: double.infinity,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            // SizedBox(height: 100),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              child: Container(
+                                height: 140,
+                                width: MediaQuery.of(context).size.width,
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Align(
+                                      alignment: FractionalOffset.center,
+                                      child: AspectRatio(
+                                        aspectRatio: 1.0,
+                                        child: Stack(
+                                          children: <Widget>[
+                                            Positioned.fill(
+                                              child: AnimatedBuilder(
+                                                animation: animationController,
+                                                builder: (BuildContext context,
+                                                    Widget child) {
+                                                  return CustomPaint(
+                                                    painter: TimerPainter(
+                                                      animation:
+                                                          animationController,
+                                                      backgroundColor:
+                                                          Colors.indigo[50],
+                                                      // color: Theme.of(context).accentColor),
+                                                      color: Colors.blue[300],
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment:
+                                                  FractionalOffset.center,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  AnimatedBuilder(
+                                                      animation:
+                                                          animationController,
+                                                      builder:
+                                                          (_, Widget child) {
+                                                        return Text(
+                                                          timerString,
+                                                          style: TextStyle(
+                                                            color: Colors
+                                                                .blue[400],
+                                                            fontSize: 35,
+                                                          ),
+                                                        );
+                                                      })
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Text(
+                                'Level: ${levelState.getCurrentLevel}',
+                                style: TextStyle(
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue[300],
+                                    fontFamily: 'Arial'),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Container(
+                                  width:
+                                      (MediaQuery.of(context).size.width > 400)
+                                          ? 320
+                                          : MediaQuery.of(context).size.width,
+                                  height: (MediaQuery.of(context).size.width >
+                                          400)
+                                      ? 320
+                                      : MediaQuery.of(context).size.width - 20,
+                                  child: levelState.getCurWidget),
+                            ),
+                            SizedBox(height: 20)
+                          ]),
+                    ),
+                  ),
+                );
+              }),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            int count = 0;
+                            Navigator.popUntil(context, (route) {
+                              return count++ == 2;
+                            });
                           },
                           child: Padding(
                             padding: EdgeInsets.all(5.0),
@@ -114,8 +238,7 @@ class TapTapDetailState extends State<TapTapDetail>
                                 borderRadius: BorderRadius.circular(6.0),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                                 child: Text(
                                   'Close',
                                   style: TextStyle(
@@ -126,157 +249,74 @@ class TapTapDetailState extends State<TapTapDetail>
                             ),
                           ),
                         ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.0),
-                            child: Container(
-                              height: 140,
-                              width: MediaQuery.of(context).size.width,
-                              child: Expanded(
-                                child: Row(
-                                  children: <Widget>[
+                      ],
+                    ),
+                    (levelState.getIsFalse && accountUser.exp >= 50)
+                        ? Expanded(
+                            child: Center(
+                              child: AlertDialog(
+                                content: Container(
+                                  height: 200,
+                                  alignment: Alignment.center,
+                                  child: Column(children: <Widget>[
                                     Expanded(
-                                      child: Align(
-                                        alignment: FractionalOffset.center,
-                                        child: AspectRatio(
-                                          aspectRatio: 1.0,
-                                          child: Stack(
-                                            children: <Widget>[
-                                              Positioned.fill(
-                                                child: AnimatedBuilder(
-                                                  animation:
-                                                      animationController,
-                                                  builder:
-                                                      (BuildContext context,
-                                                          Widget child) {
-                                                    return CustomPaint(
-                                                      painter: TimerPainter(
-                                                        animation:
-                                                            animationController,
-                                                        backgroundColor:
-                                                            Colors.indigo[50],
-                                                        // color: Theme.of(context).accentColor),
-                                                        color: Colors.blue[300],
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    FractionalOffset.center,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    AnimatedBuilder(
-                                                        animation:
-                                                            animationController,
-                                                        builder:
-                                                            (_, Widget child) {
-                                                          return Text(
-                                                            timerString,
-                                                            style: TextStyle(
-                                                              color: Colors
-                                                                  .blue[400],
-                                                              fontSize: 35,
-                                                            ),
-                                                          );
-                                                        })
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                      child: Center(
+                                          child:
+                                              Image.asset('assets/oh_no.jpg')),
                                     ),
-                                  ],
+                                    RichText(
+                                      text: TextSpan(
+                                          style: GoogleFonts.handlee(
+                                              textStyle: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 18)),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'Do you want to trade '),
+                                            TextSpan(
+                                              text: '${50} ',
+                                              style: TextStyle(
+                                                  color: Colors.orange[300],
+                                                  fontSize: 25),
+                                            ),
+                                            TextSpan(
+                                              text: 'EXP ',
+                                              style: TextStyle(
+                                                  color: Colors.green[300],
+                                                  fontSize: 25),
+                                            ),
+                                            TextSpan(text: 'to continue?'),
+                                          ]),
+                                    ),
+                                  ]),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Text(
-                              'Level: ${levelState.getCurrentLevel}',
-                              style: TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue[300],
-                                  fontFamily: 'Arial'),
-                            ),
-                          ),
-                          levelState.getCurWidget
-                        ],
-                      ),
-                    ],
-                  ),
-                  (levelState.getIsFalse)
-                      ? AlertDialog(
-                          content: Container(
-                            height: 200,
-                            alignment: Alignment.center,
-                            child: Column(children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: Image.asset('assets/oh_no.jpg')
-                                            .image),
+                                actions: [
+                                  FlatButton(
+                                    onPressed: () {
+                                      userService.updateExp(
+                                          accountUser.user.userId,
+                                          accountUser.exp - 50);
+                                      accountUser.decrementExp(50);
+                                      levelState.backToPreState();
+                                    },
+                                    child: Text('Yes'),
                                   ),
-                                ),
+                                  FlatButton(
+                                    onPressed: () {
+                                      levelState.setFinishIsTrue();
+                                    },
+                                    child: Text('No'),
+                                  ),
+                                ],
                               ),
-                              RichText(
-                                text: TextSpan(
-                                    style: GoogleFonts.handlee(
-                                        textStyle: TextStyle(
-                                            color: Colors.blue, fontSize: 18)),
-                                    children: <TextSpan>[
-                                      TextSpan(text: 'Do you want to trade '),
-                                      TextSpan(
-                                        text: '${100} ',
-                                        style: TextStyle(
-                                            color: Colors.orange[300],
-                                            fontSize: 25),
-                                      ),
-                                      TextSpan(
-                                        text: 'EXP ',
-                                        style: TextStyle(
-                                            color: Colors.green[300],
-                                            fontSize: 25),
-                                      ),
-                                      TextSpan(text: 'to continue?'),
-                                    ]),
-                              ),
-                            ]),
-                          ),
-                          actions: [
-                            FlatButton(
-                              onPressed: () {
-                                levelState.backToPreState();
-                              },
-                              child: Text('Yes'),
                             ),
-                            FlatButton(
-                              onPressed: () {
-                                levelState.setFinishIsTrue();
-                              },
-                              child: Text('No'),
-                            ),
-                          ],
-                        )
-                      : Container(),
-                ],
+                          )
+                        : Container(),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ]),
+          ),
         ),
       ),
     );

@@ -58,6 +58,7 @@ class ListenAndCompleteSentence extends StatelessWidget {
                 ),
                 child: IntrinsicHeight(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
                         child: Column(
@@ -80,7 +81,7 @@ class ListenAndCompleteSentence extends StatelessWidget {
                                 playAudio
                                     .playCustomAudioFile(vocabulary.audioFile);
                               },
-                              child: Speaker(),
+                              child: Speaker(size: 80,),
                             ),
                             Container(
                               height: MediaQuery.of(context).size.height / 5,

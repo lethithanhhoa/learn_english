@@ -5,6 +5,7 @@ import 'package:learn_english/ui/common/slider_at_lesson_list.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class LessonList extends StatelessWidget {
   List<Lesson> value;
@@ -29,18 +30,17 @@ class LessonList extends StatelessWidget {
   }
 
   Widget ItemWidget(BuildContext context, Lesson currentLesson, int percent) {
-    
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 5, 20, 5),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, RouteName.vocab,
+          Navigator.pushNamed(context, RouteName.learn,
               arguments: currentLesson.lessonId);
         },
         child: Column(
           children: <Widget>[
             Container(
-              height: 160,
+              height: (MediaQuery.of(context).size.width > 500) ? 300 : 160,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -50,7 +50,7 @@ class LessonList extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    height: 160,
+                    height: (MediaQuery.of(context).size.width > 500) ? 300 : 160,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -70,19 +70,22 @@ class LessonList extends StatelessWidget {
                             bottomRight: Radius.circular(25),
                             topRight: Radius.circular(25)),
                       ),
-                      height: 160,
+                      height: (MediaQuery.of(context).size.width > 500) ? 300 : 160,
                       width: MediaQuery.of(context).size.width,
-                      child: Text(
-                        currentLesson.lessonName,
-                        overflow: TextOverflow.fade,
-                        softWrap: true,
-                        maxLines: 2,
-                        style: TextStyle(
-                          color: Colors.white,
-                          backgroundColor: Colors.green.withOpacity(0.7),
-                          // backgroundColor: Colors.white.withOpacity(0.6),
-                          fontSize: 22,
-                          fontWeight: FontWeight.w800,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                        child: Text(
+                          currentLesson.lessonName,
+                          overflow: TextOverflow.fade,
+                          softWrap: true,
+                          maxLines: 2,
+                          style: TextStyle(
+                            color: Colors.white,
+                            backgroundColor: Colors.green.withOpacity(0.7),
+                            // backgroundColor: Colors.white.withOpacity(0.6),
+                            fontSize: (MediaQuery.of(context).size.width > 500) ? 30: 22,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       )),
                 ],
