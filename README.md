@@ -8,11 +8,13 @@
 + Xem bảng xếp hạng (bảng xếp hạng điểm kinh nghiệm, điểm cao nhất các trò chơi)
 + Xem thông tin cá nhân
 + Logout
+### Web ver: https://learn-english-7c4c5.web.app/#/
 
 # Cài đặt và chạy chương trình 
 - Cài đặt Flutter trên máy (xem chi tiết ở https://flutter.dev/docs/get-started/install)
 - Clone source code và từ folder clone về thực thi câu lệnh "flutter run" để chạy chương trình
 
-# Build file apk và cài đặt trên máy
-- Thực thi câu lện "flutter build apk --debug" để build debug version hoặc "flutter build apk" (hoặc "flutter build apk --split-per-abi") để build release version 
+# Build file apk và cài đặt trên máy 
+### Android
+- Thực thi câu lện "flutter build apk" (hoặc "flutter build apk --split-per-abi")
 - Và cài đặt trên máy bằng câu lệnh "flutter install"
