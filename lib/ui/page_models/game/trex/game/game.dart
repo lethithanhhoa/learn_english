@@ -28,7 +28,7 @@ class Bg extends Component with Resizable {
 
 enum TRexGameStatus { playing, waiting, gameOver }
 
-class TRexGame extends BaseGame {
+class TRexGame extends BaseGame{
   TRexGame({Image spriteImage}) {
     tRex = TRex(spriteImage);
     horizon = Horizon(spriteImage);

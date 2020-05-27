@@ -11,5 +11,6 @@ class RouteName{
   static final String end_game = 'end_game';
   static final String taptap_rank = 'taptap_rank';
   static final String trex = 'trex';
-
+  static final String memory = 'memory';
+  static final String memory_rank = 'memory_rank';
 }

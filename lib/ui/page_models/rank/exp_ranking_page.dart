@@ -8,24 +8,30 @@ import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class ExpRankingPage extends StatelessWidget {
-  int index = 0;
-
+  int index = -1;
+  String userId;
   @override
   Widget build(BuildContext context) {
     AccountUser accountUser = Provider.of<AccountUser>(context);
+    if (accountUser.user != null) userId = accountUser.user.userId;
 
     return Consumer<List<User>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
 
       value.sort((a, b) => b.exp.compareTo(a.exp));
 
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   setState(() {
-      index = value
-          .indexWhere((element) => element.userId == accountUser.user.userId);
-      //   });
-      // });
+      if (userId != null) {
+        // index = value
+        //     .indexWhere((element) => element.userId == userId);
 
+        for (int i = 0; i < value.length; i++) {
+          if (value[i].userId == userId) {
+            index = i;
+            break;
+          }
+        }
+      }
+      if (index == -1) return LoadingPage();
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -46,7 +52,8 @@ class ExpRankingPage extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(bottom: 5),
-                      child: Text('Exp Ranking',
+                      child: AutoSizeText('Exp Ranking',
+                      maxLines: 1,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

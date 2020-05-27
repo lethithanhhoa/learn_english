@@ -7,6 +7,7 @@ import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 
 import 'package:learn_english/ui/state/account_user.dart';
+import 'package:learn_english/ui/state/num_of_correct_answer_state.dart';
 import 'package:learn_english/ui/state/result_learning_state.dart';
 import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
@@ -23,16 +24,17 @@ class FinishLessonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ContinueButtonState continueButtonState =
-        Provider.of<ContinueButtonState>(context);
+    // ContinueButtonState continueButtonState =
+    //     Provider.of<ContinueButtonState>(context);
     SliderState sliderState = Provider.of<SliderState>(context);
     ResultLearningState resultLearningState =
         Provider.of<ResultLearningState>(context);
+        NumOfCorrectAnswer numOfCorrectAnswer = Provider.of<NumOfCorrectAnswer>(context);
 
     if (loading) {
       audioPlayer.playFinishLessonSound();
       resultLearningState.setPercentCorrect(
-          (continueButtonState.getCorrectAnswerNum /
+          (numOfCorrectAnswer.number /
                   sliderState.getMaxOfSlider *
                   100)
               .toInt());
@@ -72,7 +74,7 @@ class FinishLessonPage extends StatelessWidget {
                             TextSpan(text: '+ '),
                             TextSpan(
                                 text:
-                                    '${continueButtonState.getCorrectAnswerNum * 3}',
+                                    '${numOfCorrectAnswer.number * 3}',
                                 style: TextStyle(
                                     color: Colors.orange, fontSize: 50)),
                             TextSpan(text: ' EXP'),
@@ -132,12 +134,12 @@ class FinishLessonPage extends StatelessWidget {
                                 accountUser.user.userId, map);
                           }
                         }
-                        if (continueButtonState.getCorrectAnswerNum > 0) {
+                        if (numOfCorrectAnswer.number > 0) {
                           int currentExp = accountUser.user.exp;
                           userService.updateExp(
                               accountUser.user.userId,
                               currentExp +
-                                  (continueButtonState.getCorrectAnswerNum *
+                                  (numOfCorrectAnswer.number *
                                       3));
                         }
                         Navigator.pushNamedAndRemoveUntil(

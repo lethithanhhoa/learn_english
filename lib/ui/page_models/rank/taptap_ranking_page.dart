@@ -6,21 +6,30 @@ import 'package:learn_english/ui/page_models/rank/rank_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class TapTapPage extends StatelessWidget {
-  int index = 0;
-
+class TapTapRankingPage extends StatelessWidget {
+  int index = -1;
+  String userId;
   @override
   Widget build(BuildContext context) {
     AccountUser accountUser = Provider.of<AccountUser>(context);
+    if (accountUser.user != null) userId = accountUser.user.userId;
     return Consumer<List<User>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
-      value.sort((a, b) => b.matrix2by2.compareTo(a.matrix2by2));
+      value.sort((a, b) => b.taptap.compareTo(a.taptap));
 
-      index = value
-          .indexWhere((element) => element.userId == accountUser.user.userId);
+      if (userId != null) {
+        // index = value
+        //     .indexWhere((element) => element.userId == userId);
 
+        for (int i = 0; i < value.length; i++) {
+          if (value[i].userId == userId) {
+            index = i;
+            break;
+          }
+        }
+      }
+      if (index == -1) return LoadingPage();
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -30,7 +39,7 @@ class TapTapPage extends StatelessWidget {
                 height: 220,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Colors.orange[200].withOpacity(0.9),
+                  color: Colors.pink[200].withOpacity(0.8),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(60),
                     bottomRight: Radius.circular(0),
@@ -41,7 +50,8 @@ class TapTapPage extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(bottom: 5),
-                      child: Text('Matrix 2x2 Ranking',
+                      child: AutoSizeText('Tap Tap Ranking',
+                      maxLines: 1,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -57,7 +67,7 @@ class TapTapPage extends StatelessWidget {
                                 height: 120,
                                 width: 80,
                                 decoration: BoxDecoration(
-                                  color: Colors.green[800],
+                                  color: Colors.blue[600],
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(3),
                                       bottomLeft: Radius.circular(3)),
@@ -102,8 +112,9 @@ class TapTapPage extends StatelessWidget {
                                             overflow: TextOverflow.fade,
                                           ),
                                           AutoSizeText(
-                                            '${value[2].matrix2by2}',
+                                            '${value[2].taptap}',
                                             maxLines: 1,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 16,
                                             ),
@@ -118,7 +129,7 @@ class TapTapPage extends StatelessWidget {
                           height: 150,
                           width: 120,
                           decoration: BoxDecoration(
-                            color: Colors.blue[600],
+                            color: Colors.teal,
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Column(
@@ -160,7 +171,7 @@ class TapTapPage extends StatelessWidget {
                                       overflow: TextOverflow.fade,
                                     ),
                                     AutoSizeText(
-                                      '${value[0].matrix2by2}',
+                                      '${value[0].taptap}',
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontSize: 18,
@@ -178,7 +189,7 @@ class TapTapPage extends StatelessWidget {
                                 height: 135,
                                 width: 90,
                                 decoration: BoxDecoration(
-                                    color: Colors.orange[700],
+                                    color: Colors.purple[600],
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(3),
                                         bottomRight: Radius.circular(3))),
@@ -222,8 +233,9 @@ class TapTapPage extends StatelessWidget {
                                             overflow: TextOverflow.fade,
                                           ),
                                           AutoSizeText(
-                                            '${value[1].matrix2by2}',
+                                            '${value[1].taptap}',
                                             maxLines: 1,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 17,
                                             ),
@@ -241,7 +253,7 @@ class TapTapPage extends StatelessWidget {
               ),
               Expanded(
                   child: Container(
-                color: Colors.orange[200].withOpacity(0.9),
+                color: Colors.pink[200].withOpacity(0.8),
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
@@ -253,7 +265,7 @@ class TapTapPage extends StatelessWidget {
                   ),
                   child: RankList(
                     value: value,
-                    typeOfCode: 1,
+                    typeOfCode: 2,
                     index: index,
                   ),
                 ),

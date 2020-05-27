@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/ui/page_models/game/memory_card/memory_game.dart';
 import 'package:learn_english/ui/page_models/game/taptap/end_game_page.dart';
 import 'package:learn_english/ui/page_models/game/taptap/taptap_game.dart';
 import 'package:learn_english/ui/page_models/game/taptap/taptap_detail_page.dart';
@@ -20,14 +21,23 @@ class Router {
       case '/login':
         return MaterialPageRoute(builder: (context) => LoginPage());
 
-      case '/home':{
-        List<dynamic> arg = settings.arguments as List<dynamic>;
-        return MaterialPageRoute(builder: (context) => HomePage(initialHomePage: 0, initialRankPage: 0,));
-      }
+      case '/home':
+        {
+          List<dynamic> arg = settings.arguments as List<dynamic>;
+          return MaterialPageRoute(
+              builder: (context) => HomePage(
+                    initialHomePage: 0,
+                    initialRankPage: 0,
+                  ));
+        }
 
       case '/game':
-        return MaterialPageRoute(builder: (context) => HomePage(initialHomePage: 1, initialRankPage: 0,));
-        
+        return MaterialPageRoute(
+            builder: (context) => HomePage(
+                  initialHomePage: 1,
+                  initialRankPage: 0,
+                ));
+
       case '/learn':
         {
           String lessonId = settings.arguments as String;
@@ -70,17 +80,37 @@ class Router {
                     vocabList: vocabList,
                   ));
         }
-      case 'taptap_rank':{
-        return MaterialPageRoute(
-              builder: (context) => HomePage(initialHomePage: 2, initialRankPage: 1,));
-      }
+      case 'taptap_rank':
+        {
+          return MaterialPageRoute(
+              builder: (context) => HomePage(
+                    initialHomePage: 2,
+                    initialRankPage: 1,
+                  ));
+        }
 
-      case 'trex': {
-         return MaterialPageRoute(
-              builder: (context) => TRexGameWrapper());
-      }
+      case 'trex':
+        {
+          return MaterialPageRoute(builder: (context) => TRexGameWrapper());
+        }
 
-      
+      case 'memory':
+        {
+          List<Vocabulary> vocabList = settings.arguments as List<Vocabulary>;
+          return MaterialPageRoute(
+              builder: (context) => Memory(
+                    vocabList: vocabList,
+                  ));
+        }
+
+      case 'memory_rank':
+        {
+          return MaterialPageRoute(
+              builder: (context) => HomePage(
+                    initialHomePage: 2,
+                    initialRankPage: 2,
+                  ));
+        }
 
       default:
         return MaterialPageRoute(builder: (_) {

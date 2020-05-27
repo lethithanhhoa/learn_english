@@ -15,20 +15,22 @@ import 'package:learn_english/ui/state/recording.dart';
 
 import 'package:provider/provider.dart';
 
-class ListenAndRepeat extends StatefulWidget {
+class ListenAndRepeat extends StatelessWidget {
   Vocabulary vocabulary;
   ListenAndRepeat({this.vocabulary});
-  _ListenAndRepeatState createState() => _ListenAndRepeatState();
-}
-
-class _ListenAndRepeatState extends State<ListenAndRepeat> {
   AudioPlayer playAudio = AudioPlayer();
-  String recordingText;
-  @override
-  void initState() {
-    super.initState();
-    playAudio.playCustomAudioFile(widget.vocabulary.audioFile);
-  }
+  bool loading = true;
+//   _ListenAndRepeatState createState() => _ListenAndRepeatState();
+// }
+
+// class _ListenAndRepeatState extends State<ListenAndRepeat> {
+//   AudioPlayer playAudio = AudioPlayer();
+//   String recordingText;
+//   @override
+//   void initState() {
+//     super.initState();
+//     playAudio.playCustomAudioFile(widget.vocabulary.audioFile);
+//   }
 
   Future<bool> onWillPop() {
     Fluttertoast.showToast(msg: "Press close icon to back");
@@ -38,29 +40,33 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
   @override
   Widget build(BuildContext context) {
     Recording recording = Provider.of<Recording>(context);
-    if (recording.getBestResult.toLowerCase() ==
-        widget.vocabulary.vocab.toLowerCase())
-      setState(() {
-        recordingText = recording.getBestResult;
-      });
-    else {
-      int i = 0;
-      recording.getListResult.forEach((element) {
-        // print(element.recognizedWords);
-        if (element.recognizedWords.toLowerCase() ==
-            widget.vocabulary.vocab.toLowerCase()) {
-          setState(() {
-            recordingText = element.recognizedWords;
-          });
-          return;
-        } else
-          i++;
-      });
-      if (i == recording.getListResult.length)
-        recordingText = recording.getBestResult;
+    if (loading) {
+      playAudio.playCustomAudioFile(vocabulary.audioFile);
+      loading = false;
     }
+    // if (recording.getBestResult.toLowerCase() ==
+    //     widget.vocabulary.vocab.toLowerCase())
+    //   setState(() {
+    //     recordingText = recording.getBestResult;
+    //   });
+    // else {
+    //   int i = 0;
+    //   recording.getListResult.forEach((element) {
+    //     // print(element.recognizedWords);
+    //     if (element.recognizedWords.toLowerCase() ==
+    //         widget.vocabulary.vocab.toLowerCase()) {
+    //       setState(() {
+    //         recordingText = element.recognizedWords;
+    //       });
+    //       return;
+    //     } else
+    //       i++;
+    //   });
+    //   if (i == recording.getListResult.length)
+    //     recordingText = recording.getBestResult;
+    // }
 
-    recording.setFinalResult(recordingText);
+    // recording.setFinalResult(recordingText);
     // print(recording.getFinalResult);
 
     return WillPopScope(
@@ -135,8 +141,7 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
                                                           .assetNetwork(
                                                         placeholder:
                                                             'assets/waiting_image.gif',
-                                                        image: widget
-                                                            .vocabulary.image,
+                                                        image: vocabulary.image,
                                                         fit: BoxFit.scaleDown,
                                                         fadeInCurve:
                                                             Curves.bounceIn,
@@ -150,22 +155,24 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
                                                                 .center,
                                                         children: [
                                                           AutoSizeText(
-                                                            '${widget.vocabulary.vocab}',
+                                                            '${vocabulary.vocab}',
                                                             style: TextStyle(
                                                               color: Colors
-                                                                  .lightGreen[600],
+                                                                      .lightGreen[
+                                                                  600],
                                                               fontSize: 50,
                                                             ),
                                                           ),
                                                           SizedBox(width: 20),
                                                           GestureDetector(
                                                             onTap: () {
-                                                              playAudio.playCustomAudioFile(
-                                                                  widget
-                                                                      .vocabulary
-                                                                      .audioFile);
+                                                              playAudio
+                                                                  .playCustomAudioFile(
+                                                                      vocabulary
+                                                                          .audioFile);
                                                             },
-                                                            child: Speaker(size: 50),
+                                                            child: Speaker(
+                                                                size: 50),
                                                           )
                                                         ],
                                                       ),
@@ -184,7 +191,7 @@ class _ListenAndRepeatState extends State<ListenAndRepeat> {
                               children: <Widget>[
                                 Microphone(),
                                 _textResult(
-                                    recordingText, widget.vocabulary.vocab),
+                                    recording.getBestResult, vocabulary.vocab),
                               ],
                             ),
                           ],

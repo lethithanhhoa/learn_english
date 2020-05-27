@@ -18,7 +18,7 @@ class CloudManager extends PositionComponent
   Image spriteImage;
 
   void updateWithSpeed(double t, double speed) {
-    final double cloudSpeed = HorizonConfig.bgCloudSpeed / 1000 * t * speed;
+    final double cloudSpeed = HorizonConfig.bgCloudSpeed / 10000 * t * speed;
     final int numClouds = components.length;
 
     if (numClouds > 0) {

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/state/correct_answer.dart';
 import 'package:learn_english/ui/state/index.dart';
+import 'package:learn_english/ui/state/num_of_correct_answer_state.dart';
 import 'package:learn_english/ui/state/recording.dart';
 import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
 import 'package:learn_english/ui/state/state_of_continue_button.dart';
@@ -32,8 +33,10 @@ class ContinueButton extends StatelessWidget {
     TheThirdButtonState theThirdButtonState =
         Provider.of<TheThirdButtonState>(context);
     CorrectAnswer correctAnswer = Provider.of<CorrectAnswer>(context);
+    NumOfCorrectAnswer numOfCorrectAnswer =
+        Provider.of<NumOfCorrectAnswer>(context);
 
-    if ((recording.getFinalResult != '') ||
+    if ((recording.getBestResult != '') ||
         crosswordAnswerState.getAnswer.isEmpty == false ||
         (theFirstButtonState.getClicked ||
             theSecondButtonState.getClicked ||
@@ -85,9 +88,9 @@ class ContinueButton extends StatelessWidget {
                               // temp = temp.trim();
                               // temp = temp.replaceAll("I am", "I'm");
                               continueButtonState.setScreenCode(1);
-                            } else if (recording.getFinalResult != '') {
+                            } else if (recording.getBestResult != '') {
                               continueButtonState
-                                  .setAnswer(recording.getFinalResult);
+                                  .setAnswer(recording.getBestResult);
 
                               continueButtonState.setScreenCode(2);
                             } else if (theFirstButtonState.getClicked) {
@@ -106,20 +109,15 @@ class ContinueButton extends StatelessWidget {
 
                               continueButtonState.setScreenCode(5);
                             }
-
-                            Scaffold.of(context).showSnackBar(snackBar(
-                              context,
-                              continueButtonState.getAnswer,
-                              correctAnswer.getCorrectAnswer,
-                            ));
                             if (continueButtonState.getAnswer.toLowerCase() ==
                                 correctAnswer.getCorrectAnswer.toLowerCase()) {
-                              playAudio.playCorrectSound();
-                              continueButtonState.incrementCorrectAnswerNum();
+                              numOfCorrectAnswer.increment();
+                              Scaffold.of(context)
+                                  .showSnackBar(snackBar(context, true));
                             } else {
-                              playAudio.playWrongSound();
+                              Scaffold.of(context)
+                                  .showSnackBar(snackBar(context, false));
                             }
-                            ;
 
                             continueButtonState.setNameToContinue();
                             continueButtonState.inActive();
@@ -154,38 +152,34 @@ class ContinueButton extends StatelessWidget {
     );
   }
 
-  Widget snackBar(BuildContext context, String answer, String correctAnswer) {
-    bool value = (answer.toLowerCase() == correctAnswer.toLowerCase());
+  Widget snackBar(BuildContext context, bool checking) {
+    // bool value = (answer.toLowerCase() == correctAnswer.toLowerCase());
+    checking ? playAudio.playCorrectSound() : playAudio.playWrongSound();
     return SnackBar(
         duration: Duration(seconds: 3),
-        // backgroundColor: value
-        //     ? Colors.lightGreen[100].withOpacity(0.7)
-        //     : Colors.pink[100].withOpacity(0.7),
         backgroundColor: Colors.white,
         content: Container(
           height: 220,
           alignment: Alignment.topLeft,
-          child: !value
-              ? 
-                  Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: Image.asset('assets/noo.jpg').image)),
-                        ),
+          child: !checking
+              ? Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: Image.asset('assets/noo.jpg').image)),
                       ),
-                      Text(
-                        'Keep fighting. You can do it.',
-                        style: GoogleFonts.handlee(
-                          color: Colors.red,
-                          fontSize: 25,
-                        ),
-                      )
-                    ],
-                  )
-                
+                    ),
+                    Text(
+                      'Keep fighting. You can do it.',
+                      style: GoogleFonts.handlee(
+                        color: Colors.red,
+                        fontSize: 25,
+                      ),
+                    )
+                  ],
+                )
               : Column(
                   children: [
                     Expanded(
