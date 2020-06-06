@@ -2,6 +2,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/provider/correct_answer.dart';
+import 'package:learn_english/provider/index.dart';
+import 'package:learn_english/provider/slider_state.dart';
 import 'package:learn_english/ui/page_models/vocab/choose_correct_translation.dart';
 import 'package:learn_english/ui/page_models/vocab/listen_and_choose_correct_answer.dart';
 import 'package:learn_english/ui/page_models/vocab/listen_and_complete_sentence.dart';
@@ -10,9 +13,6 @@ import 'package:learn_english/ui/page_models/vocab/look_at_the_picture_and_choos
 import 'package:learn_english/ui/page_models/vocab/translate_sentence.dart';
 import 'package:learn_english/ui/pages/finish_lesson_page.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
-import 'package:learn_english/ui/state/correct_answer.dart';
-import 'package:learn_english/ui/state/index.dart';
-import 'package:learn_english/ui/state/slider_state.dart';
 import 'package:provider/provider.dart';
 
 class VocabList extends StatelessWidget {
@@ -43,7 +43,7 @@ class VocabList extends StatelessWidget {
           randomNumber = random.nextInt(3) + 3;
         }
         answer.setCorrectAnswer(value[index.getIndex].vocab);
-        
+        // randomNumber = 5;
         switch (randomNumber) {
           case 0:
             return LookAtThePictureAndChooseAnswer(

@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_english/ui/state/num_of_correct_answer_state.dart';
-import 'package:learn_english/ui/state/slider_state.dart';
-import 'package:learn_english/ui/state/state_of_continue_button.dart';
+import 'package:learn_english/provider/num_of_correct_answer_state.dart';
+import 'package:learn_english/provider/slider_state.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 

@@ -1,39 +1,23 @@
 import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 
-class AudioPlayer {
-  AudioCache player = AudioCache();
+class AudioCustomPlayer extends ChangeNotifier {
+  AudioPlayer audioPlayer;
+  AudioCache audioCache;
 
-  playCustomAudioFile(String file){
-    player.play(file);
+  AudioCustomPlayer() {
+    audioPlayer = AudioPlayer();
+    audioCache = AudioCache(fixedPlayer: audioPlayer);
   }
 
-  playClickSound(){
-    player.play('click.mp3');
+  playCustomAudioFile(String file) async {
+    await audioPlayer.play(
+      file,
+    );
   }
 
-  playWrongSound(){
-    player.play('wrong.mp3');
+  stop(){
+    audioPlayer.stop();
   }
-
-  playCorrectSound(){
-    player.play('correct.mp3');
-  }
-
-  playDragSound(){
-    player.play('drag.mp3');
-  }
-
-  playDropSound(){
-    player.play('drop.mp3');
-  }
-
-  playFinishLessonSound(){
-    player.play('finish.mp3');
-  }
-
-  playOhNoSound(){
-    player.play('oh_no.mp3');
-  }
-
-
 }

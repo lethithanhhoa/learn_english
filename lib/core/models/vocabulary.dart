@@ -7,6 +7,8 @@ class Vocabulary {
   String mean;
   String image;
   String audioFile;
+  // int timeStartAudio;
+  // int timeEndAudio;
   int type;
   List<dynamic> otherWord;
 
@@ -17,6 +19,8 @@ class Vocabulary {
     this.mean,
     this.image,
     this.audioFile,
+    // this.timeStartAudio,
+    // this.timeEndAudio,
     this.type,
     this.otherWord,
   });
@@ -29,6 +33,8 @@ class Vocabulary {
         mean: snapshot.data['mean'],
         image: snapshot.data['imgName'],
         audioFile: snapshot.data['audioFile'],
+        // timeStartAudio: snapshot.data['timeStartAudio'],
+        // timeEndAudio: snapshot.data['timeEndAudio'],
         type: snapshot.data['type'],
         otherWord: snapshot.data['otherWord']);
   }
@@ -41,6 +47,8 @@ class Vocabulary {
       mean: data['mean'],
       image: data['imgName'],
       audioFile: data['audioFile'],
+      // timeStartAudio: data['timeStartAudio'],
+      // timeEndAudio: data['timeEndAudio'],
       type: data['type'],
       otherWord: data['otherWord'],
     );
@@ -49,8 +57,10 @@ class Vocabulary {
   Map<String, dynamic> toMap() {
     String temp = '';
     otherWord.forEach((element) {
-      if (temp == '') temp = element;
-      else temp = temp + '/' + element;
+      if (temp == '')
+        temp = element;
+      else
+        temp = temp + '/' + element;
     });
 
     var map = <String, dynamic>{
@@ -60,6 +70,8 @@ class Vocabulary {
       'mean': mean,
       'imageFile': image,
       'audioFile': audioFile,
+      // 'timeStartAudio': timeStartAudio,
+      // 'timeEndAudio': timeEndAudio,
       'type': type,
       'otherWord': temp,
     };
@@ -74,8 +86,9 @@ class Vocabulary {
         mean: map['mean'],
         image: map['imageFile'],
         audioFile: map['audioFile'],
+        // timeStartAudio: map['timeStartAudio'],
+        // timeEndAudio: map['timeEndAudio'],
         type: map['type'],
-        otherWord: map['otherWord'].toString().split('/').toList()
-        );
+        otherWord: map['otherWord'].toString().split('/').toList());
   }
 }

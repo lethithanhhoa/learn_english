@@ -3,6 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:learn_english/core/models/user.dart';
 
 class UserService {
+  Future<List<User>> getAllUser() async {
+    var ref = await Firestore.instance.collection('users').getDocuments();
+    List<User> listOfUser =
+        ref.documents.map((doc) => User.fromSnapshot(doc)).toList();
+    return listOfUser;
+  }
+
   Future<List<DocumentSnapshot>> findUsersByEmail(String email) async {
     var result = await Firestore.instance
         .collection('users')

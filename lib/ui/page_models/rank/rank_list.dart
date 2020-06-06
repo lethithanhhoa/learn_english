@@ -3,14 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/user.dart';
-import 'package:learn_english/ui/state/account_user.dart';
-import 'package:provider/provider.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
-// class RankList extends StatefulWidget {
-
-//   _RankListState createState() => _RankListState();
-// }
 
 class RankList extends StatelessWidget {
   ItemScrollController _scrollController = ItemScrollController();
@@ -56,8 +50,9 @@ class RankList extends StatelessWidget {
                             style: GoogleFonts.anton(
                               fontSize: 23,
                               color: (index == i)
-                                  ? Colors.green[700]
-                                  : Colors.black.withOpacity(0.6),
+                                  ? highLightTextAtRanking
+                                  : Colors.black
+                                      .withOpacity(blackOpacityAtRanking),
                             ),
                           ),
                         ),
@@ -84,12 +79,9 @@ class RankList extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 color: (index == i)
-                                    ? Colors.green[700]
-                                    : Colors.black.withOpacity(0.7),
+                                    ? highLightTextAtRanking
+                                    : Colors.black.withOpacity(blackOpacity),
                                 fontSize: (index == i) ? 25 : 20,
-                                // fontWeight: (index == i)
-                                //     ? FontWeight.bold
-                                //     : FontWeight.normal,
                               ),
                               overflow: TextOverflow.fade,
                               softWrap: false,
@@ -101,16 +93,15 @@ class RankList extends StatelessWidget {
                             maxLines: 1,
                             textAlign: TextAlign.right,
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: (typeOfCode == 3) ? 25 : 30,
                               color: (index == i)
-                                  ? Colors.green[700]
+                                  ? highLightTextAtRanking
                                   : Colors.blue,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    // Divider(),
                   ],
                 ),
               ),
@@ -118,8 +109,9 @@ class RankList extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 88,
                 decoration: BoxDecoration(
-                  color: (index == i) ? Colors.yellow.withOpacity(0.2) : null,
-                  // borderRadius: (index == 0)? BorderRadius.only(topRight: Radius.circular(40)): null,
+                  color: (index == i)
+                      ? Colors.yellow.withOpacity(highLightOpacityAtRanking)
+                      : null,
                 ),
               )
             ],

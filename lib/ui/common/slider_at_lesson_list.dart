@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class SliderAtLessonList extends StatelessWidget {
             children: <Widget>[
               Container(
                 height: 5,
-                width: MediaQuery.of(context).size.width - 80,
+                width: MediaQuery.of(context).size.width - 90,
                 decoration: BoxDecoration(
                   color: Colors.grey[400],
                   borderRadius: BorderRadius.circular(3.0),
@@ -39,7 +40,7 @@ class SliderAtLessonList extends StatelessWidget {
               ),
               Container(
                 height: 5,
-                width: percent / 100 * (MediaQuery.of(context).size.width - 80),
+                width: percent / 100 * (MediaQuery.of(context).size.width - 90),
                 decoration: BoxDecoration(
                   color: temp,
                   borderRadius: BorderRadius.circular(3.0),
@@ -50,9 +51,10 @@ class SliderAtLessonList extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 3),
             child: Container(
-                width: 25,
-                child: Text(
+                width: 30,
+                child: AutoSizeText(
                   '${percent}%',
+                  maxLines: 1,
                   style: TextStyle(color: temp, fontSize: 10),
                 )),
           ),

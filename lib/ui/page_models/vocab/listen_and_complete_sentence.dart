@@ -4,23 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/provider/state_of_answer_in_crossword_part.dart';
+import 'package:learn_english/provider/state_of_continue_button.dart';
+import 'package:learn_english/provider/state_of_crossword_list.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/crossword.dart';
 import 'package:learn_english/ui/common/speaker.dart';
+import 'package:learn_english/ui/modules/audio_local_player.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
-import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
-import 'package:learn_english/ui/state/state_of_continue_button.dart';
-import 'package:learn_english/ui/state/state_of_crossword_list.dart';
-
+import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:provider/provider.dart';
 
 class ListenAndCompleteSentence extends StatelessWidget {
   Vocabulary vocabulary;
   ListenAndCompleteSentence({this.vocabulary});
   bool loading = true;
-  AudioPlayer playAudio = AudioPlayer();
-
+  AudioCustomPlayer playAudio = AudioCustomPlayer();
+  AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
   Future<bool> onWillPop() {
     Fluttertoast.showToast(msg: "Press close icon to back");
     return Future.value(false);
@@ -37,7 +38,10 @@ class ListenAndCompleteSentence extends StatelessWidget {
 
     if (loading == true) {
       stateOfCrossWordList.generateCrosswords(vocabulary);
-      playAudio.playCustomAudioFile(vocabulary.audioFile);
+      playAudio.playCustomAudioFile(vocabulary.audioFile
+      // ,
+      //     vocabulary.timeStartAudio, vocabulary.timeEndAudio
+          );
       loading = false;
     }
 
@@ -69,19 +73,23 @@ class ListenAndCompleteSentence extends StatelessWidget {
                               'Enter what you hear',
                               maxLines: 2,
                               softWrap: true,
-                              overflow: TextOverflow.fade,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
+                                  color: Colors.black.withOpacity(blackOpacity)),
                             ),
                             SizedBox(height: 10),
                             GestureDetector(
                               onTap: () {
-                                playAudio
-                                    .playCustomAudioFile(vocabulary.audioFile);
+                                playAudio.playCustomAudioFile(
+                                    vocabulary.audioFile
+                                   
+                                    );
                               },
-                              child: Speaker(size: 80,),
+                              child: Speaker(
+                                size: 50,
+                              ),
                             ),
                             Container(
                               height: MediaQuery.of(context).size.height / 5,
@@ -105,8 +113,7 @@ class ListenAndCompleteSentence extends StatelessWidget {
                                                           crosswordAnswerState
                                                               .removeFromList(
                                                                   i);
-                                                          playAudio
-                                                              .playDropSound();
+                                                          audioLocalPlayer.playDropSound();
                                                         }
                                                       : null,
                                                   child: CrossWord(
@@ -132,7 +139,7 @@ class ListenAndCompleteSentence extends StatelessWidget {
                                               onTap: continueButtonState
                                                       .getActive
                                                   ? () {
-                                                      playAudio.playDragSound();
+                                                      audioLocalPlayer.playDragSound();
                                                       crosswordAnswerState
                                                           .addToList(
                                                               stateOfCrossWordList

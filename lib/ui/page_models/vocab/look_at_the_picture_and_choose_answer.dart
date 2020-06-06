@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,6 +6,7 @@ import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 
 class LookAtThePictureAndChooseAnswer extends StatelessWidget {
   Vocabulary vocabulary;
@@ -65,35 +67,33 @@ class LookAtThePictureAndChooseAnswer extends StatelessWidget {
                                   'Look at the picture and choose the correct answer',
                                   softWrap: true,
                                   maxLines: 2,
-                                  overflow: TextOverflow.fade,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black54),
+                                      color: Colors.black
+                                          .withOpacity(blackOpacity)),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(bottom: 30),
                                   child: Container(
-                                    height: 200,
+                                    height: 180,
                                     width: MediaQuery.of(context).size.width,
                                     alignment: Alignment.bottomCenter,
                                     decoration: BoxDecoration(
+                                        // color: Colors.blue,
                                         image: DecorationImage(
                                             image:
                                                 Image.asset('assets/board2.jpg')
                                                     .image,
                                             fit: BoxFit.scaleDown)),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(20.0),
-                                      child: FadeInImage.assetNetwork(
-                                        height: 100,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        placeholder: 'assets/waiting_image.gif',
-                                        image: '${vocabulary.image}',
-                                        fit: BoxFit.scaleDown,
-                                        fadeInCurve: Curves.bounceIn,
-                                      ),
+                                    child: FadeInImage.assetNetwork(
+                                      height: 160,
+                                      width: 160,
+                                      placeholder: 'assets/waiting_image.gif',
+                                      image: '${vocabulary.image}',
+                                      fit: BoxFit.scaleDown,
+                                      fadeInCurve: Curves.bounceIn,
                                     ),
                                   ),
                                 ),

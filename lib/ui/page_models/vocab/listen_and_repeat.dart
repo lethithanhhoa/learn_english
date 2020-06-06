@@ -6,31 +6,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/provider/recording.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/microphone.dart';
 import 'package:learn_english/ui/common/speaker.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
-import 'package:learn_english/ui/state/recording.dart';
-
+import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:provider/provider.dart';
 
 class ListenAndRepeat extends StatelessWidget {
   Vocabulary vocabulary;
   ListenAndRepeat({this.vocabulary});
-  AudioPlayer playAudio = AudioPlayer();
+  AudioCustomPlayer playAudio = AudioCustomPlayer();
   bool loading = true;
-//   _ListenAndRepeatState createState() => _ListenAndRepeatState();
-// }
-
-// class _ListenAndRepeatState extends State<ListenAndRepeat> {
-//   AudioPlayer playAudio = AudioPlayer();
-//   String recordingText;
-//   @override
-//   void initState() {
-//     super.initState();
-//     playAudio.playCustomAudioFile(widget.vocabulary.audioFile);
-//   }
 
   Future<bool> onWillPop() {
     Fluttertoast.showToast(msg: "Press close icon to back");
@@ -44,30 +33,7 @@ class ListenAndRepeat extends StatelessWidget {
       playAudio.playCustomAudioFile(vocabulary.audioFile);
       loading = false;
     }
-    // if (recording.getBestResult.toLowerCase() ==
-    //     widget.vocabulary.vocab.toLowerCase())
-    //   setState(() {
-    //     recordingText = recording.getBestResult;
-    //   });
-    // else {
-    //   int i = 0;
-    //   recording.getListResult.forEach((element) {
-    //     // print(element.recognizedWords);
-    //     if (element.recognizedWords.toLowerCase() ==
-    //         widget.vocabulary.vocab.toLowerCase()) {
-    //       setState(() {
-    //         recordingText = element.recognizedWords;
-    //       });
-    //       return;
-    //     } else
-    //       i++;
-    //   });
-    //   if (i == recording.getListResult.length)
-    //     recordingText = recording.getBestResult;
-    // }
-
-    // recording.setFinalResult(recordingText);
-    // print(recording.getFinalResult);
+    print(vocabulary.vocab + vocabulary.audioFile);
 
     return WillPopScope(
       onWillPop: onWillPop,
@@ -101,42 +67,49 @@ class ListenAndRepeat extends StatelessWidget {
                                   'Listen and repeat',
                                   softWrap: true,
                                   maxLines: 2,
-                                  overflow: TextOverflow.fade,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black54),
+                                      color: Colors.black.withOpacity(blackOpacity)),
                                 ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 280,
-                                  child: Stack(
-                                    children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Column(
+                                    children: [
                                       Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 280,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: Image.asset(
-                                                        'assets/board3.jpg')
-                                                    .image,
-                                                fit: BoxFit.scaleDown)),
-                                      ),
-                                      Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 280,
-                                          alignment: Alignment.bottomCenter,
-                                          child: Container(
-                                            height: 145,
-                                            margin: EdgeInsets.all(5.0),
-                                            // color: Colors.blue.withOpacity(0.5),
-                                            child: Stack(
-                                              children: [
-                                                Column(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 270,
+                                        child: Stack(
+                                          children: <Widget>[
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 270,
+                                              decoration: BoxDecoration(
+                                                  // color: Colors.blue,
+                                                  image: DecorationImage(
+                                                      image: Image.asset(
+                                                              'assets/board4.jpeg')
+                                                          .image,
+                                                      fit: BoxFit.scaleDown)),
+                                            ),
+                                            Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 270,
+                                                alignment: Alignment.bottomCenter,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
                                                   children: [
-                                                    Expanded(
+                                                    Container(
+                                                      height: 100,
+                                                      width: 150,
+                                                      // color: Colors.blue,
+                                                      margin: EdgeInsets.all(5.0),
                                                       child: FadeInImage
                                                           .assetNetwork(
                                                         placeholder:
@@ -147,8 +120,13 @@ class ListenAndRepeat extends StatelessWidget {
                                                             Curves.bounceIn,
                                                       ),
                                                     ),
+                                                    SizedBox(height: 30),
                                                     Container(
-                                                      height: 45,
+                                                      height: 40,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
                                                       child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -156,11 +134,12 @@ class ListenAndRepeat extends StatelessWidget {
                                                         children: [
                                                           AutoSizeText(
                                                             '${vocabulary.vocab}',
+                                                            maxLines: 1,
+                                                            textAlign:
+                                                                TextAlign.center,
                                                             style: TextStyle(
-                                                              color: Colors
-                                                                      .lightGreen[
-                                                                  600],
-                                                              fontSize: 50,
+                                                              color: Colors.blue,
+                                                              fontSize: 40,
                                                             ),
                                                           ),
                                                           SizedBox(width: 20),
@@ -171,17 +150,17 @@ class ListenAndRepeat extends StatelessWidget {
                                                                       vocabulary
                                                                           .audioFile);
                                                             },
-                                                            child: Speaker(
-                                                                size: 50),
+                                                            child:
+                                                                Speaker(size: 35),
                                                           )
                                                         ],
                                                       ),
                                                     ),
                                                   ],
-                                                )
-                                              ],
-                                            ),
-                                          )),
+                                                )),
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -190,6 +169,9 @@ class ListenAndRepeat extends StatelessWidget {
                             Column(
                               children: <Widget>[
                                 Microphone(),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 _textResult(
                                     recording.getBestResult, vocabulary.vocab),
                               ],

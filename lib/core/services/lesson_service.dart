@@ -11,8 +11,9 @@ class LessonService {
 
   Future insertListLesson(List<Lesson> list) async {
     list.forEach((element) async {
+      print('chac la loi');
       await _folder.add(await _db, element.toMap());
-      print('add ${element.lessonId } success');
+      // print('add ${element.lessonId } success');
     });
   }
 

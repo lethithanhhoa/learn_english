@@ -1,16 +1,17 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/provider/state_of_answer_in_crossword_part.dart';
+import 'package:learn_english/provider/state_of_continue_button.dart';
+import 'package:learn_english/provider/state_of_crossword_list.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/crossword.dart';
+import 'package:learn_english/ui/modules/audio_local_player.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
-import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
-import 'package:learn_english/ui/state/state_of_continue_button.dart';
-import 'package:learn_english/ui/state/state_of_crossword_list.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 
 import 'package:provider/provider.dart';
 
@@ -18,12 +19,14 @@ class TranslateSentence extends StatelessWidget {
   Vocabulary vocabulary;
   TranslateSentence({this.vocabulary});
   bool loading = true;
-  AudioPlayer playAudio = AudioPlayer();
+  AudioCustomPlayer playAudio = AudioCustomPlayer();
+  AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
 
   Future<bool> onWillPop() {
-      Fluttertoast.showToast(msg: "Press close icon to back");
-      return Future.value(false);
-    }
+    Fluttertoast.showToast(msg: "Press close icon to back");
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     ContinueButtonState continueButtonState =
@@ -68,11 +71,12 @@ class TranslateSentence extends StatelessWidget {
                               'Translate the following sentence',
                               softWrap: true,
                               maxLines: 2,
-                              overflow: TextOverflow.fade,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
+                                  color:
+                                      Colors.black.withOpacity(blackOpacity)),
                             ),
                             SizedBox(height: 20),
                             Text(
@@ -80,7 +84,7 @@ class TranslateSentence extends StatelessWidget {
                               style: GoogleFonts.charm(
                                 textStyle: TextStyle(
                                   fontSize: 22,
-                                  color: Colors.black54,
+                                  color: Colors.black.withOpacity(blackOpacity),
                                 ),
                               ),
                             ),
@@ -98,24 +102,19 @@ class TranslateSentence extends StatelessWidget {
                                         .asMap()
                                         .map((i, item) => MapEntry(
                                             i,
-                                            Stack(
-                                              children: <Widget>[
-                                                GestureDetector(
-                                                  onTap: (continueButtonState
-                                                          .getActive)
-                                                      ? () {
-                                                          playAudio
-                                                              .playDropSound();
-                                                          crosswordAnswerState
-                                                              .removeFromList(
-                                                                  i);
-                                                        }
-                                                      : null,
-                                                  child: CrossWord(
-                                                      text: crosswordAnswerState
-                                                          .getAnswer[i]),
-                                                ),
-                                              ],
+                                            GestureDetector(
+                                              onTap: (continueButtonState
+                                                      .getActive)
+                                                  ? () {
+                                                      audioLocalPlayer
+                                                          .playDropSound();
+                                                      crosswordAnswerState
+                                                          .removeFromList(i);
+                                                    }
+                                                  : null,
+                                              child: CrossWord(
+                                                  text: crosswordAnswerState
+                                                      .getAnswer[i]),
                                             )))
                                         .values
                                         .toList()
@@ -130,24 +129,20 @@ class TranslateSentence extends StatelessWidget {
                                     .asMap()
                                     .map((index, element) => MapEntry(
                                         index,
-                                        Stack(
-                                          children: <Widget>[
-                                            GestureDetector(
-                                              onTap: (continueButtonState
-                                                      .getActive)
-                                                  ? () {
-                                                      playAudio.playDragSound();
-                                                      crosswordAnswerState
-                                                          .addToList(
-                                                              stateOfCrossWordList
-                                                                  .list[index]);
-                                                    }
-                                                  : null,
-                                              child: CrossWord(
-                                                  text: stateOfCrossWordList
-                                                      .list[index]),
-                                            ),
-                                          ],
+                                        GestureDetector(
+                                          onTap: (continueButtonState.getActive)
+                                              ? () {
+                                                  audioLocalPlayer
+                                                      .playDragSound();
+                                                  crosswordAnswerState
+                                                      .addToList(
+                                                          stateOfCrossWordList
+                                                              .list[index]);
+                                                }
+                                              : null,
+                                          child: CrossWord(
+                                              text: stateOfCrossWordList
+                                                  .list[index]),
                                         )))
                                     .values
                                     .toList()

@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:learn_english/core/services/auth_service.dart';
+import 'package:learn_english/provider/index_in_home_page.dart';
+import 'package:learn_english/ui/common/side_menu_bar.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:learn_english/ui/page_models/game/game_page.dart';
 import 'package:learn_english/ui/page_models/lesson/lesson_page.dart';
-import 'package:learn_english/ui/page_models/rank/rank_page.dart';
+import 'package:learn_english/ui/page_models/rank/ranking_page.dart';
 import 'package:learn_english/ui/pages/account_page.dart';
-import 'package:learn_english/ui/state/indexHomePage.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HomePage extends StatelessWidget {
   int initialHomePage;
@@ -33,45 +38,61 @@ class HomePageState extends StatelessWidget {
     final _pageOption = [
       LessonPage(),
       GamePage(),
-      RankPage(
+      RankingPage(
         initialPage: indexHomePage.indexRank,
       ),
       AccountPage(),
     ];
+
     return WillPopScope(
       onWillPop: onWillPop,
-      child: Scaffold(
-        body: Center(
-          child: _pageOption[indexHomePage.index],
-        ),
-        bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(canvasColor: Colors.green[200]),
-          child: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                title: Text('Home'),
+      child: (!kIsWeb)
+          ? Scaffold(
+              body: Center(
+                child: _pageOption[indexHomePage.index],
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.games),
-                title: Text('Game'),
+              bottomNavigationBar: Theme(
+                data:
+                    Theme.of(context).copyWith(canvasColor: Colors.green[200]),
+                child: BottomNavigationBar(
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      title: Text('Home'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.games),
+                      title: Text('Game'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.school),
+                      title: Text('Ranking'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.account_circle),
+                      title: Text('Acount'),
+                    ),
+                  ],
+                  currentIndex: indexHomePage.index,
+                  selectedItemColor: Colors.teal,
+                  unselectedItemColor: Colors.white,
+                  onTap: indexHomePage.setIndex,
+                ),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.school),
-                title: Text('Ranking'),
+            )
+          : Scaffold(
+              drawer: NavigateDrawer(),
+              appBar: AppBar(
+                title: Text(
+                  'Home',
+                  style: GoogleFonts.handlee(
+                    color: Colors.white,
+                    fontSize: 30,
+                  ),
+                ),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                title: Text('Acount'),
-              ),
-            ],
-            currentIndex: indexHomePage.index,
-            selectedItemColor: Colors.teal,
-            unselectedItemColor: Colors.white,
-            onTap: indexHomePage.setIndex,
-          ),
-        ),
-      ),
+              body: LessonPage(),
+            ),
     );
   }
 

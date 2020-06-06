@@ -1,12 +1,14 @@
 import 'dart:math';
-
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/vocab_service.dart';
+import 'package:learn_english/ui/common/side_menu_bar.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
-import 'package:learn_english/ui/page_models/game/taptap/tap_tap_animation.dart';
+import 'package:learn_english/ui/page_models/game/game_animation.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class GamePage extends StatefulWidget {
   _GameState createState() => _GameState();
@@ -49,7 +51,25 @@ class _GameState extends State<GamePage> {
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
+        drawer: kIsWeb ? NavigateDrawer() : null,
+        appBar: kIsWeb
+            ? AppBar(
+                title: Text(
+                  'Game',
+                  style: GoogleFonts.handlee(
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ),
+                  ),
+                ),
+              )
+            : null,
         backgroundColor: Colors.white,
+        // floatingActionButton: new FloatingActionButton(
+        //   child: new Icon(Icons.flip_to_back),
+        //   onPressed: () {},
+        // ),
         body: SingleChildScrollView(
           child: Column(
             // mainAxisSize: MainAxisSize.min,
@@ -87,7 +107,8 @@ class _GameState extends State<GamePage> {
                                         height:
                                             MediaQuery.of(context).size.height /
                                                 2.5,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                       ))),
                           initValue: 0,
                           spacing: 0.0,
@@ -135,7 +156,8 @@ class _GameState extends State<GamePage> {
                                         height:
                                             MediaQuery.of(context).size.height /
                                                 2.5,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                       ))),
                           initValue: 0,
                           spacing: 0.0,
@@ -148,24 +170,15 @@ class _GameState extends State<GamePage> {
                     Navigator.pushNamed(context, RouteName.taptap,
                         arguments: vocabListByType);
                   },
-                  child: TapTapAnimatedWidget(
-                      title: 'Tap Tap', imageName: 'bee1.png')),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.pushNamed(context, RouteName.trex,
-              //         arguments: vocabListByType);
-              //   },
-              //   child: TapTapAnimatedWidget(
-              //       title: 'Trex', imageName: 'duck.png'),
-              // ),
-
+                  child:
+                      GameAnimation(title: 'Tap Tap', imageName: 'bee1.png')),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, RouteName.memory, arguments: vocabList
-                      );
+                  Navigator.pushNamed(context, RouteName.memory,
+                      arguments: vocabList);
                 },
-                child: TapTapAnimatedWidget(
-                    title: 'Memory Card', imageName: 'duck.png'),
+                child:
+                    GameAnimation(title: 'Memory Card', imageName: 'duck.png'),
               ),
             ],
           ),

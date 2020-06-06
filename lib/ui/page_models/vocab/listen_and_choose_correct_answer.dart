@@ -7,13 +7,14 @@ import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
 import 'package:learn_english/ui/common/speaker.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 
 class ListenAndChooseCorrectAnswer extends StatelessWidget {
   Vocabulary vocabulary;
   List<dynamic> answers = [];
   bool loading = true;
   ListenAndChooseCorrectAnswer({this.vocabulary});
-  AudioPlayer playAudio = AudioPlayer();
+  AudioCustomPlayer playAudio = AudioCustomPlayer();
 
   void generateAnswers() {
     answers.add(vocabulary.vocab);
@@ -32,7 +33,10 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      playAudio.playCustomAudioFile(vocabulary.audioFile);
+      playAudio.playCustomAudioFile(vocabulary.audioFile
+          // ,
+          //     vocabulary.timeStartAudio, vocabulary.timeEndAudio
+          );
       generateAnswers();
       loading = false;
     }
@@ -69,11 +73,11 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
                                   'Listen and choose the correct answer',
                                   softWrap: true,
                                   maxLines: 2,
-                                  overflow: TextOverflow.fade,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black54),
+                                      color: Colors.black.withOpacity(blackOpacity)),
                                 ),
                                 SizedBox(height: 10),
                                 GestureDetector(
@@ -81,7 +85,9 @@ class ListenAndChooseCorrectAnswer extends StatelessWidget {
                                     playAudio.playCustomAudioFile(
                                         vocabulary.audioFile);
                                   },
-                                  child: Speaker(size: 80,),
+                                  child: Speaker(
+                                    size: 50,
+                                  ),
                                 ),
                               ],
                             ),

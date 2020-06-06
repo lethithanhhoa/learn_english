@@ -5,11 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/provider/account_user.dart';
+import 'package:learn_english/provider/taptap_level_state.dart';
 import 'package:learn_english/ui/page_models/game/taptap/end_game_page.dart';
-import 'package:learn_english/ui/page_models/game/taptap/state/level_state.dart';
-import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class TapTapDetailPage extends StatelessWidget {
   List<Vocabulary> vocabList;

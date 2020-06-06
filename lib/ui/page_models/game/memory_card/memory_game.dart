@@ -1,20 +1,21 @@
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/provider/account_user.dart';
+import 'package:learn_english/provider/memory_card_state.dart';
+import 'package:learn_english/ui/modules/audio_local_player.dart';
+import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
-import 'package:learn_english/ui/page_models/game/memory_card/state/memory_card_state.dart';
-import 'package:learn_english/ui/page_models/game/memory_card/widgets/unit_card.dart';
-import 'package:learn_english/ui/state/account_user.dart';
-import 'package:learn_english/ui/state/index.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class Memory extends StatelessWidget {
   List<Vocabulary> vocabList;
   Memory({this.vocabList});
+  
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -33,6 +34,8 @@ class Memory extends StatelessWidget {
 class MemoryCard extends StatelessWidget {
   bool loading = true;
   UserService userService = UserService();
+
+  AudioCustomPlayer audioCustomPlayer = AudioCustomPlayer();
   Future<bool> onWillPop() {
     Fluttertoast.showToast(msg: "Tap 'Close' button to quit");
     return Future.value(false);
@@ -47,14 +50,6 @@ class MemoryCard extends StatelessWidget {
       loading = false;
     }
 
-    // if (memoryCardState.isFinish) {
-    //   // Navigator.pushNamedAndRemoveUntil(
-    //   //     context, RouteName.taptap_rank, (route) => false);
-    //   if (accountUser.user.memory < memoryCardState.level){
-    //     userService.updateMemoryCard(accountUser.user.userId, memoryCardState.level);
-    //   }
-    //   Navigator.pushNamedAndRemoveUntil(context, RouteName.memory_rank, (route) => false);
-    // }
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
@@ -83,6 +78,7 @@ class MemoryCard extends StatelessWidget {
                               FlatButton(
                                 onPressed: (memoryCardState.checking == 0)
                                     ? () {
+                                      audioCustomPlayer.stop();
                                         Navigator.pop(context);
                                       }
                                     : null,
@@ -136,23 +132,33 @@ class MemoryCard extends StatelessWidget {
                               ),
                               actions: [
                                 FlatButton(
-                                  child: Text('Exit Game', style: TextStyle(fontSize: 20),),
+                                  child: Text(
+                                    'Exit Game',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                   onPressed: () {
-                                    // memoryCardState.setIsFinishTrue();
                                     if (accountUser.user.memory <
                                         memoryCardState.level) {
                                       userService.updateMemoryCard(
                                           accountUser.user.userId,
                                           memoryCardState.level);
                                     }
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        RouteName.memory_rank,
-                                        (route) => false);
+                                    (kIsWeb)
+                                        ? Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            RouteName.memoryRankForWeb,
+                                            (route) => false)
+                                        : Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            RouteName.memoryRank,
+                                            (route) => false);
                                   },
                                 ),
                                 FlatButton(
-                                  child: Text('Ok', style: TextStyle(fontSize: 18),),
+                                  child: Text(
+                                    'Ok',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
                                   onPressed: () {
                                     userService.updateExp(
                                         accountUser.user.userId,
@@ -167,10 +173,13 @@ class MemoryCard extends StatelessWidget {
                           : Container(),
                       (memoryCardState.checking == 2 && accountUser.exp < 50)
                           ? AlertDialog(
-                              title: Image.asset('assets/gameover.png'),
+                              content: Image.asset('assets/gameover.png'),
                               actions: [
                                 FlatButton(
-                                  child: Text('Next', style: TextStyle(fontSize: 18),),
+                                  child: Text(
+                                    'Go to Ranking Page',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
                                   onPressed: () {
                                     // memoryCardState.setIsFinishTrue();
                                     if (accountUser.user.memory <
@@ -179,10 +188,15 @@ class MemoryCard extends StatelessWidget {
                                           accountUser.user.userId,
                                           memoryCardState.level);
                                     }
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        RouteName.memory_rank,
-                                        (route) => false);
+                                    (kIsWeb)
+                                        ? Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            RouteName.memoryRankForWeb,
+                                            (route) => false)
+                                        : Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            RouteName.memoryRank,
+                                            (route) => false);
                                   },
                                 ),
                               ],
@@ -190,10 +204,13 @@ class MemoryCard extends StatelessWidget {
                           : Container(),
                       (memoryCardState.checking == 1)
                           ? AlertDialog(
-                              title: Image.asset('assets/congrat.jpg'),
+                              content: Image.asset('assets/congrat.jpg'),
                               actions: [
                                 FlatButton(
-                                  child: Text('Exit Game', style: TextStyle(fontSize: 18),),
+                                  child: Text(
+                                    'Exit Game',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
                                   onPressed: () {
                                     // memoryCardState.setIsFinishTrue();
                                     if (accountUser.user.memory <
@@ -202,14 +219,23 @@ class MemoryCard extends StatelessWidget {
                                           accountUser.user.userId,
                                           memoryCardState.level);
                                     }
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        RouteName.memory_rank,
-                                        (route) => false);
+
+                                    (kIsWeb)
+                                        ? Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            RouteName.memoryRankForWeb,
+                                            (route) => false)
+                                        : Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            RouteName.memoryRank,
+                                            (route) => false);
                                   },
                                 ),
                                 FlatButton(
-                                  child: Text('Next Level', style: TextStyle(fontSize: 18),),
+                                  child: Text(
+                                    'Next Level',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
                                   onPressed: () {
                                     memoryCardState.fetchState();
                                     memoryCardState.nextLevel();

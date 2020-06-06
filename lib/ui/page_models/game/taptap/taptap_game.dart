@@ -26,7 +26,6 @@ class _TapTapGameState extends State<TapTapGame> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -48,7 +47,7 @@ class _TapTapGameState extends State<TapTapGame> {
       });
       if (loading == false) {
         Future.delayed(Duration(seconds: 1), () {
-          Navigator.pushNamed(context, RouteName.detail_taptap,
+          Navigator.pushNamed(context, RouteName.detailTapTap,
               arguments: widget.listVocab);
           loading = true;
         });

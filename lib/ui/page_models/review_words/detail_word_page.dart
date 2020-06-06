@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/provider/index.dart';
 import 'package:learn_english/ui/page_models/review_words/detail_word.dart';
-import 'package:learn_english/ui/state/index.dart';
 import 'package:provider/provider.dart';
 
 class DetailWordPage extends StatelessWidget {

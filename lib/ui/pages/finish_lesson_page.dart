@@ -2,41 +2,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/services/user_service.dart';
-import 'package:learn_english/ui/modules/audio_player.dart';
+import 'package:learn_english/provider/account_user.dart';
+import 'package:learn_english/provider/num_of_correct_answer_state.dart';
+import 'package:learn_english/provider/result_learning_state.dart';
+import 'package:learn_english/provider/slider_state.dart';
+import 'package:learn_english/ui/modules/audio_local_player.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
-
-import 'package:learn_english/ui/state/account_user.dart';
-import 'package:learn_english/ui/state/num_of_correct_answer_state.dart';
-import 'package:learn_english/ui/state/result_learning_state.dart';
-import 'package:learn_english/ui/state/slider_state.dart';
-import 'package:learn_english/ui/state/state_of_continue_button.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
 import 'package:provider/provider.dart';
 
 class FinishLessonPage extends StatelessWidget {
   bool loading = true;
   UserService userService = UserService();
   AccountUser accountUser = AccountUser();
-  AudioPlayer audioPlayer = AudioPlayer();
+  AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
   Color _color;
 
   @override
   Widget build(BuildContext context) {
-    // ContinueButtonState continueButtonState =
-    //     Provider.of<ContinueButtonState>(context);
     SliderState sliderState = Provider.of<SliderState>(context);
     ResultLearningState resultLearningState =
         Provider.of<ResultLearningState>(context);
-        NumOfCorrectAnswer numOfCorrectAnswer = Provider.of<NumOfCorrectAnswer>(context);
+    NumOfCorrectAnswer numOfCorrectAnswer =
+        Provider.of<NumOfCorrectAnswer>(context);
 
     if (loading) {
-      audioPlayer.playFinishLessonSound();
+      audioLocalPlayer.playFinishLessonSound();
       resultLearningState.setPercentCorrect(
-          (numOfCorrectAnswer.number /
-                  sliderState.getMaxOfSlider *
-                  100)
+          (numOfCorrectAnswer.number / sliderState.getMaxOfSlider * 100)
               .toInt());
       if (resultLearningState.getPercentCorrect <= 40)
         _color = Colors.red;
@@ -73,8 +67,7 @@ class FinishLessonPage extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(text: '+ '),
                             TextSpan(
-                                text:
-                                    '${numOfCorrectAnswer.number * 3}',
+                                text: '${numOfCorrectAnswer.number * 3}',
                                 style: TextStyle(
                                     color: Colors.orange, fontSize: 50)),
                             TextSpan(text: ' EXP'),
@@ -111,9 +104,10 @@ class FinishLessonPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(height: 20),
                     FlatButton(
                       onPressed: () {
-                        audioPlayer.playClickSound();
+                        audioLocalPlayer.playClickSound();
 
                         Map<String, dynamic> map = Map();
                         if (accountUser.user.learningState != null)
@@ -136,22 +130,17 @@ class FinishLessonPage extends StatelessWidget {
                         }
                         if (numOfCorrectAnswer.number > 0) {
                           int currentExp = accountUser.user.exp;
-                          userService.updateExp(
-                              accountUser.user.userId,
-                              currentExp +
-                                  (numOfCorrectAnswer.number *
-                                      3));
+                          userService.updateExp(accountUser.user.userId,
+                              currentExp + (numOfCorrectAnswer.number * 3));
                         }
-                        Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            RouteName.home,
-                            (Route<dynamic> route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RouteName.home, (Route<dynamic> route) => false);
                       },
                       child: Text(
-                        'Next',
-                        style: TextStyle(fontSize: 20),
+                        'Back to Home',
+                        style: TextStyle(fontSize: 20, color: Colors.black.withOpacity(0.6)),
                       ),
-                      color: Colors.green,
+                      color: Colors.green[300],
                     ),
                   ],
                 ),

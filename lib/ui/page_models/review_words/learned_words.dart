@@ -3,20 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/ui/modules/route_name.dart';
+import 'package:learn_english/provider/account_user.dart';
+import 'package:learn_english/ui/common/side_menu_bar.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:learn_english/ui/page_models/review_words/detail_word_page.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
-import 'package:learn_english/ui/state/account_user.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/core/services/vocab_service.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class LearnedWords extends StatelessWidget {
-  // DatabaseService database = DatabaseService();
   VocabService _vocabService = VocabService();
   List<String> lessonList;
-  AudioPlayer playAudio = AudioPlayer();
+  AudioCustomPlayer playAudio = AudioCustomPlayer();
 
   Future<List<Vocabulary>> getVocabByLesson(List<String> lessonIdList) async {
     var list = await _vocabService.getVocabListByListOfLessonId(lessonIdList);
@@ -30,39 +31,47 @@ class LearnedWords extends StatelessWidget {
     if (accountUser.user == null) return LoadingPage();
     if (accountUser.user.learningState == null)
       return Scaffold(
+        drawer: kIsWeb ? NavigateDrawer() : null,
         appBar: AppBar(
-          
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: leadingAppBar,
+          backgroundColor: appBarColor,
           title: Text(
             'Learned Words',
             style: GoogleFonts.handlee(
               textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600),
+                color: Colors.white,
+                fontSize: (kIsWeb) ? 30 : 25,
+                fontWeight: (kIsWeb) ? FontWeight.normal : FontWeight.bold,
+              ),
             ),
           ),
-          backgroundColor: Colors.green[300],
         ),
-        body: Center(child: Text('No data')),
+        body: Center(
+            child: Text(
+          'No data',
+          style: TextStyle(
+              fontSize: 20, color: Colors.black.withOpacity(blackOpacity)),
+        )),
       );
     lessonList = accountUser.user.learningState.keys.toList();
 
     return (lessonList == null)
         ? LoadingPage()
         : Scaffold(
+            drawer: kIsWeb ? NavigateDrawer() : null,
             appBar: AppBar(
-              automaticallyImplyLeading: false,
+              automaticallyImplyLeading: leadingAppBar,
+              backgroundColor: appBarColor,
               title: Text(
                 'Learned Words',
                 style: GoogleFonts.handlee(
                   textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600),
+                    color: Colors.white,
+                    fontSize: (kIsWeb) ? 30 : 25,
+                    fontWeight: (kIsWeb) ? FontWeight.normal : FontWeight.bold,
+                  ),
                 ),
               ),
-              backgroundColor: Colors.green[300],
             ),
             backgroundColor: Colors.white,
             body: SafeArea(

@@ -7,6 +7,7 @@ import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/ui/common/app_bar.dart';
 import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 
 class ChooseCorrectTranslate extends StatelessWidget {
   Vocabulary vocabulary;
@@ -67,34 +68,43 @@ class ChooseCorrectTranslate extends StatelessWidget {
                                     'Choose the correct translation',
                                     softWrap: true,
                                     maxLines: 2,
-                                    overflow: TextOverflow.fade,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black54,
+                                      color: Colors.black.withOpacity(blackOpacity),
                                     ),
                                   ),
                                 ),
-                                // SizedBox(height: 10.0),
+                                SizedBox(height: 10.0),
                                 Container(
-                                  height: 200,
+                                  height: 170,
                                   width: MediaQuery.of(context).size.width,
                                   alignment: Alignment.bottomCenter,
                                   decoration: BoxDecoration(
+                                    // color: Colors.blue,
                                     image: DecorationImage(
                                         image: Image.asset('assets/board4.jpg')
                                             .image,
                                         fit: BoxFit.scaleDown),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.only(bottom: 47),
-                                    child: AutoSizeText(
-                                      vocabulary.mean,
-                                      maxLines: 1,
-                                      style: GoogleFonts.charm(
-                                        textStyle: TextStyle(
-                                          fontSize: 30,
-                                          color: Colors.lightGreen[600],
+                                    padding: EdgeInsets.fromLTRB(0, 0, 10, 25),
+                                    child: Container(
+                                      width: 150,
+                                      height: 140,
+                                      // color: Colors.blue,
+                                      alignment: Alignment.center,
+                                      child: AutoSizeText(
+                                        vocabulary.mean,
+                                        maxLines: 3,
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.charm(
+                                          textStyle: TextStyle(
+                                            fontSize: 30,
+                                            // backgroundColor: Colors.blue,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),

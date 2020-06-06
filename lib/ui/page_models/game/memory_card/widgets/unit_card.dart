@@ -2,8 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/ui/page_models/game/memory_card/state/memory_card_state.dart';
+import 'package:learn_english/provider/memory_card_state.dart';
 import 'package:provider/provider.dart';
 
 class UnitCard extends StatelessWidget {
@@ -21,7 +22,7 @@ class UnitCard extends StatelessWidget {
         keyCard.currentState.toggleCard();
         Future.delayed(Duration(seconds: seconds), () {
           keyCard.currentState.toggleCard();
-          // memoryCardState.setIsFlip(true);
+          memoryCardState.setTapFalse();
         });
       });
       loading = false;
@@ -39,24 +40,30 @@ class UnitCard extends StatelessWidget {
                   }
                 : null,
             child: Container(
-              height: 100,
-              width: 100,
+              height: 90,
+              width: 135,
               decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.9),
-                  borderRadius: BorderRadius.circular(5.0)),
-              
-              child: Center(
-                  child: Text(
-                '?',
-                style: TextStyle(color: Colors.white, fontSize: 50, fontWeight: FontWeight.bold),
-              )),
+                  // color: Colors.blue.withOpacity(0.9),
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5.0),
+                  // image: DecorationImage(
+                  //     image: Image.asset('assets/card.png').image)
+                  ),
+                  // child: Image.asset('assets/card.png'),
+                  child: Center(
+                    child: Text('?', style: GoogleFonts.piedra(
+                      color: Colors.white,
+                      fontSize: 50,
+                      
+                    )),
+                  ),
             ),
           ),
           back: Container(
-            height: 100,
-            width: 100,
+            height: 90,
+            width: 135,
             decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.9),
+                color: Colors.blue.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(5.0)),
             child: Center(
                 child: Padding(

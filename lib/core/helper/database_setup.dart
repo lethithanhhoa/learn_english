@@ -22,20 +22,16 @@ class AppDatabase {
   }
 
   Future _openDatabase() async {
-    print('day laf 1');
     var database;
-    if (! kIsWeb){
-    final appDocumentDir = await getApplicationDocumentsDirectory();
-    print(appDocumentDir);
-    final dbPath = join(appDocumentDir.path, 'MyDatabase.db');
-     database = await databaseFactoryIo.openDatabase(dbPath);
+    if (!kIsWeb) {
+      final appDocumentDir = await getApplicationDocumentsDirectory();
+      print(appDocumentDir);
+      final dbPath = join(appDocumentDir.path, 'MyDatabase.db');
+      database = await databaseFactoryIo.openDatabase(dbPath);
+    } else {
+      final factory = databaseFactoryWeb;
+      database = await factory.openDatabase('MyDatabase');
     }
-    else{
-    final factory = databaseFactoryWeb;
-    database = await factory.openDatabase('MyDatabase');
-    
-    }
-    print('OK');
     _dbOpenCompleter.complete(database);
   }
 }

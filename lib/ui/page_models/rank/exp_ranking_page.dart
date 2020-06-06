@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/user.dart';
+import 'package:learn_english/provider/account_user.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:learn_english/ui/page_models/rank/rank_list.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
-import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ExpRankingPage extends StatelessWidget {
   int index = -1;
@@ -21,9 +23,6 @@ class ExpRankingPage extends StatelessWidget {
       value.sort((a, b) => b.exp.compareTo(a.exp));
 
       if (userId != null) {
-        // index = value
-        //     .indexWhere((element) => element.userId == userId);
-
         for (int i = 0; i < value.length; i++) {
           if (value[i].userId == userId) {
             index = i;
@@ -38,14 +37,21 @@ class ExpRankingPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                height: 220,
+                height: 230,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Colors.green[200],
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(60),
-                    bottomRight: Radius.circular(0),
-                  ),
+                  color: (kIsWeb) ? Colors.white : Colors.green[200],
+                  borderRadius: (kIsWeb)
+                      ? null
+                      : BorderRadius.only(
+                          bottomLeft: Radius.circular(60),
+                          bottomRight: Radius.circular(0),
+                        ),
+                  image: (kIsWeb)
+                      ? DecorationImage(
+                          image: Image.asset('assets/bgranking3.jpg').image,
+                          fit: BoxFit.cover)
+                      : null,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -53,9 +59,9 @@ class ExpRankingPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 5),
                       child: AutoSizeText('Exp Ranking',
-                      maxLines: 1,
+                          maxLines: 1,
                           style: TextStyle(
-                              color: Colors.white,
+                              color: titleRankingColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 35,
                               fontFamily: 'Arial')),
@@ -108,17 +114,23 @@ class ExpRankingPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          AutoSizeText(
-                                            '${value[2].name}',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.fade,
+                                          Container(
+                                            height: 15,
+                                            child: AutoSizeText(
+                                              '${value[2].name}',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.visible,
+                                            ),
                                           ),
-                                          AutoSizeText(
-                                            '${value[2].exp}',
-                                            maxLines: 1,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 16,
+                                          Container(
+                                            height: 20,
+                                            child: AutoSizeText(
+                                              '${value[2].exp}',
+                                              maxLines: 1,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
                                             ),
                                           )
                                         ]),
@@ -167,17 +179,23 @@ class ExpRankingPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    AutoSizeText(
-                                      '${value[0].name}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.fade,
+                                    Container(
+                                      height: 15,
+                                      child: AutoSizeText(
+                                        '${value[0].name}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.visible,
+                                      ),
                                     ),
-                                    AutoSizeText(
-                                      '${value[0].exp}',
-                                      maxLines: 1,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 18,
+                                    Container(
+                                      height: 20,
+                                      child: AutoSizeText(
+                                        '${value[0].exp}',
+                                        maxLines: 1,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                        ),
                                       ),
                                     )
                                   ]),
@@ -230,17 +248,23 @@ class ExpRankingPage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          AutoSizeText(
-                                            '${value[1].name}',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.fade,
+                                          Container(
+                                            height: 15,
+                                            child: AutoSizeText(
+                                              '${value[1].name}',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.visible,
+                                            ),
                                           ),
-                                          AutoSizeText(
-                                            '${value[1].exp}',
-                                            maxLines: 1,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 17,
+                                          Container(
+                                            height: 20,
+                                            child: AutoSizeText(
+                                              '${value[1].exp}',
+                                              maxLines: 1,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                              ),
                                             ),
                                           )
                                         ]),
@@ -262,9 +286,11 @@ class ExpRankingPage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(40),
-                    ),
+                    borderRadius: (kIsWeb)
+                        ? null
+                        : BorderRadius.only(
+                            topRight: Radius.circular(40),
+                          ),
                   ),
                   child: RankList(
                     value: value,

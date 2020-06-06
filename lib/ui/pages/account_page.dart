@@ -2,12 +2,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/services/auth_service.dart';
+import 'package:learn_english/provider/account_user.dart';
+import 'package:learn_english/ui/common/side_menu_bar.dart';
+import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:learn_english/core/services/lesson_service.dart';
-import 'package:learn_english/ui/state/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class AccountPage extends StatelessWidget {
   @override
@@ -46,7 +50,20 @@ class AccountChildPage extends StatelessWidget {
       loading = false;
     }
     return Scaffold(
-      // backgroundColor: Colors.grey[200],
+      drawer: kIsWeb ? NavigateDrawer() : null,
+      appBar: kIsWeb
+          ? AppBar(
+              title: Text(
+                'Profile',
+                style: GoogleFonts.handlee(
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            )
+          : null,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
@@ -59,15 +76,14 @@ class AccountChildPage extends StatelessWidget {
                     Container(
                       height: 180,
                       decoration: BoxDecoration(
-                          color: Colors.green[200],
+                          color: mainWidgetColor,
                           image: DecorationImage(
-                              image: Image.asset('assets/cover.jpg').image,
+                              image: Image.asset(coverPhoto).image,
                               fit: BoxFit.cover)),
                     ),
                     Expanded(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        // color: Colors.,
                         color: Colors.white,
                       ),
                     )
@@ -92,9 +108,9 @@ class AccountChildPage extends StatelessWidget {
                               color: Colors.yellow.withOpacity(0.1),
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  image: Image.network(
-                                          accountUser.user.avatarUrl)
-                                      .image,
+                                  image:
+                                      Image.network(accountUser.user.avatarUrl)
+                                          .image,
                                   fit: BoxFit.fill),
                             ),
                           ),
@@ -103,7 +119,7 @@ class AccountChildPage extends StatelessWidget {
                             maxLines: 1,
                             style: TextStyle(
                               fontSize: 40,
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withOpacity(blackOpacity),
                             ),
                           ),
                           AutoSizeText(
@@ -111,10 +127,13 @@ class AccountChildPage extends StatelessWidget {
                             maxLines: 1,
                             style: TextStyle(
                                 fontSize: 18,
-                                color: Colors.black.withOpacity(0.7)),
+                                color: Colors.black.withOpacity(blackOpacity)),
                           ),
                         ],
                       ),
+                      // (kIsWeb)
+                      //     ? Container()
+                      //     :
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -122,315 +141,315 @@ class AccountChildPage extends StatelessWidget {
                             'Achievement',
                             style: TextStyle(
                                 fontSize: 22,
-                                color: Colors.black.withOpacity(0.7)),
+                                color: Colors.black.withOpacity(blackOpacity)),
                           ),
                           Container(
                             height: 170,
                             width: MediaQuery.of(context).size.width,
-                            // color: Colors.pinkAccent,
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Container(
-                                    height: 160,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.green[200],
-                                    ),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlipPanel.builder(
-                                              itemsCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(5.0),
-                                                    child: Center(
-                                                      child: AutoSizeText(
-                                                        '${count}',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: 40,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black
-                                                              .withOpacity(0.7),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                            child: Container(
-                                                height: 40,
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Num of lessons reached 100%',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                )),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Container(
-                                    height: 150,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.green[200],
-                                    ),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlipPanel.builder(
-                                              itemsCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(5.0),
-                                                    child: Center(
-                                                      child: AutoSizeText(
-                                                        '${accountUser.user.exp}',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: 40,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black
-                                                              .withOpacity(0.7),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                            child: Container(
-                                                height: 40,
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'EXP',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                )),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Container(
-                                    height: 150,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.green[200],
-                                    ),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlipPanel.builder(
-                                              itemsCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(5.0),
-                                                    child: Center(
-                                                      child: AutoSizeText(
-                                                        '${accountUser.user.taptap}',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: 40,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black
-                                                              .withOpacity(0.7),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                            child: Container(
-                                                height: 40,
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Tap Tap High Score',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                )),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Container(
-                                    height: 150,
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.green[200],
-                                    ),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlipPanel.builder(
-                                              itemsCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(5.0),
-                                                    child: Center(
-                                                      child: AutoSizeText(
-                                                        '${accountUser.user.memory}',
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                          fontSize: 40,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black
-                                                              .withOpacity(0.7),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                            child: Container(
-                                                height: 40,
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Memory Card Level',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                )),
-                                          ),
-                                        ]),
-                                  ),
-                                ),
+                                itemOfAchievement(context, count,
+                                    'Number of lessons reached 100%'),
+                                itemOfAchievement(
+                                    context, accountUser.user.exp, 'EXP'),
+                                itemOfAchievement(
+                                    context,
+                                    accountUser.user.taptap,
+                                    'Tap Tap High Score'),
+                                itemOfAchievement(
+                                    context,
+                                    accountUser.user.memory,
+                                    'Memory Card Level'),
+
                                 // Padding(
-                                //   padding: const EdgeInsets.all(5.0),
+                                //   padding: EdgeInsets.all(5.0),
+                                //   child: Container(
+                                //     height: 160,
+                                //     width: 120,
+                                //     decoration: BoxDecoration(
+                                //         borderRadius:
+                                //             BorderRadius.circular(10.0),
+                                //         color: mainWidgetColor),
+                                //     child: Padding(
+                                //       padding: EdgeInsets.all(10.0),
+                                //       child: Column(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment.spaceBetween,
+                                //           children: <Widget>[
+                                //             FlipPanel.builder(
+                                //                 itemsCount: 1,
+                                //                 itemBuilder:
+                                //                     (context, index) {
+                                //                   return Container(
+                                //                     height: 100,
+                                //                     width: 100,
+                                //                     decoration: BoxDecoration(
+                                //                       borderRadius:
+                                //                           BorderRadius
+                                //                               .circular(10.0),
+                                //                       color: Colors.white,
+                                //                     ),
+                                //                     child: Padding(
+                                //                       padding:
+                                //                           EdgeInsets.all(5.0),
+                                //                       child: Center(
+                                //                         child: AutoSizeText(
+                                //                           '${count}',
+                                //                           maxLines: 1,
+                                //                           style: TextStyle(
+                                //                             fontSize: 40,
+                                //                             fontWeight:
+                                //                                 FontWeight
+                                //                                     .bold,
+                                //                             color: Colors
+                                //                                 .black
+                                //                                 .withOpacity(
+                                //                                     blackOpacity),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                     ),
+                                //                   );
+                                //                 }),
+                                //             Container(
+                                //                 height: 35,
+                                //                 width: MediaQuery.of(context)
+                                //                     .size
+                                //                     .width,
+                                //                 alignment: Alignment.center,
+                                //                 child: AutoSizeText(
+                                //                   'Number of lessons reached 100%',
+                                //                   textAlign: TextAlign.center,
+                                //                   maxLines: 2,
+                                //                   minFontSize: 10,
+                                //                   style:
+                                //                       TextStyle(fontSize: 16),
+                                //                 ))
+                                //           ]),
+                                //     ),
+                                //   ),
+                                // ),
+
+                                // Padding(
+                                //   padding: EdgeInsets.all(5.0),
                                 //   child: Container(
                                 //     height: 150,
                                 //     width: 120,
                                 //     decoration: BoxDecoration(
-                                //       borderRadius: BorderRadius.circular(10.0),
-                                //       color: Colors.green[200],
-                                //     ),
-                                //     child: Column(
-                                //         mainAxisAlignment:
-                                //             MainAxisAlignment.center,
-                                //         children: <Widget>[
-                                //           FlipPanel.builder(
-                                //               itemsCount: 1,
-                                //               itemBuilder: (context, index) {
-                                //                 return Container(
-                                //                   height: 100,
-                                //                   width: 100,
-                                //                   decoration: BoxDecoration(
-                                //                     borderRadius:
-                                //                         BorderRadius.circular(
-                                //                             10.0),
-                                //                     color: Colors.white,
-                                //                   ),
-                                //                   child: Padding(
-                                //                     padding:
-                                //                         EdgeInsets.all(5.0),
-                                //                     child: Center(
-                                //                       child: AutoSizeText(
-                                //                         '${accountUser.user.matrix4by4}',
-                                //                         maxLines: 1,
-                                //                         style: TextStyle(
-                                //                           fontSize: 40,
-                                //                           fontWeight:
-                                //                               FontWeight.bold,
-                                //                           color: Colors.black
-                                //                               .withOpacity(0.7),
+                                //         borderRadius:
+                                //             BorderRadius.circular(10.0),
+                                //         color: mainWidgetColor),
+                                //     child: Padding(
+                                //       padding: EdgeInsets.all(10.0),
+                                //       child: Column(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment
+                                //                   .spaceBetween,
+                                //           children: <Widget>[
+                                //             FlipPanel.builder(
+                                //                 itemsCount: 1,
+                                //                 itemBuilder:
+                                //                     (context, index) {
+                                //                   return Container(
+                                //                     height: 100,
+                                //                     width: 100,
+                                //                     decoration:
+                                //                         BoxDecoration(
+                                //                       borderRadius:
+                                //                           BorderRadius
+                                //                               .circular(
+                                //                                   10.0),
+                                //                       color: Colors.white,
+                                //                     ),
+                                //                     child: Padding(
+                                //                       padding:
+                                //                           EdgeInsets.all(
+                                //                               5.0),
+                                //                       child: Center(
+                                //                         child:
+                                //                             AutoSizeText(
+                                //                           '${accountUser.user.exp}',
+                                //                           maxLines: 1,
+                                //                           style:
+                                //                               TextStyle(
+                                //                             fontSize: 40,
+                                //                             fontWeight:
+                                //                                 FontWeight
+                                //                                     .bold,
+                                //                             color: Colors
+                                //                                 .black
+                                //                                 .withOpacity(
+                                //                                     blackOpacity),
+                                //                           ),
                                 //                         ),
                                 //                       ),
                                 //                     ),
-                                //                   ),
-                                //                 );
-                                //               }),
-                                //           Padding(
-                                //             padding: EdgeInsets.symmetric(
-                                //                 horizontal: 10.0),
-                                //             child: Container(
-                                //                 height: 40,
-                                //                 alignment: Alignment.center,
-                                //                 child: Text(
-                                //                   'Matrix 4x4 high score',
-                                //                   textAlign: TextAlign.center,
-                                //                   style:
-                                //                       TextStyle(fontSize: 16),
+                                //                   );
+                                //                 }),
+                                //             Container(
+                                //                 height: 35,
+                                //                 alignment:
+                                //                     Alignment.center,
+                                //                 child: AutoSizeText(
+                                //                   'EXP',
+                                //                   textAlign:
+                                //                       TextAlign.center,
+                                //                   maxLines: 1,
+                                //                   minFontSize: 10,
+                                //                   style: TextStyle(
+                                //                       fontSize: 16),
                                 //                 )),
-                                //           ),
-                                //         ]),
+                                //           ]),
+                                //     ),
                                 //   ),
                                 // ),
+                                // Padding(
+                                //   padding: EdgeInsets.all(5.0),
+                                //   child: Container(
+                                //     height: 150,
+                                //     width: 120,
+                                //     decoration: BoxDecoration(
+                                //         borderRadius:
+                                //             BorderRadius.circular(10.0),
+                                //         color: mainWidgetColor),
+                                //     child: Padding(
+                                //       padding: EdgeInsets.all(10.0),
+                                //       child: Column(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment
+                                //                   .spaceBetween,
+                                //           children: <Widget>[
+                                //             FlipPanel.builder(
+                                //                 itemsCount: 1,
+                                //                 itemBuilder:
+                                //                     (context, index) {
+                                //                   return Container(
+                                //                     height: 100,
+                                //                     width: 100,
+                                //                     decoration:
+                                //                         BoxDecoration(
+                                //                       borderRadius:
+                                //                           BorderRadius
+                                //                               .circular(
+                                //                                   10.0),
+                                //                       color: Colors.white,
+                                //                     ),
+                                //                     child: Padding(
+                                //                       padding:
+                                //                           EdgeInsets.all(
+                                //                               5.0),
+                                //                       child: Center(
+                                //                         child:
+                                //                             AutoSizeText(
+                                //                           '${accountUser.user.taptap}',
+                                //                           maxLines: 1,
+                                //                           style:
+                                //                               TextStyle(
+                                //                             fontSize: 40,
+                                //                             fontWeight:
+                                //                                 FontWeight
+                                //                                     .bold,
+                                //                             color: Colors
+                                //                                 .black
+                                //                                 .withOpacity(
+                                //                                     blackOpacity),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                     ),
+                                //                   );
+                                //                 }),
+                                //             Container(
+                                //                 height: 35,
+                                //                 alignment:
+                                //                     Alignment.center,
+                                //                 child: AutoSizeText(
+                                //                   'Tap Tap High Score',
+                                //                   maxLines: 2,
+                                //                   minFontSize: 10,
+                                //                   textAlign:
+                                //                       TextAlign.center,
+                                //                   style: TextStyle(
+                                //                       fontSize: 16),
+                                //                 )),
+                                //           ]),
+                                //     ),
+                                //   ),
+                                // ),
+                                //   Padding(
+                                //     padding: EdgeInsets.all(5.0),
+                                //     child: Container(
+                                //       height: 150,
+                                //       width: 120,
+                                //       decoration: BoxDecoration(
+                                //           borderRadius:
+                                //               BorderRadius.circular(10.0),
+                                //           color: mainWidgetColor),
+                                //       child: Padding(
+                                //         padding: EdgeInsets.all(10.0),
+                                //         child: Column(
+                                //             mainAxisAlignment:
+                                //                 MainAxisAlignment
+                                //                     .spaceBetween,
+                                //             children: <Widget>[
+                                //               FlipPanel.builder(
+                                //                   itemsCount: 1,
+                                //                   itemBuilder:
+                                //                       (context, index) {
+                                //                     return Container(
+                                //                       height: 100,
+                                //                       width: 100,
+                                //                       decoration:
+                                //                           BoxDecoration(
+                                //                         borderRadius:
+                                //                             BorderRadius
+                                //                                 .circular(
+                                //                                     10.0),
+                                //                         color: Colors.white,
+                                //                       ),
+                                //                       child: Padding(
+                                //                         padding:
+                                //                             EdgeInsets.all(
+                                //                                 5.0),
+                                //                         child: Center(
+                                //                           child:
+                                //                               AutoSizeText(
+                                //                             '${accountUser.user.memory}',
+                                //                             maxLines: 1,
+                                //                             style:
+                                //                                 TextStyle(
+                                //                               fontSize: 40,
+                                //                               fontWeight:
+                                //                                   FontWeight
+                                //                                       .bold,
+                                //                               color: Colors
+                                //                                   .black
+                                //                                   .withOpacity(
+                                //                                       blackOpacity),
+                                //                             ),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                     );
+                                //                   }),
+                                //               Container(
+                                //                   height: 35,
+                                //                   alignment:
+                                //                       Alignment.center,
+                                //                   child: AutoSizeText(
+                                //                     'Memory Card Level',
+                                //                     maxLines: 2,
+                                //                     minFontSize: 10,
+                                //                     textAlign:
+                                //                         TextAlign.center,
+                                //                     style: TextStyle(
+                                //                         fontSize: 16),
+                                //                   )),
+                                //             ]),
+                                //       ),
+                                // ),
+                                //   ),
                               ],
                             ),
                           ),
@@ -439,10 +458,8 @@ class AccountChildPage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           handleSignOut();
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteName.login,
-                              (Route<dynamic> route) => false);
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              RouteName.login, (Route<dynamic> route) => false);
                         },
                         child: Padding(
                           padding: EdgeInsets.only(top: 30),
@@ -451,14 +468,15 @@ class AccountChildPage extends StatelessWidget {
                             width: 100,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.0),
-                              color: Colors.orange[200],
+                              color: signOutButtonColor,
                             ),
                             child: Center(
                               child: Text(
                                 'Sign Out',
                                 style: TextStyle(
-                                    // backgroundColor: Colors.green,
-                                    fontSize: 20),
+                                    fontSize: 20,
+                                    color:
+                                        Colors.black.withOpacity(blackOpacity)),
                               ),
                             ),
                           ),
@@ -470,6 +488,62 @@ class AccountChildPage extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget itemOfAchievement(BuildContext context, int number, String title) {
+    return Padding(
+      padding: EdgeInsets.all(5.0),
+      child: Container(
+        height: 160,
+        width: 120,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0), color: mainWidgetColor),
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FlipPanel.builder(
+                    itemsCount: 1,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: Center(
+                            child: AutoSizeText(
+                              '${number}',
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black.withOpacity(blackOpacity),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                Container(
+                    height: 35,
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      title,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      minFontSize: 10,
+                      style: TextStyle(fontSize: 16),
+                    ))
+              ]),
         ),
       ),
     );
