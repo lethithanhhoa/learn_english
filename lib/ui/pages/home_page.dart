@@ -70,7 +70,7 @@ class HomePageState extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.account_circle),
-                      title: Text('Acount'),
+                      title: Text('Account'),
                     ),
                   ],
                   currentIndex: indexHomePage.index,

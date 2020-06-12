@@ -8,11 +8,11 @@ import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
 import 'package:learn_english/ui/modules/general_parameter.dart';
 
-class LookAtThePictureAndChooseAnswer extends StatelessWidget {
+class PageToLookAtThePictureAndChooseAnswer extends StatelessWidget {
   Vocabulary vocabulary;
   List<dynamic> answers = [];
   bool loading = true;
-  LookAtThePictureAndChooseAnswer({this.vocabulary});
+  PageToLookAtThePictureAndChooseAnswer({this.vocabulary});
 
   void generateAnswers() {
     answers.add(vocabulary.vocab);

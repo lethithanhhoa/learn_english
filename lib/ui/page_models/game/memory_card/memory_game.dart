@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 class Memory extends StatelessWidget {
   List<Vocabulary> vocabList;
   Memory({this.vocabList});
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -78,11 +78,11 @@ class MemoryCard extends StatelessWidget {
                               FlatButton(
                                 onPressed: (memoryCardState.checking == 0)
                                     ? () {
-                                      audioCustomPlayer.stop();
+                                        audioCustomPlayer.stop();
                                         Navigator.pop(context);
                                       }
                                     : null,
-                                child: Text('Close'),
+                                child: Text('Quit'),
                                 color: Colors.blue.withOpacity(0.3),
                               ),
                             ],
@@ -107,37 +107,65 @@ class MemoryCard extends StatelessWidget {
                       ),
                       (memoryCardState.checking == 2 && accountUser.exp >= 50)
                           ? AlertDialog(
-                              title: Image.asset('assets/oh_no.jpg'),
-                              content: RichText(
-                                text: TextSpan(
-                                    style: GoogleFonts.handlee(
-                                        textStyle: TextStyle(
-                                            color: Colors.blue, fontSize: 18)),
-                                    children: <TextSpan>[
-                                      TextSpan(text: 'Do you want to trade '),
-                                      TextSpan(
-                                        text: '${50} ',
-                                        style: TextStyle(
-                                            color: Colors.orange[300],
-                                            fontSize: 25),
-                                      ),
-                                      TextSpan(
-                                        text: 'EXP ',
-                                        style: TextStyle(
-                                            color: Colors.green[300],
-                                            fontSize: 25),
-                                      ),
-                                      TextSpan(text: 'to continue?'),
-                                    ]),
+                              content: Container(
+                                height: 200,
+                                alignment: Alignment.center,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                          child:
+                                              Image.asset('assets/oh_no.jpg')),
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                          style: GoogleFonts.handlee(
+                                              textStyle: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 18)),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'Do you want to trade '),
+                                            TextSpan(
+                                              text: '${50} ',
+                                              style: TextStyle(
+                                                  color: Colors.orange[300],
+                                                  fontSize: 25),
+                                            ),
+                                            TextSpan(
+                                              text: 'EXP ',
+                                              style: TextStyle(
+                                                  color: Colors.green[300],
+                                                  fontSize: 25),
+                                            ),
+                                            TextSpan(text: 'to continue?'),
+                                          ]),
+                                    ),
+                                  ],
+                                ),
                               ),
                               actions: [
                                 FlatButton(
                                   child: Text(
-                                    'Exit Game',
+                                    'Yes',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  onPressed: () {
+                                    userService.updateExp(
+                                        accountUser.user.userId,
+                                        accountUser.exp - 50);
+                                    accountUser.decrementExp(50);
+                                    memoryCardState.fetchState();
+                                    memoryCardState.generateCard();
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text(
+                                    'No',
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   onPressed: () {
-                                    if (accountUser.user.memory <
+                                    if (accountUser.user.memoryCard <
                                         memoryCardState.level) {
                                       userService.updateMemoryCard(
                                           accountUser.user.userId,
@@ -154,26 +182,15 @@ class MemoryCard extends StatelessWidget {
                                             (route) => false);
                                   },
                                 ),
-                                FlatButton(
-                                  child: Text(
-                                    'Ok',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  onPressed: () {
-                                    userService.updateExp(
-                                        accountUser.user.userId,
-                                        accountUser.exp - 50);
-                                    accountUser.decrementExp(50);
-                                    memoryCardState.fetchState();
-                                    memoryCardState.generateCard();
-                                  },
-                                ),
                               ],
                             )
                           : Container(),
                       (memoryCardState.checking == 2 && accountUser.exp < 50)
                           ? AlertDialog(
-                              content: Image.asset('assets/gameover.png'),
+                              content: Container(
+                                  height: 200,
+                                  alignment: Alignment.center,
+                                  child: Image.asset('assets/gameover.png')),
                               actions: [
                                 FlatButton(
                                   child: Text(
@@ -182,7 +199,7 @@ class MemoryCard extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     // memoryCardState.setIsFinishTrue();
-                                    if (accountUser.user.memory <
+                                    if (accountUser.user.memoryCard <
                                         memoryCardState.level) {
                                       userService.updateMemoryCard(
                                           accountUser.user.userId,
@@ -204,7 +221,10 @@ class MemoryCard extends StatelessWidget {
                           : Container(),
                       (memoryCardState.checking == 1)
                           ? AlertDialog(
-                              content: Image.asset('assets/congrat.jpg'),
+                              content: Container(
+                                  height: 200,
+                                  alignment: Alignment.center,
+                                  child: Image.asset('assets/congrat.jpg')),
                               actions: [
                                 FlatButton(
                                   child: Text(
@@ -213,7 +233,7 @@ class MemoryCard extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     // memoryCardState.setIsFinishTrue();
-                                    if (accountUser.user.memory <
+                                    if (accountUser.user.memoryCard <
                                         memoryCardState.level) {
                                       userService.updateMemoryCard(
                                           accountUser.user.userId,

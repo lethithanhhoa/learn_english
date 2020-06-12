@@ -12,7 +12,7 @@ import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
-class FinishLessonPage extends StatelessWidget {
+class EndOfLessonPage extends StatelessWidget {
   bool loading = true;
   UserService userService = UserService();
   AccountUser accountUser = AccountUser();
@@ -110,13 +110,13 @@ class FinishLessonPage extends StatelessWidget {
                         audioLocalPlayer.playClickSound();
 
                         Map<String, dynamic> map = Map();
-                        if (accountUser.user.learningState != null)
-                          map = accountUser.user.learningState;
+                        if (accountUser.user.learningResult != null)
+                          map = accountUser.user.learningResult;
 
                         if (!map.containsKey(resultLearningState.lessonId)) {
                           map[resultLearningState.lessonId] =
                               resultLearningState.getPercentCorrect;
-                          userService.updateState(accountUser.user.userId, map);
+                          userService.updateLearningResult(accountUser.user.userId, map);
                         } else {
                           if ((map[resultLearningState.lessonId]).toInt() <
                               resultLearningState.getPercentCorrect) {
@@ -124,7 +124,7 @@ class FinishLessonPage extends StatelessWidget {
                                 resultLearningState.lessonId,
                                 (value) =>
                                     resultLearningState.getPercentCorrect);
-                            userService.updateState(
+                            userService.updateLearningResult(
                                 accountUser.user.userId, map);
                           }
                         }

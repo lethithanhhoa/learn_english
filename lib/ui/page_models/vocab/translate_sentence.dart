@@ -15,9 +15,9 @@ import 'package:learn_english/ui/modules/general_parameter.dart';
 
 import 'package:provider/provider.dart';
 
-class TranslateSentence extends StatelessWidget {
+class PageToTranslateSentence extends StatelessWidget {
   Vocabulary vocabulary;
-  TranslateSentence({this.vocabulary});
+  PageToTranslateSentence({this.vocabulary});
   bool loading = true;
   AudioCustomPlayer playAudio = AudioCustomPlayer();
   AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();

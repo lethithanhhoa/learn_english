@@ -9,11 +9,11 @@ import 'package:learn_english/ui/common/continue_button.dart';
 import 'package:learn_english/ui/common/list_of_answer_button.dart';
 import 'package:learn_english/ui/modules/general_parameter.dart';
 
-class ChooseCorrectTranslate extends StatelessWidget {
+class PageToChooseCorrectTranslate extends StatelessWidget {
   Vocabulary vocabulary;
   List<dynamic> answers = [];
   bool loading = true;
-  ChooseCorrectTranslate({this.vocabulary});
+  PageToChooseCorrectTranslate({this.vocabulary});
 
   void generateAnswers() {
     answers.add(vocabulary.vocab);

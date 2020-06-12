@@ -31,8 +31,9 @@ class LessonPage extends StatelessWidget {
           child: Consumer<List<Lesson>>(builder: (context, value, child) {
             AccountUser accountUser = Provider.of<AccountUser>(context);
             if (value == null || accountUser.user == null) return LoadingPage();
-
+            // if(value.length == 0) return LoadingPage();
             return (!kIsWeb)
+                // UI for Mobile app
                 ? Column(
                     children: <Widget>[
                       Padding(
@@ -79,6 +80,7 @@ class LessonPage extends StatelessWidget {
                       )),
                     ],
                   )
+                //UI for Web
                 : SingleChildScrollView(
                     child: Container(
                       child: Column(
@@ -86,7 +88,7 @@ class LessonPage extends StatelessWidget {
                           Container(
                             height: (MediaQuery.of(context).size.width <
                                     MediaQuery.of(context).size.height)
-                                ? MediaQuery.of(context).size.height *2/5
+                                ? MediaQuery.of(context).size.height * 2 / 5
                                 : MediaQuery.of(context).size.height / 2,
                             width: MediaQuery.of(context).size.width,
                             child: Column(
@@ -109,7 +111,11 @@ class LessonPage extends StatelessWidget {
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        alignment: Alignment.centerLeft,
+                                        alignment:
+                                            (MediaQuery.of(context).size.width <
+                                                    400)
+                                                ? Alignment.center
+                                                : Alignment.centerLeft,
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 20),
                                         child: Column(

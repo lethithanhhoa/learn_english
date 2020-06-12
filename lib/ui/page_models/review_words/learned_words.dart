@@ -29,7 +29,7 @@ class LearnedWords extends StatelessWidget {
   Widget build(BuildContext context) {
     AccountUser accountUser = Provider.of<AccountUser>(context);
     if (accountUser.user == null) return LoadingPage();
-    if (accountUser.user.learningState == null)
+    if (accountUser.user.learningResult == null)
       return Scaffold(
         drawer: kIsWeb ? NavigateDrawer() : null,
         appBar: AppBar(
@@ -53,7 +53,7 @@ class LearnedWords extends StatelessWidget {
               fontSize: 20, color: Colors.black.withOpacity(blackOpacity)),
         )),
       );
-    lessonList = accountUser.user.learningState.keys.toList();
+    lessonList = accountUser.user.learningResult.keys.toList();
 
     return (lessonList == null)
         ? LoadingPage()

@@ -10,10 +10,10 @@ class LessonService {
   Future<Database> get _db async => await AppDatabase.instance.database;
 
   Future insertListLesson(List<Lesson> list) async {
+    await _folder.delete(await _db);
     list.forEach((element) async {
-      print('chac la loi');
       await _folder.add(await _db, element.toMap());
-      // print('add ${element.lessonId } success');
+      print('add ${element.lessonId } success');
     });
   }
 
@@ -25,9 +25,7 @@ class LessonService {
     }).toList();
   }
 
-  Future clearAllLesson() async{
-    await _folder.delete(await _db);
-    print('delete OK...');
-    return;
-  }
+  // Future clearAllLesson() async{
+  //   await _folder.delete(await _db);
+  // }
 }

@@ -237,7 +237,7 @@ class TapTapDetailState extends State<TapTapDetail>
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                                 child: Text(
-                                  'Close',
+                                  'Quit',
                                   style: TextStyle(
                                       color: Colors.black.withOpacity(0.8),
                                       fontSize: 16),

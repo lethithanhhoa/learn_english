@@ -31,7 +31,7 @@ class RankList extends StatelessWidget {
             text = '${currentUser.taptap}';
           else if (typeOfCode == 2)
             text = '${currentUser.taptap}';
-          else if (typeOfCode == 3) text = 'Level ${currentUser.memory}';
+          else if (typeOfCode == 3) text = 'Level ${currentUser.memoryCard}';
 
           return Stack(
             children: [

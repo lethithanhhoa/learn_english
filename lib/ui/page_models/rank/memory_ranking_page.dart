@@ -19,7 +19,7 @@ class MemoryRankingPage extends StatelessWidget {
     if (accountUser.user != null) userId = accountUser.user.userId;
     return Consumer<List<User>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
-      value.sort((a, b) => b.memory.compareTo(a.memory));
+      value.sort((a, b) => b.memoryCard.compareTo(a.memoryCard));
       if (userId != null) {
         for (int i = 0; i < value.length; i++) {
           if (value[i].userId == userId) {
@@ -123,7 +123,7 @@ class MemoryRankingPage extends StatelessWidget {
                                           Container(
                                             height: 20,
                                             child: AutoSizeText(
-                                              '${value[2].memory}',
+                                              '${value[2].memoryCard}',
                                               maxLines: 1,
                                               style: TextStyle(
                                                 fontSize: 16,
@@ -187,7 +187,7 @@ class MemoryRankingPage extends StatelessWidget {
                                     Container(
                                       height: 20,
                                       child: AutoSizeText(
-                                        '${value[0].memory}',
+                                        '${value[0].memoryCard}',
                                         maxLines: 1,
                                         style: TextStyle(
                                           fontSize: 18,
@@ -255,7 +255,7 @@ class MemoryRankingPage extends StatelessWidget {
                                           Container(
                                             height: 20,
                                             child: AutoSizeText(
-                                              '${value[1].memory}',
+                                              '${value[1].memoryCard}',
                                               maxLines: 1,
                                               style: TextStyle(
                                                 fontSize: 17,

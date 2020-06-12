@@ -16,7 +16,7 @@ class CloseLesson extends StatelessWidget {
           context: context,
           child: AlertDialog(
             title: Text('Do you want exit this lesson?'),
-            content: Text('If you exit this lesson, the result wont be saved.'),
+            content: Text("If you exit this lesson, the result won't be saved."),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {

@@ -74,7 +74,7 @@ class _GameState extends State<GamePage> {
           child: Column(
             // mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 // mainAxisSize: MainAxisSize.min,

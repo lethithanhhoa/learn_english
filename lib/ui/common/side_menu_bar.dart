@@ -37,52 +37,7 @@ class NavigateDrawer extends StatelessWidget {
                     image: AssetImage('assets/cover.jpg'), fit: BoxFit.cover)),
           ),
 
-          // Container(
-          //   height: 190,
-          //   decoration: BoxDecoration(
-
-          //      gradient: LinearGradient(colors: [
-          //        Colors.teal[50], Colors.teal[700]
-          //      ],
-          //      end: Alignment.topCenter,
-          //      begin: Alignment.bottomCenter
-          //      )
-          //      ),
-          //   child: Center(
-          //     child: Stack(
-          //       children: <Widget>[
-          //         Container(
-          //           width: 160,
-          //           height: 160,
-          //           decoration: BoxDecoration(
-          //             shape: BoxShape.circle,
-          //             gradient: LinearGradient(
-          //               colors: [Colors.pink[50], Colors.pink],
-          //               begin: Alignment.bottomLeft,
-          //               end: Alignment.bottomRight,
-          //             ),
-          //           ),
-          //         ),
-          //         Positioned(
-          //             top: 5,
-          //             left: 3,
-          //             right: 8,
-          //             bottom: 5,
-          //             child: Container(
-          //               width: 160,
-          //               height: 160,
-          //               decoration: BoxDecoration(
-          //                 color: Colors.white,
-          //                 shape: BoxShape.circle,
-          //                 image: DecorationImage(
-          //                     image: Image.asset('assets/owl.jpg').image,
-          //                     fit: BoxFit.fill),
-          //               ),
-          //             )),
-          //       ],
-          //     ),
-          //   ),
-          // ),
+        
 
           ListTile(
             leading: Icon(
@@ -134,7 +89,7 @@ class NavigateDrawer extends StatelessWidget {
                 Icons.account_circle,
               ),
               title: Text(
-                'Profile',
+                'Account',
                 style: TextStyle(fontSize: 18),
               ),
               onTap: () {
@@ -145,7 +100,7 @@ class NavigateDrawer extends StatelessWidget {
                 Icons.exit_to_app,
               ),
               title: Text(
-                'Logout',
+                'Sign Out',
                 style: TextStyle(fontSize: 18),
               ),
               onTap: () {

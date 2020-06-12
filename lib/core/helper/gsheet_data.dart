@@ -61,4 +61,12 @@ class GSheetData {
     });
     return list;
   }
+
+  Future<String> getVersionFromGSheet() async {
+    final gsheets = GSheets(_credentials);
+    final ss = await gsheets.spreadsheet(_spreadsheetId);
+    var sheet = ss.worksheetByTitle('Overview');
+    var data = await sheet.values.value(column: 3, row: 4);
+    return data;
+  }
 }

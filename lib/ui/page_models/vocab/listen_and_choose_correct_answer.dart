@@ -9,11 +9,11 @@ import 'package:learn_english/ui/common/speaker.dart';
 import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/modules/general_parameter.dart';
 
-class ListenAndChooseCorrectAnswer extends StatelessWidget {
+class PageToListenAndChooseCorrectAnswer extends StatelessWidget {
   Vocabulary vocabulary;
   List<dynamic> answers = [];
   bool loading = true;
-  ListenAndChooseCorrectAnswer({this.vocabulary});
+  PageToListenAndChooseCorrectAnswer({this.vocabulary});
   AudioCustomPlayer playAudio = AudioCustomPlayer();
 
   void generateAnswers() {

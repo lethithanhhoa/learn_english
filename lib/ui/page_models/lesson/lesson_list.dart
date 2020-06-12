@@ -31,15 +31,17 @@ class LessonList extends StatelessWidget {
             itemBuilder: (context, index) {
               Lesson currentLesson = value[index];
               int percent = 0;
-              if (accountUser.user.learningState != null) {
-                if (accountUser.user.learningState[currentLesson.lessonId] !=
+              if (accountUser.user.learningResult != null) {
+                if (accountUser.user.learningResult[currentLesson.lessonId] !=
                     null)
                   percent =
-                      (accountUser.user.learningState[currentLesson.lessonId])
+                      (accountUser.user.learningResult[currentLesson.lessonId])
                           .toInt();
               }
               return ItemWidget(context, currentLesson, percent);
             })
+
+            //UI for Web
         : GridView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -53,11 +55,11 @@ class LessonList extends StatelessWidget {
             itemBuilder: (context, index) {
               Lesson currentLesson = value[index];
               int percent = 0;
-              if (accountUser.user.learningState != null) {
-                if (accountUser.user.learningState[currentLesson.lessonId] !=
+              if (accountUser.user.learningResult != null) {
+                if (accountUser.user.learningResult[currentLesson.lessonId] !=
                     null)
                   percent =
-                      (accountUser.user.learningState[currentLesson.lessonId])
+                      (accountUser.user.learningResult[currentLesson.lessonId])
                           .toInt();
               }
               return ItemWidgetForWeb(context, currentLesson, percent);

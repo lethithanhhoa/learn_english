@@ -11,7 +11,7 @@ import 'package:learn_english/ui/page_models/vocab/listen_and_complete_sentence.
 import 'package:learn_english/ui/page_models/vocab/listen_and_repeat.dart';
 import 'package:learn_english/ui/page_models/vocab/look_at_the_picture_and_choose_answer.dart';
 import 'package:learn_english/ui/page_models/vocab/translate_sentence.dart';
-import 'package:learn_english/ui/pages/finish_lesson_page.dart';
+import 'package:learn_english/ui/pages/end_of_lesson_page.dart';
 import 'package:learn_english/ui/pages/loading_page.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ class VocabList extends StatelessWidget {
         loading = false;
       }
       if (index.getIndex >= value.length)
-        return FinishLessonPage();
+        return EndOfLessonPage();
       else {
         if (value[index.getIndex].type == 1) {
           randomNumber = random.nextInt(5);
@@ -46,24 +46,24 @@ class VocabList extends StatelessWidget {
         // randomNumber = 5;
         switch (randomNumber) {
           case 0:
-            return LookAtThePictureAndChooseAnswer(
+            return PageToLookAtThePictureAndChooseAnswer(
                 vocabulary: value[index.getIndex]);
 
           case 1:
-            return ListenAndRepeat(vocabulary: value[index.getIndex]);
+            return PageToListenAndRepeat(vocabulary: value[index.getIndex]);
 
           case 2:
-            return ChooseCorrectTranslate(vocabulary: value[index.getIndex]);
+            return PageToChooseCorrectTranslate(vocabulary: value[index.getIndex]);
 
           case 3:
-            return ListenAndCompleteSentence(vocabulary: value[index.getIndex]);
+            return PageToListenAndCompleteSentence(vocabulary: value[index.getIndex]);
 
           case 4:
-            return ListenAndChooseCorrectAnswer(
+            return PageToListenAndChooseCorrectAnswer(
                 vocabulary: value[index.getIndex]);
 
           case 5:
-            return TranslateSentence(vocabulary: value[index.getIndex]);
+            return PageToTranslateSentence(vocabulary: value[index.getIndex]);
         }
       }
     });

@@ -16,9 +16,9 @@ import 'package:learn_english/ui/modules/audio_player.dart';
 import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:provider/provider.dart';
 
-class ListenAndCompleteSentence extends StatelessWidget {
+class PageToListenAndCompleteSentence extends StatelessWidget {
   Vocabulary vocabulary;
-  ListenAndCompleteSentence({this.vocabulary});
+  PageToListenAndCompleteSentence({this.vocabulary});
   bool loading = true;
   AudioCustomPlayer playAudio = AudioCustomPlayer();
   AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
