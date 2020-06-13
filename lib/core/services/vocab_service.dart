@@ -9,6 +9,7 @@ class VocabService {
   Future<Database> get _db async => await AppDatabase.instance.database;
 
   Future insertListVocab(List<Vocabulary> list) async {
+    await _folder.delete(await _db);
     list.forEach((element) async {
       await _folder.add(await _db, element.toMap());
     });
@@ -54,8 +55,8 @@ class VocabService {
     }).toList();
   }
 
-  Future  clearAllVocab() async {
-    await _folder.delete(await _db);
+  // Future  clearAllVocab() async {
+  //   await _folder.delete(await _db);
  
-  }
+  // }
 }

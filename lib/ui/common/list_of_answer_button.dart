@@ -1,26 +1,23 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_english/ui/state/state_of_continue_button.dart';
-import 'package:learn_english/ui/state/the_first_button_state.dart';
-import 'package:learn_english/ui/state/the_second_button_state.dart';
-import 'package:learn_english/ui/state/the_third_button_state.dart';
+import 'package:learn_english/ui/modules/audio/audio_local_player.dart';
+import 'package:learn_english/ui/provider/choice_button_state.dart';
+import 'package:learn_english/ui/provider/state_of_continue_button.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_english/ui/modules/audio_player.dart';
+
+import '../general_parameter.dart';
 
 class AnswerButtons extends StatelessWidget {
   List<dynamic> answers;
   AnswerButtons({this.answers});
 
-  AudioPlayer playAudio = AudioPlayer();
+  AudioLocalPlayer playAudio = AudioLocalPlayer();
 
   @override
   Widget build(BuildContext context) {
-    TheFirstButtonState theFirstButtonState =
-        Provider.of<TheFirstButtonState>(context);
-    TheSecondButtonState theSecondButtonState =
-        Provider.of<TheSecondButtonState>(context);
-    TheThirdButtonState theThirdButtonState =
-        Provider.of<TheThirdButtonState>(context);
+    ChoiceButtonState choiceButtonState =
+        Provider.of<ChoiceButtonState>(context);
     ContinueButtonState continueButtonState =
         Provider.of<ContinueButtonState>(context);
 
@@ -31,7 +28,7 @@ class AnswerButtons extends StatelessWidget {
             Container(
               height: 55,
               decoration: BoxDecoration(
-                color: (!theFirstButtonState.getClicked)
+                color: (!choiceButtonState.getClicked(0))
                     ? Colors.grey[300]
                     : Colors.blue[300],
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -47,7 +44,7 @@ class AnswerButtons extends StatelessWidget {
               bottom: 5,
               child: Container(
                 decoration: BoxDecoration(
-                  color: (!theFirstButtonState.getClicked)
+                  color: (!choiceButtonState.getClicked(0))
                       ? Colors.white
                       : Colors.blue[50],
                   borderRadius: BorderRadius.circular(12.0),
@@ -56,18 +53,16 @@ class AnswerButtons extends StatelessWidget {
                     onPressed: (continueButtonState.getActive)
                         ? () {
                             playAudio.playClickSound();
-                            theFirstButtonState.setClicked(answers[0]);
 
-                            theSecondButtonState.fetchState();
-                            theThirdButtonState.fetchState();
+                            choiceButtonState.setClick(0, answers[0]);
                           }
                         : null,
-                    child: Text(
+                    child: AutoSizeText(
                       answers[0],
                       style: TextStyle(
                           fontSize: 20.0,
-                          color: (!theFirstButtonState.getClicked)
-                              ? Colors.black87
+                          color: (!choiceButtonState.getClicked(0))
+                              ? Colors.black.withOpacity(blackOpacity)
                               : Colors.blue),
                     )),
               ),
@@ -80,7 +75,7 @@ class AnswerButtons extends StatelessWidget {
             Container(
               height: 55,
               decoration: BoxDecoration(
-                color: (!theSecondButtonState.getClicked)
+                color: (!choiceButtonState.getClicked(1))
                     ? Colors.grey[300]
                     : Colors.blue[300],
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -96,7 +91,7 @@ class AnswerButtons extends StatelessWidget {
               bottom: 5,
               child: Container(
                 decoration: BoxDecoration(
-                  color: (!theSecondButtonState.getClicked)
+                  color: (!choiceButtonState.getClicked(1))
                       ? Colors.white
                       : Colors.blue[50],
                   borderRadius: BorderRadius.circular(12.0),
@@ -105,18 +100,16 @@ class AnswerButtons extends StatelessWidget {
                     onPressed: (continueButtonState.getActive)
                         ? () {
                             playAudio.playClickSound();
-                            theSecondButtonState.setClicked(answers[1]);
-                            // play(answers[1]);
-                            theFirstButtonState.fetchState();
-                            theThirdButtonState.fetchState();
+
+                            choiceButtonState.setClick(1, answers[1]);
                           }
                         : null,
-                    child: Text(
+                    child: AutoSizeText(
                       answers[1],
                       style: TextStyle(
                           fontSize: 20.0,
-                          color: (!theSecondButtonState.getClicked)
-                              ? Colors.black87
+                          color: (!choiceButtonState.getClicked(1))
+                              ? Colors.black.withOpacity(blackOpacity)
                               : Colors.blue),
                     )),
               ),
@@ -129,7 +122,7 @@ class AnswerButtons extends StatelessWidget {
             Container(
               height: 55,
               decoration: BoxDecoration(
-                color: (!theThirdButtonState.getClicked)
+                color: (!choiceButtonState.getClicked(2))
                     ? Colors.grey[300]
                     : Colors.blue[300],
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -145,7 +138,7 @@ class AnswerButtons extends StatelessWidget {
               bottom: 5,
               child: Container(
                 decoration: BoxDecoration(
-                  color: (!theThirdButtonState.getClicked)
+                  color: (!choiceButtonState.getClicked(2))
                       ? Colors.white
                       : Colors.blue[50],
                   borderRadius: BorderRadius.circular(12.0),
@@ -154,18 +147,15 @@ class AnswerButtons extends StatelessWidget {
                     onPressed: (continueButtonState.getActive)
                         ? () {
                             playAudio.playClickSound();
-                            theThirdButtonState.setClicked(answers[2]);
-                            // play(answers[2]);
-                            theSecondButtonState.fetchState();
-                            theFirstButtonState.fetchState();
+                            choiceButtonState.setClick(2, answers[2]);
                           }
                         : null,
-                    child: Text(
+                    child: AutoSizeText(
                       answers[2],
                       style: TextStyle(
                           fontSize: 20.0,
-                          color: (!theThirdButtonState.getClicked)
-                              ? Colors.black87
+                          color: (!choiceButtonState.getClicked(2))
+                              ? Colors.black.withOpacity(blackOpacity)
                               : Colors.blue),
                     )),
               ),

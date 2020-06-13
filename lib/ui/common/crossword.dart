@@ -1,21 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:learn_english/ui/state/state_of_crossword_list.dart';
 
-import 'package:provider/provider.dart';
+import '../general_parameter.dart';
 
 class CrossWord extends StatelessWidget {
   String text;
-  int position;
   CrossWord({this.text});
   @override
   Widget build(BuildContext context) {
-    // error because provider must build again
-    StateOfCrossWordList stateOfCrossWordList =
-        Provider.of<StateOfCrossWordList>(context);
-   
-
     return Padding(
       padding: EdgeInsets.all(3.0),
       child: Stack(
@@ -48,7 +41,9 @@ class CrossWord extends StatelessWidget {
                 onPressed: null,
                 child: Text(
                   text,
-                  style: TextStyle(fontSize: 20, color: Colors.black54),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black.withOpacity(blackOpacity)),
                 ),
               ),
             ),

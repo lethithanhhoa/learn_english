@@ -5,14 +5,10 @@ class Speaker extends StatelessWidget {
   Speaker({this.size});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: size,
-      width: size,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: Image.asset('assets/high-volume.png').image,
-            fit: BoxFit.scaleDown),
-      ),
+    return Icon(
+      Icons.volume_up,
+      size: size,
+      color: Colors.blue[300],
     );
   }
 }

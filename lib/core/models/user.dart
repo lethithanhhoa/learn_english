@@ -7,8 +7,8 @@ class User {
   String avatarUrl;
   int exp;
   int taptap;
-  int memory;
-  Map<String, dynamic> learningState;
+  int memoryCard;
+  Map<String, dynamic> learningResult;
 
   User(
       {this.userId,
@@ -17,11 +17,10 @@ class User {
       this.avatarUrl,
       this.exp,
       this.taptap,
-      this.memory,
-      this.learningState});
+      this.memoryCard,
+      this.learningResult});
 
   factory User.fromSnapshot(DocumentSnapshot snapshot) {
-    print(snapshot);
     return User(
         userId: snapshot.documentID,
         name: snapshot.data['name'],
@@ -29,7 +28,7 @@ class User {
         avatarUrl: snapshot.data['avatar_url'],
         exp: snapshot.data['exp'],
         taptap: snapshot.data['taptap'],
-        memory: snapshot.data['memory'],
-        learningState: snapshot.data['state']);
+        memoryCard: snapshot.data['memory_card'],
+        learningResult: snapshot.data['learning_result']);
   }
 }

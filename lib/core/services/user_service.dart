@@ -3,6 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:learn_english/core/models/user.dart';
 
 class UserService {
+  Future<List<User>> getAllUser() async {
+    var ref = await Firestore.instance.collection('users').getDocuments();
+    List<User> listOfUser =
+        ref.documents.map((doc) => User.fromSnapshot(doc)).toList();
+    return listOfUser;
+  }
+
   Future<List<DocumentSnapshot>> findUsersByEmail(String email) async {
     var result = await Firestore.instance
         .collection('users')
@@ -20,15 +27,15 @@ class UserService {
         'avatar_url': userData.photoUrl,
         'exp': 0,
         'taptap': 0,
-        'memory': 0,
-        'state': null,
+        'memory_card': 0,
+        'learning_result': null,
       },
     );
   }
 
-  Future updateState(String userId, Map<String, dynamic> learningState) async {
+  Future updateLearningResult(String userId, Map<String, dynamic> learningResult) async {
     await Firestore.instance.collection('users').document(userId).updateData({
-      'state': learningState,
+      'learning_result': learningResult,
     });
   }
 
@@ -46,13 +53,7 @@ class UserService {
 
   Future updateMemoryCard(String userId, int level) async {
     await Firestore.instance.collection('users').document(userId).updateData({
-      'memory': level,
-    });
-  }
-
-  Future updateMatrix4by4HighScore(String userId, int score) async {
-    await Firestore.instance.collection('users').document(userId).updateData({
-      'matrix4by4': score,
+      'memory_card': level,
     });
   }
 }

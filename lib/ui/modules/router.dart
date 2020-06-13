@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/ui/page_models/game/memory_card/memory_game.dart';
-import 'package:learn_english/ui/page_models/game/taptap/end_game_page.dart';
-import 'package:learn_english/ui/page_models/game/taptap/taptap_game.dart';
-import 'package:learn_english/ui/page_models/game/taptap/taptap_detail_page.dart';
-import 'package:learn_english/ui/page_models/game/trex/trex_game.dart';
-import 'package:learn_english/ui/page_models/review_words/detail_word_page.dart';
-import 'package:learn_english/ui/page_models/review_words/learned_words_page.dart';
-import 'package:learn_english/ui/page_models/vocab/vocabulary_page.dart';
-import 'package:learn_english/ui/pages/home_page.dart';
-import 'package:learn_english/ui/pages/login_page.dart';
-import 'package:learn_english/ui/pages/splash_page.dart';
+
+import 'game/game_page.dart';
+import 'game/memory_card/memory_game.dart';
+import 'game/taptap/end_game_page.dart';
+import 'game/taptap/taptap_detail_page.dart';
+import 'game/taptap/taptap_game.dart';
+import 'home/home_page.dart';
+import 'learn_vocab/vocabulary_page.dart';
+import 'login/login_page.dart';
+import 'profile/account_page.dart';
+import 'ranking/ranking_page.dart';
+import 'review_words/detail_word_page.dart';
+import 'review_words/learned_words_page.dart';
+import 'start_app/splash_page.dart';
 
 class Router {
   static Route generateRoute(RouteSettings settings) {
@@ -89,11 +92,6 @@ class Router {
                   ));
         }
 
-      case 'trex':
-        {
-          return MaterialPageRoute(builder: (context) => TRexGameWrapper());
-        }
-
       case 'memory':
         {
           List<Vocabulary> vocabList = settings.arguments as List<Vocabulary>;
@@ -110,6 +108,40 @@ class Router {
                     initialHomePage: 2,
                     initialRankPage: 2,
                   ));
+        }
+
+      case 'exp_rank_for_web':
+        {
+          return MaterialPageRoute(
+              builder: (context) => RankingPage(
+                    initialPage: 0,
+                  ));
+        }
+
+      case 'taptap_rank_for_web':
+        {
+          return MaterialPageRoute(
+              builder: (context) => RankingPage(
+                    initialPage: 1,
+                  ));
+        }
+
+      case 'memory_rank_for_web':
+        {
+          return MaterialPageRoute(
+              builder: (context) => RankingPage(
+                    initialPage: 2,
+                  ));
+        }
+
+      case 'profile_for_web':
+        {
+          return MaterialPageRoute(builder: (context) => AccountPage());
+        }
+
+      case 'game_for_web':
+        {
+          return MaterialPageRoute(builder: (context) => GamePage());
         }
 
       default:

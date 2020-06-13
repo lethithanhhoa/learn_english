@@ -1,23 +1,21 @@
-import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_english/ui/modules/audio_player.dart';
-import 'package:learn_english/ui/state/correct_answer.dart';
-import 'package:learn_english/ui/state/index.dart';
-import 'package:learn_english/ui/state/num_of_correct_answer_state.dart';
-import 'package:learn_english/ui/state/recording.dart';
-import 'package:learn_english/ui/state/state_of_answer_in_crossword_part.dart';
-import 'package:learn_english/ui/state/state_of_continue_button.dart';
-import 'package:learn_english/ui/state/the_first_button_state.dart';
-import 'package:learn_english/ui/state/the_second_button_state.dart';
-import 'package:learn_english/ui/state/the_third_button_state.dart';
-
+import 'package:learn_english/ui/modules/audio/audio_local_player.dart';
+import 'package:learn_english/ui/provider/choice_button_state.dart';
+import 'package:learn_english/ui/provider/correct_answer.dart';
+import 'package:learn_english/ui/provider/index.dart';
+import 'package:learn_english/ui/provider/num_of_correct_answer_state.dart';
+import 'package:learn_english/ui/provider/recording.dart';
+import 'package:learn_english/ui/provider/state_of_answer_in_crossword_part.dart';
+import 'package:learn_english/ui/provider/state_of_continue_button.dart';
 import 'package:provider/provider.dart';
 
+import '../general_parameter.dart';
+
 class ContinueButton extends StatelessWidget {
-  // String temp = '';
-  AudioPlayer playAudio = AudioPlayer();
+  AudioLocalPlayer playAudio = AudioLocalPlayer();
   @override
   Widget build(BuildContext context) {
     Index index = Provider.of<Index>(context);
@@ -26,21 +24,15 @@ class ContinueButton extends StatelessWidget {
         Provider.of<ContinueButtonState>(context);
     CrosswordAnswerState crosswordAnswerState =
         Provider.of<CrosswordAnswerState>(context);
-    TheFirstButtonState theFirstButtonState =
-        Provider.of<TheFirstButtonState>(context);
-    TheSecondButtonState theSecondButtonState =
-        Provider.of<TheSecondButtonState>(context);
-    TheThirdButtonState theThirdButtonState =
-        Provider.of<TheThirdButtonState>(context);
+    ChoiceButtonState choiceButtonState =
+        Provider.of<ChoiceButtonState>(context);
     CorrectAnswer correctAnswer = Provider.of<CorrectAnswer>(context);
     NumOfCorrectAnswer numOfCorrectAnswer =
         Provider.of<NumOfCorrectAnswer>(context);
 
-    if ((recording.getBestResult != '') ||
+    if (recording.getBestResult != '' ||
         crosswordAnswerState.getAnswer.isEmpty == false ||
-        (theFirstButtonState.getClicked ||
-            theSecondButtonState.getClicked ||
-            theThirdButtonState.getClicked)) {
+        choiceButtonState.getValue != '') {
       continueButtonState.setEnable();
     } else {
       continueButtonState.fetchState();
@@ -54,7 +46,7 @@ class ContinueButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: continueButtonState.getDisable
                   ? Colors.grey[400]
-                  : Colors.lightGreen[700],
+                  : parentPrimaryColor,
               borderRadius: BorderRadius.all(Radius.circular(15.0)),
             ),
           ),
@@ -67,7 +59,7 @@ class ContinueButton extends StatelessWidget {
               decoration: BoxDecoration(
                 color: continueButtonState.getDisable
                     ? Colors.grey[400]
-                    : Colors.lightGreen,
+                    : primaryColor,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: Builder(
@@ -76,6 +68,7 @@ class ContinueButton extends StatelessWidget {
                       ? null
                       : () {
                           playAudio.playClickSound();
+
                           continueButtonState.incrementClickedNum();
                           if (continueButtonState.getClickedNum == 1) {
                             if (!crosswordAnswerState.getAnswer.isEmpty) {
@@ -85,38 +78,35 @@ class ContinueButton extends StatelessWidget {
                                     (continueButtonState.getAnswer + " " + item)
                                         .trim());
                               });
-                              // temp = temp.trim();
-                              // temp = temp.replaceAll("I am", "I'm");
+
                               continueButtonState.setScreenCode(1);
                             } else if (recording.getBestResult != '') {
                               continueButtonState
                                   .setAnswer(recording.getBestResult);
-
+                              recording.stopRecord();
                               continueButtonState.setScreenCode(2);
-                            } else if (theFirstButtonState.getClicked) {
+                            } else if (choiceButtonState.getState()) {
                               continueButtonState
-                                  .setAnswer(theFirstButtonState.getValue);
+                                  .setAnswer(choiceButtonState.getValue);
 
                               continueButtonState.setScreenCode(3);
-                            } else if (theSecondButtonState.getClicked) {
-                              continueButtonState
-                                  .setAnswer(theSecondButtonState.getValue);
-
-                              continueButtonState.setScreenCode(4);
-                            } else if (theThirdButtonState.getClicked) {
-                              continueButtonState
-                                  .setAnswer(theThirdButtonState.getValue);
-
-                              continueButtonState.setScreenCode(5);
                             }
+
                             if (continueButtonState.getAnswer.toLowerCase() ==
                                 correctAnswer.getCorrectAnswer.toLowerCase()) {
                               numOfCorrectAnswer.increment();
-                              Scaffold.of(context)
-                                  .showSnackBar(snackBar(context, true));
+
+                              Scaffold.of(context).showSnackBar(snackBar(
+                                  context,
+                                  correctAnswer.getCorrectAnswer,
+                                  true));
                             } else {
-                              Scaffold.of(context)
-                                  .showSnackBar(snackBar(context, false));
+                              // playAudio.playWrongSound();
+
+                              Scaffold.of(context).showSnackBar(snackBar(
+                                  context,
+                                  correctAnswer.getCorrectAnswer,
+                                  false));
                             }
 
                             continueButtonState.setNameToContinue();
@@ -128,9 +118,7 @@ class ContinueButton extends StatelessWidget {
                                 continueButtonState,
                                 crosswordAnswerState,
                                 recording,
-                                theFirstButtonState,
-                                theSecondButtonState,
-                                theThirdButtonState);
+                                choiceButtonState);
                           }
                         },
                   child: Padding(
@@ -152,9 +140,11 @@ class ContinueButton extends StatelessWidget {
     );
   }
 
-  Widget snackBar(BuildContext context, bool checking) {
-    // bool value = (answer.toLowerCase() == correctAnswer.toLowerCase());
-    checking ? playAudio.playCorrectSound() : playAudio.playWrongSound();
+  Widget snackBar(BuildContext context, String corectAnswer, bool checking) {
+    if (checking)
+      playAudio.playCorrectSound();
+    else
+      playAudio.playWrongSound();
     return SnackBar(
         duration: Duration(seconds: 3),
         backgroundColor: Colors.white,
@@ -169,6 +159,15 @@ class ContinueButton extends StatelessWidget {
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: Image.asset('assets/noo.jpg').image)),
+                      ),
+                    ),
+                    AutoSizeText(
+                      'Corect answer: ${corectAnswer}',
+                      maxLines: 1,
+                      style: GoogleFonts.handlee(
+                        color: Colors.red,
+                        backgroundColor: Colors.yellow,
+                        fontSize: 20,
                       ),
                     ),
                     Text(
@@ -226,9 +225,7 @@ class ContinueButton extends StatelessWidget {
       ContinueButtonState continueButtonState,
       CrosswordAnswerState crosswordAnswerState,
       Recording recording,
-      TheFirstButtonState theFirstButtonState,
-      TheSecondButtonState theSecondButtonState,
-      TheThirdButtonState theThirdButtonState) {
+      ChoiceButtonState choiceButtonState) {
     index.increment();
 
     switch (continueButtonState.getScreenCode) {
@@ -244,17 +241,7 @@ class ContinueButton extends StatelessWidget {
         }
       case 3:
         {
-          theFirstButtonState.fetchState();
-          break;
-        }
-      case 4:
-        {
-          theSecondButtonState.fetchState();
-          break;
-        }
-      case 5:
-        {
-          theThirdButtonState.fetchState();
+          choiceButtonState.fetchState();
           break;
         }
     }

@@ -26,19 +26,23 @@ class GSheetData {
     final ss = await gsheets.spreadsheet(_spreadsheetId);
     var sheet = ss.worksheetByTitle('Vocabulary');
     var data = await sheet.values.allRows();
+
     data.removeAt(0);
 
-    List<Vocabulary> list = [];
+    List<Vocabulary> list = new List();
     data.forEach((element) {
       list.add(Vocabulary(
-          vocabId: element[0],
-          vocab: element[1],
-          lessonId: element[2],
-          mean: element[3],
-          type: int.parse(element[4]),
-          image: element[5],
-          audioFile: element[6],
-          otherWord: element[7].split('/')));
+        vocabId: element[0],
+        vocab: element[1],
+        lessonId: element[2],
+        mean: element[3],
+        type: int.parse(element[4]),
+        image: element[5],
+        audioFile: element[6],
+        otherWord: element[7].split('/'),
+        // timeStartAudio: int.parse(element[8]),
+        // timeEndAudio: int.parse(element[9]),
+      ));
     });
     return list;
   }
@@ -58,4 +62,11 @@ class GSheetData {
     return list;
   }
 
+  Future<String> getVersionFromGSheet() async {
+    final gsheets = GSheets(_credentials);
+    final ss = await gsheets.spreadsheet(_spreadsheetId);
+    var sheet = ss.worksheetByTitle('Overview');
+    var data = await sheet.values.value(column: 3, row: 4);
+    return data;
+  }
 }
