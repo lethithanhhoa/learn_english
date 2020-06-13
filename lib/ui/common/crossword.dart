@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:learn_english/ui/modules/general_parameter.dart';
+
+import '../general_parameter.dart';
 
 class CrossWord extends StatelessWidget {
   String text;

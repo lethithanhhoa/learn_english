@@ -2,16 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_english/provider/choice_button_state.dart';
-import 'package:learn_english/provider/correct_answer.dart';
-import 'package:learn_english/provider/index.dart';
-import 'package:learn_english/provider/num_of_correct_answer_state.dart';
-import 'package:learn_english/provider/recording.dart';
-import 'package:learn_english/provider/state_of_answer_in_crossword_part.dart';
-import 'package:learn_english/provider/state_of_continue_button.dart';
-import 'package:learn_english/ui/modules/audio_local_player.dart';
+import 'package:learn_english/ui/modules/audio/audio_local_player.dart';
+import 'package:learn_english/ui/provider/choice_button_state.dart';
+import 'package:learn_english/ui/provider/correct_answer.dart';
+import 'package:learn_english/ui/provider/index.dart';
+import 'package:learn_english/ui/provider/num_of_correct_answer_state.dart';
+import 'package:learn_english/ui/provider/recording.dart';
+import 'package:learn_english/ui/provider/state_of_answer_in_crossword_part.dart';
+import 'package:learn_english/ui/provider/state_of_continue_button.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_english/ui/modules/general_parameter.dart';
+
+import '../general_parameter.dart';
 
 class ContinueButton extends StatelessWidget {
   AudioLocalPlayer playAudio = AudioLocalPlayer();

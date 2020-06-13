@@ -2,8 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/services/auth_service.dart';
-import 'package:learn_english/ui/modules/general_parameter.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
+
+import '../general_parameter.dart';
 
 class NavigateDrawer extends StatelessWidget {
   AuthService authService = AuthService();
@@ -36,9 +37,6 @@ class NavigateDrawer extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage('assets/cover.jpg'), fit: BoxFit.cover)),
           ),
-
-        
-
           ListTile(
             leading: Icon(
               Icons.home,

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_english/ui/modules/general_parameter.dart';
+import 'package:learn_english/ui/general_parameter.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/modules/router.dart';
-import 'package:learn_english/ui/pages/splash_page.dart';
-
-
+import 'package:learn_english/ui/modules/start_app/splash_page.dart';
 
 void main() async {
   runApp(MyApp());
@@ -25,7 +23,6 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-     
       home: SplashPage(),
       initialRoute: RouteName.start,
       onGenerateRoute: Router.generateRoute,
