@@ -10,6 +10,7 @@
 + Log out
 
 ### Phiên bản Web khả dụng tại: https://learn-english-7c4c5.web.app/#/
+### File cài đặt trên Android: https://drive.google.com/file/d/1JZB9-8K_u8edBpAsSUNusxQ3LpVEQbbA/view?usp=sharing
 
 # Cài đặt và chạy chương trình 
 - Cài đặt Flutter trên máy (xem chi tiết ở https://flutter.dev/docs/get-started/install)
