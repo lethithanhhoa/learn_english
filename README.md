@@ -1,5 +1,5 @@
 # Giới thiệu
-###### Ứng dụng để học tiếng Anh cho học sinh lớp 1 (dữ liệu được lấy trên sachmem.vn) được phát triển bởi framework Flutter. Hiện ứng dụng khả dụng trên nền tảng Android và web, dữ liệu ứng dụng được lưu trữ ở Firebase và Google Sheet.
+Ứng dụng để học tiếng Anh cho học sinh lớp 1 (dữ liệu được lấy từ bộ sách giáo khoa tiếng ANh lớp 1 của nhà xuất bản giáo dục Việt Nam trên sachmem.vn) được phát triển bởi Flutter. Hiện ứng dụng khả dụng trên nền tảng Android và web, dữ liệu ứng dụng được lưu trữ ở Firebase và Google Sheet.
 ### Các chức năng hiện có:
 + Đăng nhập với tài khoản Google (tự động đăng nhập lại nếu chưa logout khỏi phiên làm việc trước đó)
 + Học từ (có tính % số câu trả lời đúng cho mỗi bài học)
@@ -14,9 +14,5 @@
 
 # Cài đặt và chạy chương trình 
 - Cài đặt Flutter trên máy (xem chi tiết ở https://flutter.dev/docs/get-started/install)
-- Clone source code và từ folder clone về thực thi câu lệnh "flutter run" để chạy chương trình
+- Clone source code và thực thi câu lệnh "flutter run" trong folder dự án để chạy chương trình
 
-# Build file apk và cài đặt trên máy 
-### Android
-- Thực thi câu lện "flutter build apk" (hoặc "flutter build apk --split-per-abi")
-- Và cài đặt trên máy bằng câu lệnh "flutter install"
