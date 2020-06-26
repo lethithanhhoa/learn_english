@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
+import 'package:learn_english/ui/modules/audio/audio_local_player.dart';
 import 'package:learn_english/ui/modules/audio/audio_player.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
@@ -32,11 +33,12 @@ class Memory extends StatelessWidget {
 
 class MemoryCard extends StatelessWidget {
   bool loading = true;
-  UserService userService = UserService();
+  FireStoreService fireStoreService = FireStoreService();
 
   AudioCustomPlayer audioCustomPlayer = AudioCustomPlayer();
+  AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
   Future<bool> onWillPop() {
-    Fluttertoast.showToast(msg: "Tap 'Close' button to quit");
+    Fluttertoast.showToast(msg: "Press 'Quit' button to exit game.");
     return Future.value(false);
   }
 
@@ -77,7 +79,7 @@ class MemoryCard extends StatelessWidget {
                               FlatButton(
                                 onPressed: (memoryCardState.checking == 0)
                                     ? () {
-                                        audioCustomPlayer.stop();
+                                        memoryCardState.setIsFinishTrue();
                                         Navigator.pop(context);
                                       }
                                     : null,
@@ -150,7 +152,7 @@ class MemoryCard extends StatelessWidget {
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   onPressed: () {
-                                    userService.updateExp(
+                                    fireStoreService.updateExp(
                                         accountUser.user.userId,
                                         accountUser.exp - 50);
                                     accountUser.decrementExp(50);
@@ -166,7 +168,7 @@ class MemoryCard extends StatelessWidget {
                                   onPressed: () {
                                     if (accountUser.user.memoryCard <
                                         memoryCardState.level) {
-                                      userService.updateMemoryCard(
+                                      fireStoreService.updateMemoryCard(
                                           accountUser.user.userId,
                                           memoryCardState.level);
                                     }
@@ -200,7 +202,7 @@ class MemoryCard extends StatelessWidget {
                                     // memoryCardState.setIsFinishTrue();
                                     if (accountUser.user.memoryCard <
                                         memoryCardState.level) {
-                                      userService.updateMemoryCard(
+                                      fireStoreService.updateMemoryCard(
                                           accountUser.user.userId,
                                           memoryCardState.level);
                                     }
@@ -234,7 +236,7 @@ class MemoryCard extends StatelessWidget {
                                     // memoryCardState.setIsFinishTrue();
                                     if (accountUser.user.memoryCard <
                                         memoryCardState.level) {
-                                      userService.updateMemoryCard(
+                                      fireStoreService.updateMemoryCard(
                                           accountUser.user.userId,
                                           memoryCardState.level);
                                     }

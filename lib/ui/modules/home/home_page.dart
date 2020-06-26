@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/ui/common/side_menu_bar.dart';
 import 'package:learn_english/ui/modules/game/game_page.dart';
@@ -31,6 +32,7 @@ class HomePage extends StatelessWidget {
 }
 
 class HomePageState extends StatelessWidget {
+  DateTime currentBackPressTime;
   @override
   Widget build(BuildContext context) {
     IndexHomePage indexHomePage = Provider.of<IndexHomePage>(context);
@@ -96,6 +98,13 @@ class HomePageState extends StatelessWidget {
   }
 
   Future<bool> onWillPop() {
-    return Future.value(false);
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null || 
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Fluttertoast.showToast(msg: 'Press again to exit app');
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 }

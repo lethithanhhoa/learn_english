@@ -81,19 +81,21 @@ class PageToLookAtThePictureAndChooseAnswer extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width,
                                     alignment: Alignment.bottomCenter,
                                     decoration: BoxDecoration(
-                                       
                                         image: DecorationImage(
                                             image:
                                                 Image.asset('assets/board2.jpg')
                                                     .image,
                                             fit: BoxFit.scaleDown)),
-                                    child: FadeInImage.assetNetwork(
-                                      height: 160,
-                                      width: 160,
-                                      placeholder: 'assets/waiting_image.gif',
-                                      image: '${vocabulary.image}',
-                                      fit: BoxFit.scaleDown,
-                                      fadeInCurve: Curves.bounceIn,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      child: FadeInImage.assetNetwork(
+                                        height: 160,
+                                        width: 160,
+                                        placeholder: 'assets/waiting_image.gif',
+                                        image: '${vocabulary.image}',
+                                        fit: BoxFit.scaleDown,
+                                        fadeInCurve: Curves.bounceIn,
+                                      ),
                                     ),
                                   ),
                                 ),

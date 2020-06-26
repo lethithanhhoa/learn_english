@@ -120,6 +120,7 @@ class TapTapRankingPage extends StatelessWidget {
                                             child: AutoSizeText(
                                               '${value[2].name}',
                                               maxLines: 1,
+                                              textAlign: TextAlign.center,
                                               overflow: TextOverflow.visible,
                                             ),
                                           ),
@@ -185,6 +186,7 @@ class TapTapRankingPage extends StatelessWidget {
                                       child: AutoSizeText(
                                         '${value[0].name}',
                                         maxLines: 1,
+                                        textAlign: TextAlign.center,
                                         overflow: TextOverflow.visible,
                                       ),
                                     ),
@@ -253,6 +255,7 @@ class TapTapRankingPage extends StatelessWidget {
                                             child: AutoSizeText(
                                               '${value[1].name}',
                                               maxLines: 1,
+                                              textAlign: TextAlign.center,
                                               overflow: TextOverflow.visible,
                                             ),
                                           ),

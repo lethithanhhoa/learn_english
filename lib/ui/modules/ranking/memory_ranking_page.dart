@@ -118,13 +118,15 @@ class MemoryRankingPage extends StatelessWidget {
                                             child: AutoSizeText(
                                               '${value[2].name}',
                                               maxLines: 1,
+                                              textAlign: TextAlign.center,
                                               overflow: TextOverflow.visible,
                                             ),
                                           ),
                                           Container(
                                             height: 20,
                                             child: AutoSizeText(
-                                              '${value[2].memoryCard}',
+                                              'L. ${value[2].memoryCard}',
+                                              textAlign: TextAlign.center,
                                               maxLines: 1,
                                               style: TextStyle(
                                                 fontSize: 16,
@@ -182,13 +184,15 @@ class MemoryRankingPage extends StatelessWidget {
                                       child: AutoSizeText(
                                         '${value[0].name}',
                                         maxLines: 1,
+                                        textAlign: TextAlign.center,
                                         overflow: TextOverflow.visible,
                                       ),
                                     ),
                                     Container(
                                       height: 20,
                                       child: AutoSizeText(
-                                        '${value[0].memoryCard}',
+                                        'L. ${value[0].memoryCard}',
+                                        textAlign: TextAlign.center,
                                         maxLines: 1,
                                         style: TextStyle(
                                           fontSize: 18,
@@ -250,13 +254,15 @@ class MemoryRankingPage extends StatelessWidget {
                                             child: AutoSizeText(
                                               '${value[1].name}',
                                               maxLines: 1,
+                                              textAlign: TextAlign.center,
                                               overflow: TextOverflow.visible,
                                             ),
                                           ),
                                           Container(
                                             height: 20,
                                             child: AutoSizeText(
-                                              '${value[1].memoryCard}',
+                                              'L. ${value[1].memoryCard}',
+                                              textAlign: TextAlign.center,
                                               maxLines: 1,
                                               style: TextStyle(
                                                 fontSize: 17,

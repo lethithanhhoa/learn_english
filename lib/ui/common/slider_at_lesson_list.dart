@@ -51,7 +51,7 @@ class SliderAtLessonList extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 3),
             child: Container(
-                width: 30,
+                width: 35,
                 child: AutoSizeText(
                   '${percent}%',
                   maxLines: 1,

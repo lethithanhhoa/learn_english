@@ -2,30 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learn_english/core/services/auth_service.dart';
-import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:overlay_support/overlay_support.dart';
-
+import 'package:learn_english/core/models/user.dart';
 import '../loading_page.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final UserService _userService = new UserService();
-  final AuthService _authService = new AuthService();
+  FireStoreService _fireStoreService = FireStoreService();
+  AuthService _authService = new AuthService();
 
   bool loading = false;
 
   @override
   void initState() {
     super.initState();
-
-    checkUserSignedIn();
+    // checkUserSignedIn();
   }
 
   void checkUserSignedIn() async {
@@ -34,14 +32,8 @@ class _LoginPageState extends State<LoginPage> {
     });
     bool isSignedIn = await _authService.isSignedIn();
     if (isSignedIn) {
-      // SharedPreferences preferences = await SharedPreferences.getInstance();
-      // FirebaseUser user = await _authService.getCurrentUser();
-      // await preferences.setString('name', user.displayName);
-      // await preferences.setString('email', user.email);
-      // await preferences.setString('avatar_url', user.photoUrl);
-      // print('Already signed in.');
-
-      Navigator.pushNamed(context, RouteName.home);
+      print('Already signed in.');
+      Navigator.popAndPushNamed(context, RouteName.home);
     }
 
     this.setState(() {
@@ -53,41 +45,25 @@ class _LoginPageState extends State<LoginPage> {
     this.setState(() {
       loading = true;
     });
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    FirebaseUser user = await _authService.facebookSignIn();
-    if (user == null) {
-      this.setState(() {
-        loading = false;
-      });
-      return showSimpleNotification(Text("Unable to sign in."),
-          background: Colors.red, autoDismiss: true);
-    }
-
-    List<dynamic> documents = await _userService.findUsersByEmail(user.email);
-    if (documents.length == 0) {
-      await _userService.saveUser(user);
-    }
-
-    // await preferences.setString('name', user.displayName);
-    // await preferences.setString('email', user.email);
-    // await preferences.setString('avatar_url', user.photoUrl);
-
-    print('Successfully signed in.');
-    Navigator.pushNamed(context, RouteName.home);
-
+    FirebaseUser user = await _authService.signInWithFacebook();
+    handle(user);
     this.setState(() {
       loading = false;
     });
   }
 
-  Future handleSignIn() async {
+  Future handleSignInWithGoogle() async {
     this.setState(() {
       loading = true;
     });
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-
     FirebaseUser user = await _authService.signInWithGoogle();
+    handle(user);
+    this.setState(() {
+      loading = false;
+    });
+  }
+
+  handle(FirebaseUser user) async {
     if (user == null) {
       this.setState(() {
         loading = false;
@@ -95,22 +71,12 @@ class _LoginPageState extends State<LoginPage> {
       return showSimpleNotification(Text("Unable to sign in."),
           background: Colors.red, autoDismiss: true);
     }
-
-    List<dynamic> documents = await _userService.findUsersByEmail(user.email);
-    if (documents.length == 0) {
-      await _userService.saveUser(user);
+    bool isExisted = await _fireStoreService.findUsersByUID(user.uid);
+    if (!isExisted) {
+      await _fireStoreService.saveUser(user);
     }
-
-    // await preferences.setString('name', user.displayName);
-    // await preferences.setString('email', user.email);
-    // await preferences.setString('avatar_url', user.photoUrl);
-
     print('Successfully signed in.');
-    Navigator.pushNamed(context, RouteName.home);
-
-    this.setState(() {
-      loading = false;
-    });
+    Navigator.popAndPushNamed(context, RouteName.home);
   }
 
   @override
@@ -189,74 +155,16 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Column(
                               children: <Widget>[
-                                // GestureDetector(
-                                //   onTap: handleSignInWithFacebook,
-                                //   child: Container(
-                                //     width: 240,
-                                //     height: 50,
-                                //     decoration: BoxDecoration(
-                                //         border: Border.all(
-                                //             width: 1.2,
-                                //             color: Colors.pink[300]),
-                                //         borderRadius:
-                                //             BorderRadius.circular(50)),
-                                //     child: Row(
-                                //       mainAxisAlignment:
-                                //           MainAxisAlignment.center,
-                                //       children: <Widget>[
-                                //         Icon(
-                                //           FontAwesomeIcons.facebookF,
-                                //           color: Colors.blue[900],
-                                //         ),
-                                //         SizedBox(
-                                //           width: 10,
-                                //         ),
-                                //         Text(
-                                //           "Sign In with Facebook",
-                                //           style: TextStyle(
-                                //             fontSize: 17.5,
-                                //             color: Colors.pink[400],
-                                //           ),
-                                //         ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 20,
-                                // ),
                                 GestureDetector(
-                                  onTap: handleSignIn,
-                                  child: Container(
-                                    width: 240,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 1.2,
-                                            color: Colors.pink[300]),
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          FontAwesomeIcons.google,
-                                          color: Colors.pink,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "Sign In with Google",
-                                          style: TextStyle(
-                                            fontSize: 17.5,
-                                            color: Colors.pink[400],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  onTap: handleSignInWithFacebook,
+                                  child: button('Sign In with Facebook'),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                GestureDetector(
+                                  onTap: handleSignInWithGoogle,
+                                  child: button('Sign In with Google'),
                                 ),
                               ],
                             ),
@@ -269,5 +177,45 @@ class _LoginPageState extends State<LoginPage> {
               }),
             ),
           );
+  }
+
+  Widget button(String nameButton) {
+    return Container(
+      width: 260,
+      height: 50,
+      decoration: BoxDecoration(
+          border: Border.all(width: 1.2, color: Colors.pink[300]),
+          borderRadius: BorderRadius.circular(50)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 22),
+        child: Row(
+          children: <Widget>[
+            (nameButton != 'Sign In with Facebook')
+                ? Icon(
+                    FontAwesomeIcons.google,
+                    color: Colors.pink,
+                  )
+                : Icon(
+                    FontAwesomeIcons.facebookF,
+                    color: Colors.blue[800],
+                  ),
+            SizedBox(
+              width: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text(
+                nameButton,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 17.5,
+                  color: Colors.pink[400],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

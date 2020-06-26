@@ -28,7 +28,7 @@ class PageToListenAndRepeat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Recording recording = Provider.of<Recording>(context);
+    RecordingVoice recording = Provider.of<RecordingVoice>(context);
     if (loading) {
       playAudio.playCustomAudioFile(vocabulary.audioFile);
       loading = false;

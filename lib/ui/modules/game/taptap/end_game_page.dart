@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:learn_english/ui/provider/taptap_level_state.dart';
@@ -17,7 +17,7 @@ class EndGamePage extends StatefulWidget {
 }
 
 class _EndGameState extends State<EndGamePage> {
-  UserService userService = new UserService();
+  FireStoreService userService = new FireStoreService();
   @override
   void initState() {
     super.initState();

@@ -58,9 +58,7 @@ class MemoryCardState extends ChangeNotifier {
     }
     cardList.shuffle();
     Future.delayed(Duration(seconds: seconds + 2), () {
-      audioPlayer.playCustomAudioFile(temp[0].audioFile
-          // , temp[0].timeStartAudio, temp[0].timeEndAudio
-          );
+      if (!isFinish) audioPlayer.playCustomAudioFile(temp[0].audioFile);
     });
 
     notifyListeners();

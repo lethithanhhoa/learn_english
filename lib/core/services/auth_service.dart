@@ -9,8 +9,9 @@ class AuthService {
   final FacebookLogin _facebookLogin = FacebookLogin();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-   Future facebookSignIn() async {
+  Future<FirebaseUser> signInWithFacebook() async {
     try {
+      _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
       final result = await _facebookLogin.logIn(['email']);
 
       if (result.status == FacebookLoginStatus.loggedIn) {
@@ -21,45 +22,51 @@ class AuthService {
         return user;
       }
     } catch (error) {
-      return error;
+      print(error);
+      return null;
     }
   }
 
   Future<FirebaseUser> signInWithGoogle() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    try {
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    final FirebaseUser user =
-        (await _auth.signInWithCredential(credential)).user;
-    return user;
+      final FirebaseUser user =
+          (await _auth.signInWithCredential(credential)).user;
+      return user;
+    } catch (error) {
+      print(error);
+      return null;
+    }
   }
 
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
     await _googleSignIn.signOut();
+    await _facebookLogin.logOut();
   }
 
   Future<bool> isSignedIn() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    return (user != null);
+    return (user != null)? true: false;
   }
 
   Future<String> getUidCurrentUser() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return user.uid;
   }
-  
+
   Future<User> getDetailCurrentUser() async {
-    String docId =  await getUidCurrentUser();
+    String docId = await getUidCurrentUser();
     var currentUser =
         await Firestore.instance.collection('users').document(docId).get();
     return User.fromSnapshot(currentUser);
   }
-  
 }

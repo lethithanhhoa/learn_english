@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/user.dart';
-import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/common/side_menu_bar.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ import 'memory_ranking_page.dart';
 import 'taptap_ranking_page.dart';
 
 class RankingPage extends StatelessWidget {
-  UserService userService = UserService();
+  FireStoreService fireStoreService = FireStoreService();
   int initialPage;
   RankingPage({this.initialPage});
 
@@ -25,7 +25,7 @@ class RankingPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         FutureProvider<List<User>>.value(
-          value: userService.getAllUser(),
+          value: fireStoreService.getAllUser(),
         ),
         ChangeNotifierProvider(
           create: (context) => AccountUser(),

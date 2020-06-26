@@ -19,7 +19,7 @@ class ContinueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Index index = Provider.of<Index>(context);
-    Recording recording = Provider.of<Recording>(context);
+    RecordingVoice recording = Provider.of<RecordingVoice>(context);
     ContinueButtonState continueButtonState =
         Provider.of<ContinueButtonState>(context);
     CrosswordAnswerState crosswordAnswerState =
@@ -162,7 +162,7 @@ class ContinueButton extends StatelessWidget {
                       ),
                     ),
                     AutoSizeText(
-                      'Corect answer: ${corectAnswer}',
+                      'Correct answer: ${corectAnswer}',
                       maxLines: 1,
                       style: GoogleFonts.handlee(
                         color: Colors.red,
@@ -172,6 +172,7 @@ class ContinueButton extends StatelessWidget {
                     ),
                     Text(
                       'Keep fighting. You can do it.',
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.handlee(
                         color: Colors.red,
                         fontSize: 25,
@@ -224,7 +225,7 @@ class ContinueButton extends StatelessWidget {
       Index index,
       ContinueButtonState continueButtonState,
       CrosswordAnswerState crosswordAnswerState,
-      Recording recording,
+      RecordingVoice recording,
       ChoiceButtonState choiceButtonState) {
     index.increment();
 

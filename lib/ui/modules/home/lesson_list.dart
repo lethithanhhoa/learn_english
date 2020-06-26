@@ -17,7 +17,7 @@ class LessonList extends StatelessWidget {
   int numOfItem;
   @override
   Widget build(BuildContext context) {
-    if (value == null || accountUser.user == null) return LoadingPage();
+    // if (value == null || accountUser.user == null) return LoadingPage();
     if (MediaQuery.of(context).size.width < 400)
       numOfItem = 1;
     else if (MediaQuery.of(context).size.width < 800)

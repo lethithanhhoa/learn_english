@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
-import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:learn_english/ui/provider/taptap_level_state.dart';
 import 'package:provider/provider.dart';
-
 import 'end_game_page.dart';
 
 class TapTapDetailPage extends StatelessWidget {
@@ -38,7 +37,7 @@ class TapTapDetail extends StatefulWidget {
 class TapTapDetailState extends State<TapTapDetail>
     with TickerProviderStateMixin {
   AnimationController animationController;
-  UserService userService = UserService();
+  FireStoreService fireStoreService = FireStoreService();
 
   String get timerString {
     Duration duration =
@@ -70,7 +69,7 @@ class TapTapDetailState extends State<TapTapDetail>
   }
 
   Future<bool> onWillPop() {
-    Fluttertoast.showToast(msg: "Tap 'Close' button to quit");
+    Fluttertoast.showToast(msg: "Press 'Quit' button to exit game");
     return Future.value(false);
   }
 
@@ -221,30 +220,17 @@ class TapTapDetailState extends State<TapTapDetail>
                   children: [
                     Row(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            int count = 0;
-                            Navigator.popUntil(context, (route) {
-                              return count++ == 2;
-                            });
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.indigo[50].withOpacity(0.8),
-                                borderRadius: BorderRadius.circular(6.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                child: Text(
-                                  'Quit',
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.8),
-                                      fontSize: 16),
-                                ),
-                              ),
-                            ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: FlatButton(
+                            onPressed: () {
+                              int count = 0;
+                              Navigator.popUntil(context, (route) {
+                                return count++ == 2;
+                              });
+                            },
+                            child: Text('Quit'),
+                            color: Colors.indigo[50].withOpacity(0.8),
                           ),
                         ),
                       ],
@@ -291,7 +277,7 @@ class TapTapDetailState extends State<TapTapDetail>
                                 actions: [
                                   FlatButton(
                                     onPressed: () {
-                                      userService.updateExp(
+                                      fireStoreService.updateExp(
                                           accountUser.user.userId,
                                           accountUser.exp - 50);
                                       accountUser.decrementExp(50);
