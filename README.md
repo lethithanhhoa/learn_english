@@ -10,12 +10,22 @@
 + Đăng xuất
 
 ### Một số màn hình của ứng dụng
-Màn hình đăng nhập và màn hình chính.
 <p>
-<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="250"/>
-<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/home.png" alt="Màn hình chính (mobile)" width="250"/>
-<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/homeweb.PNG" alt="Màn hình chính (web)" width="250"/>
+<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="200"/>
+<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/home.png" alt="Màn hình chính (mobile)" width="200"/>
+<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/homeweb.PNG" alt="Màn hình chính (web)" width="600"/>
 </p>
+<p>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/game.png" width="200"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/ranking.png" width="200"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/account.png" width="200"/>
+</p>
+<p>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/review.png" width="200"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/taptap.png" width="200"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/memory.png" width="200"/>
+</p>
+
 
 ### Phiên bản Web khả dụng tại: https://learn-english-7c4c5.web.app/#/
 ### File cài đặt trên Android: https://drive.google.com/file/d/1JZB9-8K_u8edBpAsSUNusxQ3LpVEQbbA/view?usp=sharing
