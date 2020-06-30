@@ -10,18 +10,11 @@
 + Đăng xuất
 
 ### Một số màn hình của ứng dụng
-<p>
-    <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="250"/>
-    <em>Màn hình đăng nhập</em>
-</p>
-|<p>
-    <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/home.png" alt="Màn hình chính (mobile)" width="250"/>
-    <em>Màn hình chính (trên mobile)</em>
-</p>|
-<p>
-    <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/homeweb.PNG" alt="Màn hình chính (web)" width="250"/>
-    <em>Màn hình chính (trên web)</em>
-</p>|
+Màn hình đăng nhập            |  Màn hình chính (trên mobile)    | Màn hình chính (trên web) 
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="250"/>
+|<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/home.png" alt="Màn hình chính (mobile)" width="250"/>
+|<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/homeweb.PNG" alt="Màn hình chính (web)" width="250"/>
 
 ### Phiên bản Web khả dụng tại: https://learn-english-7c4c5.web.app/#/
 ### File cài đặt trên Android: https://drive.google.com/file/d/1JZB9-8K_u8edBpAsSUNusxQ3LpVEQbbA/view?usp=sharing
