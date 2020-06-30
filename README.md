@@ -11,25 +11,25 @@
 
 ### Một số màn hình của ứng dụng
 <p>
-<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="200"/>
-<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/home.png" alt="Màn hình chính (mobile)" width="200"/>
+<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="150"/>
+<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/home.png" alt="Màn hình chính (mobile)" width="150"/>
 <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/homeweb.PNG" alt="Màn hình chính (web)" width="700"/>
 </p>
 <p>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/game.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/ranking.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/account.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/review.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/taptap.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/memory.png" width="200"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/game.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/ranking.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/account.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/review.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/taptap.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/memory.png" width="150"/>
 </p>
 <p>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/1.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/2.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/3.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/4.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/5.png" width="200"/>
-  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/6.png" width="200"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/1.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/2.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/3.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/4.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/5.png" width="150"/>
+  <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/6.png" width="150"/>
 </p>
 
 
