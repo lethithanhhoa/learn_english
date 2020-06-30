@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/user.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
 import '../../general_parameter.dart';
 
 class RankList extends StatelessWidget {
@@ -60,14 +59,29 @@ class RankList extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
+                        // Container(
+                        //   width: 60.0,
+                        //   height: 60.0,
+                        //   decoration: BoxDecoration(
+                        //     shape: BoxShape.circle,
+                        //     image: DecorationImage(
+                        //       fit: BoxFit.fill,
+                        //       image: Image.network(currentUser.avatarUrl).image,
+                        //     ),
+                        //   ),
+                        // ),
                         Container(
-                          width: 60.0,
-                          height: 60.0,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: Image.network(currentUser.avatarUrl).image,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(80.0),
+                            child: FadeInImage.assetNetwork(
+                              fit: BoxFit.cover,
+                              width: 60,
+                              height: 60,
+                              placeholder: "assets/avatar.png",
+                              image: '${currentUser.avatarUrl}',
                             ),
                           ),
                         ),
@@ -94,7 +108,7 @@ class RankList extends StatelessWidget {
                             maxLines: 1,
                             textAlign: TextAlign.right,
                             style: TextStyle(
-                              fontSize: (typeOfCode == 3) ? 25 : 30,
+                              fontSize: 27,
                               color: (index == i)
                                   ? highLightTextAtRanking
                                   : Colors.blue,

@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/common/side_menu_bar.dart';
 import 'package:learn_english/ui/modules/audio/audio_player.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_english/core/services/vocab_service.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../../general_parameter.dart';
@@ -16,15 +16,15 @@ import '../loading_page.dart';
 import 'detail_word_page.dart';
 
 class LearnedWords extends StatelessWidget {
-  VocabService _vocabService = VocabService();
+  // VocabService _vocabService = VocabService();
   List<String> lessonList;
   AudioCustomPlayer playAudio = AudioCustomPlayer();
+  FireStoreService _fireStoreService = FireStoreService();
+  // Future<List<Vocabulary>> getVocabByLesson(List<String> lessonIdList) async {
+  //   var list = await _vocabService.getVocabListByListOfLessonId(lessonIdList);
 
-  Future<List<Vocabulary>> getVocabByLesson(List<String> lessonIdList) async {
-    var list = await _vocabService.getVocabListByListOfLessonId(lessonIdList);
-
-    return list;
-  }
+  //   return list;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,47 +77,52 @@ class LearnedWords extends StatelessWidget {
             backgroundColor: Colors.white,
             body: SafeArea(
               child: FutureBuilder(
-                future: getVocabByLesson(lessonList),
+                future:_fireStoreService.getVocabByLessonList(lessonList),
                 builder: (context, AsyncSnapshot<List<Vocabulary>> value) {
                   if (value.data == null) return LoadingPage();
 
                   return ListView.builder(
                       itemCount: value.data.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                            value.data[index].vocab,
-                            style: TextStyle(fontSize: 22),
-                          ),
-                          subtitle: AutoSizeText(
-                            value.data[index].mean,
-                            maxLines: 1,
-                            style: GoogleFonts.farsan(
-                              textStyle: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          trailing: IconButton(
-                              padding: EdgeInsets.all(0.0),
-                              onPressed: () {
-                                playAudio.playCustomAudioFile(
-                                    value.data[index].audioFile);
+                        return Column(
+                          children: [
+                            ListTile(
+                              title: Text(
+                                value.data[index].vocab,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              subtitle: AutoSizeText(
+                                value.data[index].mean,
+                                maxLines: 1,
+                                style: GoogleFonts.farsan(
+                                  textStyle: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                              trailing: IconButton(
+                                  padding: EdgeInsets.all(0.0),
+                                  onPressed: () {
+                                    playAudio.playCustomAudioFile(
+                                        value.data[index].audioFile);
+                                  },
+                                  icon: Icon(
+                                    Icons.volume_up,
+                                    size: 20,
+                                  )),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType
+                                            .rightToLeftWithFade,
+                                        duration: Duration(milliseconds: 300),
+                                        child: DetailWordPage(
+                                          vocabList: value.data,
+                                          index: index,
+                                        )));
                               },
-                              icon: Icon(
-                                Icons.volume_up,
-                                size: 20,
-                              )),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type:
-                                        PageTransitionType.rightToLeftWithFade,
-                                    duration: Duration(milliseconds: 300),
-                                    child: DetailWordPage(
-                                      vocabList: value.data,
-                                      index: index,
-                                    )));
-                          },
+                            ),
+                            Divider(),
+                          ],
                         );
                       });
                 },

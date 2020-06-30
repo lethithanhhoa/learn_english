@@ -4,25 +4,25 @@ class Lesson {
   String lessonId;
   String lessonName;
   String image;
-  // int index;
+  int index;
 
-  Lesson({this.lessonId, this.lessonName, this.image});
+  Lesson({this.lessonId, this.lessonName, this.image, this.index});
 
   factory Lesson.fromSnapshot(DocumentSnapshot snapshot) {
     return Lesson(
-        lessonId: snapshot.documentID,
-        lessonName: snapshot.data['lessonName'],
-        image: snapshot.data['imgName']
-        // index: snapshot.data['index']
+        lessonId: snapshot.data['lesson_id'],
+        lessonName: snapshot.data['lesson_name'],
+        image: snapshot.data['image_file'],
+        index: snapshot.data['index']
         );
   }
 
   factory Lesson.fromJson(Map<String, dynamic> data) {
     return Lesson(
-      lessonId: data['id'],
-      lessonName: data['lessonName'],
-      image: data['imgName'],
-      // index: data['index'],
+      lessonId: data['lesson_id'],
+      lessonName: data['lesson_name'],
+      image: data['image_file'],
+      index: data['index'],
     );
   }
 

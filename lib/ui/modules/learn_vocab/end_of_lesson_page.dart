@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_english/core/services/user_service.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/modules/audio/audio_local_player.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:learn_english/ui/provider/num_of_correct_answer_state.dart';
@@ -15,7 +15,7 @@ import '../route_name.dart';
 
 class EndOfLessonPage extends StatelessWidget {
   bool loading = true;
-  UserService userService = UserService();
+  FireStoreService fireStoreService = FireStoreService();
   AccountUser accountUser = AccountUser();
   AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
   Color _color;
@@ -117,7 +117,7 @@ class EndOfLessonPage extends StatelessWidget {
                         if (!map.containsKey(resultLearningState.lessonId)) {
                           map[resultLearningState.lessonId] =
                               resultLearningState.getPercentCorrect;
-                          userService.updateLearningResult(
+                          fireStoreService.updateLearningResult(
                               accountUser.user.userId, map);
                         } else {
                           if ((map[resultLearningState.lessonId]).toInt() <
@@ -126,13 +126,13 @@ class EndOfLessonPage extends StatelessWidget {
                                 resultLearningState.lessonId,
                                 (value) =>
                                     resultLearningState.getPercentCorrect);
-                            userService.updateLearningResult(
+                            fireStoreService.updateLearningResult(
                                 accountUser.user.userId, map);
                           }
                         }
                         if (numOfCorrectAnswer.number > 0) {
                           int currentExp = accountUser.user.exp;
-                          userService.updateExp(accountUser.user.userId,
+                          fireStoreService.updateExp(accountUser.user.userId,
                               currentExp + (numOfCorrectAnswer.number * 3));
                         }
                         Navigator.pushNamedAndRemoveUntil(context,

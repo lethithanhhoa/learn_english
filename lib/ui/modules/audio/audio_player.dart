@@ -16,8 +16,4 @@ class AudioCustomPlayer extends ChangeNotifier {
       file,
     );
   }
-
-  stop(){
-    audioPlayer.stop();
-  }
 }

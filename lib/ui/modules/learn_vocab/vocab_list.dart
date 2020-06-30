@@ -44,7 +44,7 @@ class VocabList extends StatelessWidget {
           randomNumber = random.nextInt(3) + 3;
         }
         answer.setCorrectAnswer(value[index.getIndex].vocab);
-        // randomNumber = 5;
+        randomNumber = 1;
         switch (randomNumber) {
           case 0:
             return PageToLookAtThePictureAndChooseAnswer(

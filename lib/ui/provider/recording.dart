@@ -1,17 +1,22 @@
+// import 'dart:html';
+
+import 'package:audio_recorder/audio_recorder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+// import 'package:web_media_recorder/web_media_recorder.dart';
 // import 'dart:html' as html;
 
-class Recording extends ChangeNotifier {
+class RecordingVoice extends ChangeNotifier {
   PermissionHandler permissionHandler = PermissionHandler();
   List<SpeechRecognitionWords> _recordingResultList = new List();
   String _bestResult = '';
   String _finalResult = '';
   bool _isListening = false;
-  stt.SpeechToText speech = stt.SpeechToText();
+  SpeechToText speech = SpeechToText();
+  Recording recording = Recording();
 
   List<SpeechRecognitionWords> get getListResult => _recordingResultList;
   String get getBestResult => _bestResult;
@@ -19,28 +24,46 @@ class Recording extends ChangeNotifier {
   bool get getListening => _isListening;
 
   record() async {
-    if (!_isListening) {
-      checkPermission();
-      bool available = await speech.initialize();
-      if (available) {
-        _isListening = true;
-        speech.listen(onResult: (result) {
-          _recordingResultList = result.alternates;
-          _bestResult = result.recognizedWords;
-          if (speech.isListening && _bestResult != '') {
-            stopRecord();
-            _isListening = false;
-            notifyListeners();
-          }
-          
-          notifyListeners();
-        });
-      }
+    // if (!kIsWeb) {
+      if (!_isListening) {
+        checkPermission();
+        bool available = await speech.initialize();
+        if (available) {
+          _isListening = true;
+          speech.listen(onResult: (result) {
+            _recordingResultList = result.alternates;
+            _bestResult = result.recognizedWords;
+            if (speech.isListening && _bestResult != '') {
+              stopRecord();
+              _isListening = false;
+              notifyListeners();
+            }
 
-      notifyListeners();
-    } else {
-      stopRecord();
-    }
+            notifyListeners();
+          });
+        }
+
+        notifyListeners();
+      } else {
+        stopRecord();
+      }
+    // } else {
+    //   webRecorder.openRecorder();
+    //   webRecorder = WebRecorder(
+    //       whenRecorderStart: () {
+    //         _isListening = true;
+    //         notifyListeners();
+    //       },
+    //       whenRecorderStop: () {
+    //         _isListening = false;
+    //         notifyListeners();
+    //       },
+    //       whenReceiveData: (data) {
+    //         _bestResult = data;
+    //         _recordingResultList = data;
+    //         notifyListeners();
+    //       });
+    // }
   }
 
   void stopRecord() {
@@ -63,7 +86,7 @@ class Recording extends ChangeNotifier {
 
     // if (permission.state == "denied") return;
 
-    // final stream = await html.window.navigator.getUserMedia(audio: true, video: false);
+    // await html.window.navigator.getUserMedia(audio: true, video: false);
   }
 
   fetchText() {
@@ -78,3 +101,5 @@ class Recording extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+

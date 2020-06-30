@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/lesson.dart';
+import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:provider/provider.dart';
 import 'package:learn_english/core/services/lesson_service.dart';
@@ -14,13 +15,15 @@ import '../route_name.dart';
 import 'lesson_list.dart';
 
 class LessonPage extends StatelessWidget {
-  LessonService _lessonService = LessonService();
+  // LessonService _lessonService = LessonService();
+  FireStoreService _fireStoreService = FireStoreService();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         FutureProvider<List<Lesson>>.value(
-          value: _lessonService.getAllLesson(),
+          // value: _lessonService.getAllLesson(),
+          value: _fireStoreService.getAllLessons(),
         ),
         ChangeNotifierProvider(
           create: (_) => AccountUser(),
@@ -32,7 +35,7 @@ class LessonPage extends StatelessWidget {
           child: Consumer<List<Lesson>>(builder: (context, value, child) {
             AccountUser accountUser = Provider.of<AccountUser>(context);
             if (value == null || accountUser.user == null) return LoadingPage();
-            // if(value.length == 0) return LoadingPage();
+
             return (!kIsWeb)
                 // UI for Mobile app
                 ? Column(

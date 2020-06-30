@@ -31,14 +31,13 @@ class _TapTapGameState extends State<TapTapGame> {
 
   @override
   Widget build(BuildContext context) {
-    
-    if(_current > 0){
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        _current--;
-        _text = '${_current}';
+    if (_current > 0) {
+      Future.delayed(Duration(seconds: 1), () {
+        setState(() {
+          _current--;
+          _text = '${_current}';
+        });
       });
-    });
     }
 
     if (_current <= 0) {
@@ -57,14 +56,10 @@ class _TapTapGameState extends State<TapTapGame> {
     return Scaffold(
       backgroundColor: Colors.green[50],
       body: Center(
-        child: AutoSizeText(
-          _text,
-          style: GoogleFonts.piedra(
-            fontSize: 150,
-            color: Colors.blue
-          ),
-        )
-      ),
+          child: AutoSizeText(
+        _text,
+        style: GoogleFonts.piedra(fontSize: 150, color: Colors.blue),
+      )),
     );
   }
 }

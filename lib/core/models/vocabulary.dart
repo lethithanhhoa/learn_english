@@ -7,8 +7,6 @@ class Vocabulary {
   String mean;
   String image;
   String audioFile;
-  // int timeStartAudio;
-  // int timeEndAudio;
   int type;
   List<dynamic> otherWord;
 
@@ -19,38 +17,32 @@ class Vocabulary {
     this.mean,
     this.image,
     this.audioFile,
-    // this.timeStartAudio,
-    // this.timeEndAudio,
     this.type,
     this.otherWord,
   });
 
   factory Vocabulary.fromSnapshot(DocumentSnapshot snapshot) {
     return Vocabulary(
-        vocabId: snapshot.documentID,
-        lessonId: snapshot.data['lessonId'],
+        vocabId: snapshot.data['vocab_id'],
+        lessonId: snapshot.data['lesson_id'],
         vocab: snapshot.data['vocab'],
         mean: snapshot.data['mean'],
-        image: snapshot.data['imgName'],
-        audioFile: snapshot.data['audioFile'],
-        // timeStartAudio: snapshot.data['timeStartAudio'],
-        // timeEndAudio: snapshot.data['timeEndAudio'],
+        image: snapshot.data['image_file'],
+        audioFile: snapshot.data['audio_file'],
         type: snapshot.data['type'],
-        otherWord: snapshot.data['otherWord']);
+        otherWord: snapshot.data['other_words']);
   }
 
   factory Vocabulary.fromJson(Map<String, dynamic> data) {
     return Vocabulary(
-      vocabId: data['id'],
-      lessonId: data['lessonId'],
+      vocabId: data['vocab_id'],
+      lessonId: data['lesson_id'],
       vocab: data['vocab'],
       mean: data['mean'],
-      image: data['imgName'],
-      audioFile: data['audioFile'],
-      // timeStartAudio: data['timeStartAudio'],
-      // timeEndAudio: data['timeEndAudio'],
+      image: data['image_file'],
+      audioFile: data['audio_ile'],
       type: data['type'],
-      otherWord: data['otherWord'],
+      otherWord: data['other_words'],
     );
   }
 

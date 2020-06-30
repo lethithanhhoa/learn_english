@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class Microphone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Recording recording = Provider.of<Recording>(context);
+    RecordingVoice recording = Provider.of<RecordingVoice>(context);
     ContinueButtonState continueButtonState =
         Provider.of<ContinueButtonState>(context);
 
