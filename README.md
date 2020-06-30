@@ -10,7 +10,7 @@
 + Đăng xuất
 
 ### Một số mà hình của ứng dụng
-<img src="hhttps://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="250"/>
+<img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="250"/>
 
 ### Phiên bản Web khả dụng tại: https://learn-english-7c4c5.web.app/#/
 ### File cài đặt trên Android: https://drive.google.com/file/d/1JZB9-8K_u8edBpAsSUNusxQ3LpVEQbbA/view?usp=sharing
