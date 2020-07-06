@@ -83,58 +83,28 @@ class ExpRankingPage extends StatelessWidget {
                                 ),
                                 child: Column(
                                   children: <Widget>[
-                                    Text(
-                                      'TOP 3',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                    Container(
+                                      height: 28,
+                                      child: Center(
+                                        child: textAtTop('TOP 3', 20),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Colors.grey[50],
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(3))),
                                         child: Column(children: <Widget>[
                                           Padding(
-                                            padding: EdgeInsets.only(top: 2),
-                                            child: Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white,
-                                                image: DecorationImage(
-                                                    image: Image.network(
-                                                            value[2].avatarUrl)
-                                                        .image),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 15,
-                                            child: AutoSizeText(
-                                              '${value[2].name}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.visible,
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 20,
-                                            child: AutoSizeText(
-                                              '${value[2].exp}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          )
+                                              padding: EdgeInsets.only(top: 2),
+                                              child: avatarAtTop(
+                                                  '${value[2].avatarUrl}', 50)),
+                                          inforMemberAtTop('${value[2].name}'),
+                                          inforMemberAtTop('${value[2].exp}'),
                                         ]),
                                       ),
                                     )
@@ -150,12 +120,11 @@ class ExpRankingPage extends StatelessWidget {
                           ),
                           child: Column(
                             children: <Widget>[
-                              Text(
-                                'TOP 1',
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                              Container(
+                                height: 36,
+                                child: Center(
+                                  child: textAtTop('TOP 1', 25),
+                                ),
                               ),
                               Expanded(
                                 child: Container(
@@ -168,39 +137,11 @@ class ExpRankingPage extends StatelessWidget {
                                   child: Column(children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(top: 3),
-                                      child: Container(
-                                        height: 70,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                          image: DecorationImage(
-                                              image: Image.network(
-                                                      value[0].avatarUrl)
-                                                  .image),
-                                        ),
-                                      ),
+                                      child: avatarAtTop(
+                                          '${value[0].avatarUrl}', 68),
                                     ),
-                                    Container(
-                                      height: 15,
-                                      child: AutoSizeText(
-                                        '${value[0].name}',
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.visible,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 20,
-                                      child: AutoSizeText(
-                                        '${value[0].exp}',
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    )
+                                    inforMemberAtTop('${value[0].name}'),
+                                    inforMemberAtTop('${value[0].exp}'),
                                   ]),
                                 ),
                               )
@@ -219,58 +160,26 @@ class ExpRankingPage extends StatelessWidget {
                                         bottomRight: Radius.circular(3))),
                                 child: Column(
                                   children: <Widget>[
-                                    Text(
-                                      'TOP 2',
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                    Container(
+                                      height: 33,
+                                      child: textAtTop('TOP 2', 22),
                                     ),
                                     Expanded(
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Colors.grey[50],
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
                                                     Radius.circular(3))),
                                         child: Column(children: <Widget>[
                                           Padding(
-                                            padding: EdgeInsets.only(top: 2),
-                                            child: Container(
-                                              height: 60,
-                                              width: 60,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white,
-                                                image: DecorationImage(
-                                                    image: Image.network(
-                                                            value[1].avatarUrl)
-                                                        .image),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 15,
-                                            child: AutoSizeText(
-                                              '${value[1].name}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.visible,
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 20,
-                                            child: AutoSizeText(
-                                              '${value[1].exp}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                              ),
-                                            ),
-                                          )
+                                              padding: EdgeInsets.only(top: 3),
+                                              child: avatarAtTop(
+                                                  '${value[1].avatarUrl}', 57)),
+                                          inforMemberAtTop('${value[1].name}'),
+                                          inforMemberAtTop('${value[1].exp}'),
                                         ]),
                                       ),
                                     )
@@ -308,5 +217,50 @@ class ExpRankingPage extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Widget textAtTop(String text, double fontSize) {
+    return Center(
+      child: Text(
+        text,
+        style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: Colors.white),
+      ),
+    );
+  }
+
+  Widget inforMemberAtTop(String value) {
+    return Container(
+      height: 20,
+      child: AutoSizeText(
+        value,
+        maxLines: 1,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.visible,
+        style: TextStyle(
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+  Widget avatarAtTop(String imageUrl, double size) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(80.0),
+        child: FadeInImage.assetNetwork(
+          fit: BoxFit.cover,
+          width: size,
+          height: size,
+          placeholder: "assets/avatar.png",
+          image: imageUrl,
+        ),
+      ),
+    );
   }
 }

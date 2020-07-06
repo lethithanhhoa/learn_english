@@ -33,7 +33,17 @@ class PageToListenAndRepeat extends StatelessWidget {
       playAudio.playCustomAudioFile(vocabulary.audioFile);
       loading = false;
     }
-    print(vocabulary.vocab + vocabulary.audioFile);
+
+    print(recording.getListResult);
+    print(recording.getBestResult);
+    
+    //get best result
+    if(recording.getBestResult != vocabulary.vocab){
+      recording.getListResult.forEach((element) {
+        if (element.recognizedWords.toLowerCase() == vocabulary.vocab.toLowerCase()) recording.setBestResult(element.recognizedWords);
+        return;
+      });
+    }
 
     return WillPopScope(
       onWillPop: onWillPop,

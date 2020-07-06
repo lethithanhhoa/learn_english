@@ -10,15 +10,15 @@ import 'package:provider/provider.dart';
 class UnitCard extends StatelessWidget {
   Vocabulary vocabulary;
   int seconds;
-  bool loading = true;
   GlobalKey<FlipCardState> keyCard = GlobalKey<FlipCardState>();
   UnitCard({this.vocabulary, this.seconds});
 
+  bool loading = true;
   @override
   Widget build(BuildContext context) {
     MemoryCardState memoryCardState = Provider.of<MemoryCardState>(context);
     if (loading && memoryCardState.checking == 0) {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: seconds), () {
         keyCard.currentState.toggleCard();
         Future.delayed(Duration(seconds: seconds), () {
           keyCard.currentState.toggleCard();
@@ -43,13 +43,9 @@ class UnitCard extends StatelessWidget {
               height: 90,
               width: 135,
               decoration: BoxDecoration(
-                // color: Colors.blue.withOpacity(0.9),
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(5.0),
-                // image: DecorationImage(
-                //     image: Image.asset('assets/card.png').image)
               ),
-              // child: Image.asset('assets/card.png'),
               child: Center(
                 child: Text('?',
                     style: GoogleFonts.piedra(

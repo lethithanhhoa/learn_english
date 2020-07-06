@@ -116,7 +116,7 @@ class TapTapDetailState extends State<TapTapDetail>
                           children: <Widget>[
                             // SizedBox(height: 100),
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.0),
+                              padding: EdgeInsets.symmetric(vertical: 30.0),
                               child: Container(
                                 height: 140,
                                 width: MediaQuery.of(context).size.width,

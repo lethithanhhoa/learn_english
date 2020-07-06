@@ -6,12 +6,8 @@ import 'package:learn_english/ui/modules/game/memory_card/widgets/unit_card.dart
 
 class MemoryCardState extends ChangeNotifier {
   List<Vocabulary> vocabList;
-  MemoryCardState({this.vocabList});
   List<UnitCard> cardList = new List();
-  AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
-  AudioCustomPlayer audioPlayer = AudioCustomPlayer();
   int level = 1;
-
   String answer;
   String correctVocab;
   int checking = 0;
@@ -19,6 +15,9 @@ class MemoryCardState extends ChangeNotifier {
   bool isFinish = false;
   bool isTaped = true;
 
+  AudioLocalPlayer audioLocalPlayer = AudioLocalPlayer();
+  AudioCustomPlayer audioPlayer = AudioCustomPlayer();
+  MemoryCardState({this.vocabList});
   setIsFinishTrue() {
     isFinish = true;
     notifyListeners();

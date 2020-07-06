@@ -228,14 +228,8 @@ class _DetailWordState extends State<DetailWord> with TickerProviderStateMixin {
                                               : Speaker(size: 37),
                                       onTap: () {
                                         playAudio.playCustomAudioFile(widget
-                                                .vocabList[_index.getIndex]
-                                                .audioFile
-                                            // ,
-                                            // widget.vocabList[_index.getIndex]
-                                            //     .timeStartAudio,
-                                            // widget.vocabList[_index.getIndex]
-                                            //     .timeEndAudio
-                                            );
+                                            .vocabList[_index.getIndex]
+                                            .audioFile);
                                       }),
                                 ),
                               ],

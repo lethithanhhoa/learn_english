@@ -15,7 +15,6 @@ import 'package:learn_english/ui/provider/state_of_answer_in_crossword_part.dart
 import 'package:learn_english/ui/provider/state_of_continue_button.dart';
 import 'package:learn_english/ui/provider/state_of_crossword_list.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_english/core/services/vocab_service.dart';
 
 class VocabularyPage extends StatelessWidget {
   // VocabService _vocabService = VocabService();
