@@ -77,7 +77,7 @@ class LearnedWords extends StatelessWidget {
             backgroundColor: Colors.white,
             body: SafeArea(
               child: FutureBuilder(
-                future:_fireStoreService.getVocabByLessonList(lessonList),
+                future:_fireStoreService.getVocabByLessons(lessonList),
                 builder: (context, AsyncSnapshot<List<Vocabulary>> value) {
                   if (value.data == null) return LoadingPage();
 
@@ -87,8 +87,9 @@ class LearnedWords extends StatelessWidget {
                         return Column(
                           children: [
                             ListTile(
-                              title: Text(
+                              title: AutoSizeText(
                                 value.data[index].vocab,
+                                maxLines: 1,
                                 style: TextStyle(fontSize: 20),
                               ),
                               subtitle: AutoSizeText(

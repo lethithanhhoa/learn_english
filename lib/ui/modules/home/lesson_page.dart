@@ -7,7 +7,6 @@ import 'package:learn_english/core/models/lesson.dart';
 import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:provider/provider.dart';
-import 'package:learn_english/core/services/lesson_service.dart';
 
 import '../../general_parameter.dart';
 import '../loading_page.dart';
@@ -90,10 +89,12 @@ class LessonPage extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            height: (MediaQuery.of(context).size.width <
-                                    MediaQuery.of(context).size.height)
-                                ? MediaQuery.of(context).size.height * 2 / 5
-                                : MediaQuery.of(context).size.height / 2,
+                            height: 300,
+                            // (MediaQuery.of(context).size.width <
+                            //         MediaQuery.of(context).size.height)
+                                
+                                // MediaQuery.of(context).size.height * 2 / 5
+                                // : MediaQuery.of(context).size.height / 2,
                             width: MediaQuery.of(context).size.width,
                             child: Column(
                               children: [

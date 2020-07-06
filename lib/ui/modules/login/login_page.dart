@@ -1,12 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:learn_english/core/models/user.dart';
 import 'package:learn_english/core/services/auth_service.dart';
 import 'package:learn_english/core/services/firestore_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:learn_english/core/models/user.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../loading_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,51 +28,42 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    // checkUserSignedIn();
-  }
-
-  void checkUserSignedIn() async {
-    this.setState(() {
-      loading = true;
-    });
-    bool isSignedIn = await _authService.isSignedIn();
-    if (isSignedIn) {
-      print('Already signed in.');
-      Navigator.popAndPushNamed(context, RouteName.home);
-    }
-
-    this.setState(() {
-      loading = false;
-    });
   }
 
   Future handleSignInWithFacebook() async {
-    this.setState(() {
-      loading = true;
-    });
+    if (kIsWeb) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(
+                  "Sorry! We don't support this method on the web. Please sign in with your Google account."),
+            );
+          });
+      return;
+    }
     FirebaseUser user = await _authService.signInWithFacebook();
     handle(user);
-    this.setState(() {
-      loading = false;
-    });
   }
 
   Future handleSignInWithGoogle() async {
-    this.setState(() {
-      loading = true;
-    });
     FirebaseUser user = await _authService.signInWithGoogle();
     handle(user);
-    this.setState(() {
-      loading = false;
-    });
+    // if (user == null) {
+    //   return showSimpleNotification(Text("Unable to sign in."),
+    //       background: Colors.red, autoDismiss: true);
+    // }
+    // List<dynamic> documents =
+    //     await _fireStoreService.findUsersByEmail(user.email);
+    // if (documents.length == 0) {
+    //   await _fireStoreService.saveUser(user);
+    // }
+    // print('Successfully signed in.');
+    // Navigator.pushNamed(context, RouteName.home);
   }
 
   handle(FirebaseUser user) async {
     if (user == null) {
-      this.setState(() {
-        loading = false;
-      });
       return showSimpleNotification(Text("Unable to sign in."),
           background: Colors.red, autoDismiss: true);
     }
@@ -81,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return loading
+    return (loading)
         ? LoadingPage()
         : Scaffold(
             backgroundColor: Colors.white,

@@ -15,6 +15,7 @@ import 'listen_and_complete_sentence.dart';
 import 'listen_and_repeat.dart';
 import 'look_at_the_picture_and_choose_answer.dart';
 import 'translate_sentence.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class VocabList extends StatelessWidget {
   bool loading = true;
@@ -27,7 +28,6 @@ class VocabList extends StatelessWidget {
     int randomNumber;
     return Consumer<List<Vocabulary>>(builder: (context, value, child) {
       if (value == null) return LoadingPage();
-
       sliderState.setMaxOfSlider(value.length);
       if (loading) {
         value.shuffle();
@@ -44,7 +44,7 @@ class VocabList extends StatelessWidget {
           randomNumber = random.nextInt(3) + 3;
         }
         answer.setCorrectAnswer(value[index.getIndex].vocab);
-        randomNumber = 1;
+        // randomNumber = 1;
         switch (randomNumber) {
           case 0:
             return PageToLookAtThePictureAndChooseAnswer(
@@ -52,7 +52,6 @@ class VocabList extends StatelessWidget {
 
           case 1:
             return PageToListenAndRepeat(vocabulary: value[index.getIndex]);
-
           case 2:
             return PageToChooseCorrectTranslate(
                 vocabulary: value[index.getIndex]);

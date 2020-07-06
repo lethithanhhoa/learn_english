@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:learn_english/core/services/auth_service.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:flutter/services.dart';
 import 'package:sa_anicoto/sa_anicoto.dart';
@@ -18,19 +19,31 @@ class _SplashPageState extends State<SplashPage> with AnimationMixin {
   String verInGSheet;
 
   int timeToLoad = 3;
+  bool state;
 
   @override
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    checkUserSignedIn();
+  }
+
+  void checkUserSignedIn() async {
+    bool isSingIn = await AuthService().isSignedIn();
+    setState(() {
+      state = isSingIn;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     Timer(Duration(seconds: timeToLoad), () {
-      Navigator.pushNamedAndRemoveUntil(
-          context, RouteName.login, (Route<dynamic> route) => false);
+      if (state)
+        Navigator.popAndPushNamed(context, RouteName.home);
+      else
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteName.login, (Route<dynamic> route) => false);
     });
 
     return Scaffold(

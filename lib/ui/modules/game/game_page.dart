@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:learn_english/core/models/vocabulary.dart';
 import 'package:learn_english/core/services/firestore_service.dart';
-import 'package:learn_english/core/services/vocab_service.dart';
 import 'package:learn_english/ui/common/side_menu_bar.dart';
 import 'package:learn_english/ui/modules/route_name.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -45,10 +44,6 @@ class _GameState extends State<GamePage> {
 
     final random = Random();
 
-    Future<bool> onWillPop() {
-      return Future.value(false);
-    }
-
     return Scaffold(
       drawer: kIsWeb ? NavigateDrawer() : null,
       appBar: kIsWeb
@@ -71,12 +66,12 @@ class _GameState extends State<GamePage> {
       // ),
       body: SingleChildScrollView(
         child: Column(
-          // mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
-              // mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: [0, 1, 2, 3, 4, 5, 6, 7]
                   .map((count) => FlipPanel.stream(
                         itemStream: Stream.fromFuture(Future.delayed(

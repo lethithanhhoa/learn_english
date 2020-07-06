@@ -83,7 +83,7 @@ class ContinueButton extends StatelessWidget {
                             } else if (recording.getBestResult != '') {
                               continueButtonState
                                   .setAnswer(recording.getBestResult);
-                              recording.stopRecord();
+                              // recording.stopRecord();
                               continueButtonState.setScreenCode(2);
                             } else if (choiceButtonState.getState()) {
                               continueButtonState
@@ -95,13 +95,13 @@ class ContinueButton extends StatelessWidget {
                             if (continueButtonState.getAnswer.toLowerCase() ==
                                 correctAnswer.getCorrectAnswer.toLowerCase()) {
                               numOfCorrectAnswer.increment();
-
+                              print('answer .....:' + continueButtonState.getAnswer + '.....');
                               Scaffold.of(context).showSnackBar(snackBar(
                                   context,
                                   correctAnswer.getCorrectAnswer,
                                   true));
                             } else {
-                              // playAudio.playWrongSound();
+                              print('answer .....:' + continueButtonState.getAnswer + '.....');
 
                               Scaffold.of(context).showSnackBar(snackBar(
                                   context,
@@ -170,9 +170,10 @@ class ContinueButton extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
-                    Text(
+                    AutoSizeText(
                       'Keep fighting. You can do it.',
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                       style: GoogleFonts.handlee(
                         color: Colors.red,
                         fontSize: 25,
@@ -191,8 +192,9 @@ class ContinueButton extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
+                    AutoSizeText(
                       'Excellent!',
+                      maxLines: 1,
                       style: GoogleFonts.handlee(
                         color: Colors.green,
                         fontSize: 25,

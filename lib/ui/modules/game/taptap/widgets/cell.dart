@@ -6,6 +6,7 @@ class Cell extends StatelessWidget {
   double textSize;
   double borderRadius;
   Cell({this.vocabulary, this.textSize, this.borderRadius});
+
   @override
   Widget build(BuildContext context) {
     return null;

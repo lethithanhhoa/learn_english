@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_english/core/models/user.dart';
@@ -6,6 +5,7 @@ import 'package:learn_english/ui/common/side_menu_bar.dart';
 import 'package:learn_english/ui/modules/ranking/rank_list.dart';
 import 'package:learn_english/ui/provider/account_user.dart';
 import 'package:provider/provider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../../general_parameter.dart';
@@ -41,7 +41,7 @@ class TapTapRankingPage extends StatelessWidget {
                 height: 230,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: (kIsWeb)? Colors.white : Colors.pink[200].withOpacity(0.8),
+                  color: (kIsWeb)? Colors.white : Colors.orange[200].withOpacity(0.8),
                   borderRadius: (kIsWeb)
                       ? null
                       : BorderRadius.only(
@@ -76,65 +76,35 @@ class TapTapRankingPage extends StatelessWidget {
                                 height: 120,
                                 width: 80,
                                 decoration: BoxDecoration(
-                                  color: Colors.blue[600],
+                                  color: Colors.blue[700],
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(3),
                                       bottomLeft: Radius.circular(3)),
                                 ),
                                 child: Column(
                                   children: <Widget>[
-                                    Text(
-                                      'TOP 3',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                    Container(
+                                      height: 28,
+                                      child: Center(
+                                        child: textAtTop('TOP 3', 20),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Colors.grey[50],
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(3))),
                                         child: Column(children: <Widget>[
                                           Padding(
-                                            padding: EdgeInsets.only(top: 2),
-                                            child: Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white,
-                                                image: DecorationImage(
-                                                    image: Image.network(
-                                                            value[2].avatarUrl)
-                                                        .image),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 15,
-                                            child: AutoSizeText(
-                                              '${value[2].name}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.visible,
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 20,
-                                            child: AutoSizeText(
-                                              '${value[2].taptap}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          )
+                                              padding: EdgeInsets.only(top: 2),
+                                              child: avatarAtTop(
+                                                  '${value[2].avatarUrl}', 50)),
+                                          inforMemberAtTop('${value[2].name}'),
+                                          inforMemberAtTop('${value[2].taptap}'),
                                         ]),
                                       ),
                                     )
@@ -150,12 +120,11 @@ class TapTapRankingPage extends StatelessWidget {
                           ),
                           child: Column(
                             children: <Widget>[
-                              Text(
-                                'TOP 1',
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                              Container(
+                                height: 36,
+                                child: Center(
+                                  child: textAtTop('TOP 1', 25),
+                                ),
                               ),
                               Expanded(
                                 child: Container(
@@ -168,38 +137,11 @@ class TapTapRankingPage extends StatelessWidget {
                                   child: Column(children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(top: 3),
-                                      child: Container(
-                                        height: 70,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                          image: DecorationImage(
-                                              image: Image.network(
-                                                      value[0].avatarUrl)
-                                                  .image),
-                                        ),
-                                      ),
+                                      child: avatarAtTop(
+                                          '${value[0].avatarUrl}', 68),
                                     ),
-                                    Container(
-                                      height: 15,
-                                      child: AutoSizeText(
-                                        '${value[0].name}',
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.visible,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 20,
-                                      child: AutoSizeText(
-                                        '${value[0].taptap}',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    )
+                                    inforMemberAtTop('${value[0].name}'),
+                                    inforMemberAtTop('${value[0].taptap}'),
                                   ]),
                                 ),
                               )
@@ -218,58 +160,26 @@ class TapTapRankingPage extends StatelessWidget {
                                         bottomRight: Radius.circular(3))),
                                 child: Column(
                                   children: <Widget>[
-                                    Text(
-                                      'TOP 2',
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                    Container(
+                                      height: 33,
+                                      child: textAtTop('TOP 2', 22),
                                     ),
                                     Expanded(
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Colors.grey[50],
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
                                                     Radius.circular(3))),
                                         child: Column(children: <Widget>[
                                           Padding(
-                                            padding: EdgeInsets.only(top: 2),
-                                            child: Container(
-                                              height: 60,
-                                              width: 60,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white,
-                                                image: DecorationImage(
-                                                    image: Image.network(
-                                                            value[1].avatarUrl)
-                                                        .image),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 15,
-                                            child: AutoSizeText(
-                                              '${value[1].name}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.visible,
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 20,
-                                            child: AutoSizeText(
-                                              '${value[1].taptap}',
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                              ),
-                                            ),
-                                          )
+                                              padding: EdgeInsets.only(top: 3),
+                                              child: avatarAtTop(
+                                                  '${value[1].avatarUrl}', 57)),
+                                          inforMemberAtTop('${value[1].name}'),
+                                          inforMemberAtTop('${value[1].taptap}'),
                                         ]),
                                       ),
                                     )
@@ -283,15 +193,17 @@ class TapTapRankingPage extends StatelessWidget {
               ),
               Expanded(
                   child: Container(
-                color: Colors.pink[200].withOpacity(0.8),
+                color: Colors.orange[200].withOpacity(0.8),
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: (kIsWeb)? null : BorderRadius.only(
-                      topRight: Radius.circular(40),
-                    ),
+                    borderRadius: (kIsWeb)
+                        ? null
+                        : BorderRadius.only(
+                            topRight: Radius.circular(40),
+                          ),
                   ),
                   child: RankList(
                     value: value,
@@ -306,4 +218,50 @@ class TapTapRankingPage extends StatelessWidget {
       );
     });
   }
+
+  Widget textAtTop(String text, double fontSize) {
+    return Center(
+      child: Text(
+        text,
+        style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: Colors.white),
+      ),
+    );
+  }
+
+  Widget inforMemberAtTop(String value) {
+    return Container(
+      height: 20,
+      child: AutoSizeText(
+        value,
+        maxLines: 1,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.visible,
+        style: TextStyle(
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+  Widget avatarAtTop(String imageUrl, double size) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(80.0),
+        child: FadeInImage.assetNetwork(
+          fit: BoxFit.cover,
+          width: size,
+          height: size,
+          placeholder: "assets/avatar.png",
+          image: imageUrl,
+        ),
+      ),
+    );
+  }
 }
+

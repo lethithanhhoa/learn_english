@@ -22,13 +22,13 @@ class LevelState extends ChangeNotifier {
 
   List<Vocabulary> vocabList;
   int _currentLevel;
-  List<bool> _widgetsState = List.filled(25, false);
-  List<bool> _isCorrectWidget = List.filled(25, null);
+  List<bool> _cellsState = List.filled(25, false);
+  List<bool> _isCorrectCells = List.filled(25, null);
   int _numOfCorrectWidgets = 0;
+  int _score = 0;
   bool _isFalse = false;
   bool _isFinish = false;
-  Map<int, String> map = Map();
-  int _score = 0;
+  Map<int, String> _map = Map();
   List<Cell> _widgets = List();
   Widget _curWidget;
 
@@ -49,11 +49,11 @@ class LevelState extends ChangeNotifier {
   int get getScore => _score;
 
   bool getWidgetState(int index) {
-    return _widgetsState[index];
+    return _cellsState[index];
   }
 
   bool getIsCorrectWidget(int index) {
-    return _isCorrectWidget[index];
+    return _isCorrectCells[index];
   }
 
   setFinishIsTrue() {
@@ -69,28 +69,28 @@ class LevelState extends ChangeNotifier {
 
   backToPreState() {
     _isFalse = false;
+    
+    _cellsState[_map.keys.first] = false;
+    _isCorrectCells[_map.keys.first] = null;
 
-    _widgetsState[map.keys.first] = false;
-    _isCorrectWidget[map.keys.first] = null;
-
-    _widgetsState[map.keys.last] = false;
-    _isCorrectWidget[map.keys.last] = null;
+    _cellsState[_map.keys.last] = false;
+    _isCorrectCells[_map.keys.last] = null;
     removeMap();
     notifyListeners();
   }
 
   setWidgetState(int index, Vocabulary vocabulary) {
     audioLocalPlayer.playDropSound();
-    if (_widgetsState[index]) {
-      _widgetsState[index] = false;
-      map.remove(index);
+    if (_cellsState[index]) {
+      _cellsState[index] = false;
+      _map.remove(index);
     } else {
-      _widgetsState[index] = true;
-      map[index] = vocabulary.vocab;
+      _cellsState[index] = true;
+      _map[index] = vocabulary.vocab;
     }
 
-    if (map.keys.length == 2) {
-      if (map.values.first == map.values.last) {
+    if (_map.keys.length == 2) {
+      if (_map.values.first == _map.values.last) {
         setValueForListByMap(true);
         // _audioPlayer.playCorrectSound();
         _numOfCorrectWidgets += 2;
@@ -107,14 +107,14 @@ class LevelState extends ChangeNotifier {
   }
 
   removeMap() {
-    map.remove(map.keys.first);
-    map.remove(map.keys.last);
+    _map.remove(_map.keys.first);
+    _map.remove(_map.keys.last);
     notifyListeners();
   }
 
   setValueForListByMap(bool value) {
-    _isCorrectWidget[map.keys.first] = value;
-    _isCorrectWidget[map.keys.last] = value;
+    _isCorrectCells[_map.keys.first] = value;
+    _isCorrectCells[_map.keys.last] = value;
     notifyListeners();
   }
 
@@ -265,8 +265,8 @@ class LevelState extends ChangeNotifier {
   setDefaultState() {
     _numOfCorrectWidgets = 0;
     _currentLevel += 1;
-    _isCorrectWidget.fillRange(0, 24, null);
-    _widgetsState.fillRange(0, 24, false);
+    _isCorrectCells.fillRange(0, 24, null);
+    _cellsState.fillRange(0, 24, false);
     notifyListeners();
   }
 }

@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
 class ContinueButtonState extends ChangeNotifier {
-  bool _disable = true;
+  
   String _nameButton = 'CHECK IT';
-  int _clickedNum = 0;
-  bool _active =
-      true; //this parameter is used to disable choose other answer after clicking 'check it' button
+  bool _disable = true;
+  int _clickedNum = 0; // 
+  bool _active = true; // can't change the answer after clicking 'check it'
   int _screenCode = 0;
   int _correctAnswerNum = 0;
-
   String _answer = '';
 
   bool get getDisable => _disable;
@@ -19,7 +18,7 @@ class ContinueButtonState extends ChangeNotifier {
   int get getCorrectAnswerNum => _correctAnswerNum;
   String get getAnswer => _answer;
 
-  setAnswer(String string){
+  setAnswer(String string) {
     _answer = string;
     notifyListeners();
   }

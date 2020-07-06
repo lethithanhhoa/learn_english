@@ -6,7 +6,7 @@ import 'package:learn_english/core/models/vocabulary.dart';
 
 class FireStoreService {
   final _users = Firestore.instance.collection('users');
-  final _vocabs = Firestore.instance.collection('vocabularies');
+  final _vocabs = Firestore.instance.collection('vocabulary');
   final _lessons = Firestore.instance.collection('lessons');
 
   //--------------------------------------------------------//
@@ -21,7 +21,13 @@ class FireStoreService {
   Future<bool> findUsersByUID(String uid) async {
     var result = _users.document(_users.path + '/' + uid);
     return (result != null) ? true : false;
-    
+  }
+
+  Future<List<DocumentSnapshot>> findUsersByEmail(String email) async {
+    QuerySnapshot result = await _users
+      .where('email', isEqualTo: email)
+      .getDocuments();
+    return result.documents;
   }
 
   Future saveUser(FirebaseUser userData) async {
@@ -81,23 +87,25 @@ class FireStoreService {
     return listOfVocab;
   }
 
-  Future<List<Vocabulary>> getVocabByLessonList(
-      List<String> lessonIdList) async {
-    if (lessonIdList.length <= 10) {
+  Future<List<Vocabulary>> getVocabByLessons(List<String> lessonIdList) async {
+    List<Vocabulary> listOfVocab = new List();
+      while (lessonIdList.length > 10) {
+        var ref = await _vocabs
+            .where('lesson_id', whereIn: lessonIdList.getRange(0, 9).toList())
+            .getDocuments();
+        lessonIdList.removeRange(0, 9);
+        List<Vocabulary> temp =
+            ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
+        listOfVocab = listOfVocab + temp;
+      }
       var ref = await _vocabs
           .where('lesson_id', whereIn: lessonIdList)
           .getDocuments();
-      List<Vocabulary> listOfVocab =
+      List<Vocabulary> temp =
           ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
-      return listOfVocab;
-    } else {
-      var ref = await _vocabs
-          .where('lesson_id', whereIn: lessonIdList.getRange(0, 9).toList())
-          .getDocuments();
-      List<Vocabulary> listOfVocab =
-          ref.documents.map((doc) => Vocabulary.fromSnapshot(doc)).toList();
-      return listOfVocab;
-    }
+      listOfVocab = listOfVocab + temp;
+      
+    return listOfVocab;
   }
 
   Future<List<Vocabulary>> getVocabByTypeOfWord() async {
