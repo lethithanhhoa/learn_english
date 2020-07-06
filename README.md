@@ -9,6 +9,10 @@
 + Xem thông tin cá nhân
 + Đăng xuất
 
+
+#### Phiên bản Web: https://learn-english-7c4c5.web.app
+#### Phiên bản Android: https://lethithanhhoa.github.io/English_for_Kids/
+
 ### Một số màn hình của ứng dụng
 <p>
 <img src="https://github.com/lethithanhhoa/learn_english/blob/master/screenshot/login.png" alt="Màn hình đăng nhập" width="130"/>
@@ -33,10 +37,7 @@
 </p>
 
 
-### Phiên bản Web khả dụng tại: https://learn-english-7c4c5.web.app/#/
-### File cài đặt trên Android: https://drive.google.com/file/d/1JZB9-8K_u8edBpAsSUNusxQ3LpVEQbbA/view?usp=sharing
-
-# Cài đặt và chạy chương trình 
+# Cài đặt và chạy chương trình trên máy
 - Cài đặt Flutter trên máy (xem chi tiết ở https://flutter.dev/docs/get-started/install)
 - Clone source code và thực thi câu lệnh "flutter run" trong folder dự án để chạy chương trình
 
